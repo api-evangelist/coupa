@@ -1,0 +1,109 @@
+name: Coupa
+description: Coupa is a leading Business Spend Management (BSM) platform that provides cloud-based solutions for procurement, invoicing, expenses, payments, sourcing, contracts, and supply chain design & planning.
+image: https://www.coupa.com/wp-content/themes/coupa/images/coupa-logo.svg
+url: https://www.coupa.com
+created: '2024'
+modified: '2024'
+tags:
+- Procurement
+- Business Spend Management
+- BSM
+- Invoicing
+- Supply Chain
+- Financial Management
+- Enterprise
+- Cloud Platform
+apis:
+- name: Coupa Core API
+  description: The primary RESTful API for accessing and managing core Coupa resources including suppliers, purchase orders, invoices, and requisitions.
+  image: https://www.coupa.com/wp-content/themes/coupa/images/coupa-logo.svg
+  humanURL: https://compass.coupa.com/en-us/products/core-platform
+  baseURL: https://instance.coupahost.com/api
+  tags:
+  - REST
+  - Procurement
+  - Purchase Orders
+  - Invoices
+  - Requisitions
+  properties:
+  - type: Documentation
+    url: https://compass.coupa.com/en-us/products/product-documentation/integration-technical-documentation/coupa-core-api
+  - type: OpenAPI
+    url: https://compass.coupa.com/en-us/api_docs
+  - type: Authentication
+    url: https://compass.coupa.com/en-us/products/product-documentation/integration-technical-documentation/coupa-core-api/authentication
+  contact:
+  - type: Support
+    url: https://compass.coupa.com/en-us/support
+- name: Coupa Integration API
+  description: API designed for enterprise integrations with ERP systems and other third-party applications.
+  image: https://www.coupa.com/wp-content/themes/coupa/images/coupa-logo.svg
+  humanURL: https://compass.coupa.com/en-us/products/core-platform/integration
+  baseURL: https://instance.coupahost.com/api
+  tags:
+  - Integration
+  - ERP
+  - Enterprise
+  - Webhooks
+  properties:
+  - type: Documentation
+    url: https://compass.coupa.com/en-us/products/product-documentation/integration-technical-documentation
+  - type: Webhooks
+    url: https://compass.coupa.com/en-us/products/product-documentation/integration-technical-documentation/webhooks
+  - type: Best Practices
+    url: https://compass.coupa.com/en-us/products/product-documentation/integration-technical-documentation/integration-best-practices
+- name: Coupa Supplier API
+  description: API for supplier-specific operations including supplier information management, catalogs, and supplier collaboration.
+  image: https://www.coupa.com/wp-content/themes/coupa/images/coupa-logo.svg
+  humanURL: https://compass.coupa.com/en-us/products/supplier-portal
+  baseURL: https://instance.coupahost.com/api/suppliers
+  tags:
+  - Suppliers
+  - Catalogs
+  - Vendor Management
+  properties:
+  - type: Documentation
+    url: https://compass.coupa.com/en-us/products/product-documentation/integration-technical-documentation/supplier-api
+  - type: Getting Started
+    url: https://compass.coupa.com/en-us/products/supplier-portal/getting-started
+- name: Coupa Analytics API
+  description: API for accessing Coupa's analytics and reporting data for business intelligence and custom reporting needs.
+  image: https://www.coupa.com/wp-content/themes/coupa/images/coupa-logo.svg
+  humanURL: https://compass.coupa.com/en-us/products/analytics
+  baseURL: https://instance.coupahost.com/api/analytics
+  tags:
+  - Analytics
+  - Reporting
+  - Business Intelligence
+  - Data Export
+  properties:
+  - type: Documentation
+    url: https://compass.coupa.com/en-us/products/product-documentation/analytics-reporting
+  - type: Data Dictionary
+    url: https://compass.coupa.com/en-us/products/product-documentation/analytics-reporting/data-dictionary
+common:
+- type: Developer Portal
+  url: https://compass.coupa.com/en-us/products/product-documentation/integration-technical-documentation
+- type: Authentication
+  url: https://compass.coupa.com/en-us/products/product-documentation/integration-technical-documentation/coupa-core-api/authentication
+- type: Rate Limits
+  url: https://compass.coupa.com/en-us/products/product-documentation/integration-technical-documentation/api-rate-limits
+- type: Status
+  url: https://trust.coupa.com/
+- type: Terms of Service
+  url: https://www.coupa.com/company/trust/agreements
+- type: Privacy Policy
+  url: https://www.coupa.com/company/trust/privacy
+- type: Support
+  url: https://compass.coupa.com/en-us/support
+- type: Blog
+  url: https://www.coupa.com/blog
+- type: LinkedIn
+  url: https://www.linkedin.com/company/coupa-software
+- type: Twitter
+  url: https://twitter.com/Coupa
+maintainers:
+- type: Organization
+  name: Coupa Software
+  email: support@coupa.com
+  url: https://www.coupa.com
