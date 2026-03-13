@@ -1,0 +1,971 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/api-search/coupa/json-schema/coupa-invoice-schema.json",
+  "title": "Coupa Invoice",
+  "description": "Schema representing a Coupa invoice, which is a billing document from a supplier for goods or services delivered. Supports the full invoice lifecycle from draft through approval, dispute, and payment. Based on the Coupa Core API invoices resource as documented at compass.coupa.com.",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "integer",
+      "description": "Coupa unique internal identifier for the invoice.",
+      "readOnly": true
+    },
+    "invoice-number": {
+      "type": "string",
+      "description": "Invoice identification number assigned by the supplier.",
+      "maxLength": 40
+    },
+    "invoice-date": {
+      "type": "string",
+      "format": "date",
+      "description": "Date of the invoice. Provide only the date (not timestamp) to prevent credit note issues."
+    },
+    "status": {
+      "type": "string",
+      "description": "Current status of the invoice in its lifecycle.",
+      "enum": [
+        "new",
+        "draft",
+        "pending_approval",
+        "approved",
+        "pending_receipt",
+        "processing",
+        "payable_adjustment",
+        "on_hold",
+        "ap_hold",
+        "booking_hold",
+        "pending_action",
+        "rejected",
+        "disputed",
+        "abandoned",
+        "voided",
+        "invalid"
+      ]
+    },
+    "document-type": {
+      "type": "string",
+      "description": "Document type classification.",
+      "enum": [
+        "Invoice",
+        "Credit Note"
+      ]
+    },
+    "supplier": {
+      "$ref": "#/$defs/SupplierReference",
+      "description": "The supplier (vendor) who issued this invoice."
+    },
+    "currency": {
+      "$ref": "#/$defs/CurrencyReference",
+      "description": "Transaction currency for the invoice."
+    },
+    "gross-total": {
+      "type": ["number", "null"],
+      "description": "Total invoice amount including tax.",
+      "multipleOf": 0.0001
+    },
+    "tax-amount": {
+      "type": ["number", "null"],
+      "description": "Header-level tax amount. Not used if tax is provided at the line level.",
+      "multipleOf": 0.0001
+    },
+    "tax-code": {
+      "type": ["string", "null"],
+      "description": "Header-level tax classification code.",
+      "maxLength": 255
+    },
+    "tax-rate": {
+      "type": ["number", "null"],
+      "description": "Header-level tax rate percentage."
+    },
+    "line-level-taxation": {
+      "type": "boolean",
+      "description": "Flag indicating whether taxes are provided at the line level rather than the header level."
+    },
+    "discount-amount": {
+      "type": ["number", "null"],
+      "description": "Discount amount provided by the supplier.",
+      "multipleOf": 0.0001
+    },
+    "discount-percent": {
+      "type": ["number", "null"],
+      "description": "Discount percentage."
+    },
+    "discount-due-date": {
+      "type": ["string", "null"],
+      "format": "date",
+      "description": "Date by which payment must be made to qualify for the discount."
+    },
+    "discount-due-less-discount": {
+      "type": ["number", "null"],
+      "description": "Amount due less discount.",
+      "readOnly": true
+    },
+    "amount-due-less-discount": {
+      "type": ["number", "null"],
+      "description": "Total amount due after discount application.",
+      "readOnly": true
+    },
+    "gross-total-less-discount": {
+      "type": ["number", "null"],
+      "description": "Gross total minus the discount amount.",
+      "readOnly": true
+    },
+    "net-total-less-discount": {
+      "type": ["number", "null"],
+      "description": "Net total minus the discount amount.",
+      "readOnly": true
+    },
+    "shipping-amount": {
+      "type": ["number", "null"],
+      "description": "Freight charges on the invoice.",
+      "multipleOf": 0.0001
+    },
+    "handling-amount": {
+      "type": ["number", "null"],
+      "description": "Processing and handling fees.",
+      "multipleOf": 0.0001
+    },
+    "payment-term": {
+      "$ref": "#/$defs/PaymentTermReference",
+      "description": "Payment schedule terms for the invoice."
+    },
+    "payment-method": {
+      "type": ["string", "null"],
+      "description": "Payment processing method.",
+      "maxLength": 10
+    },
+    "payment-notes": {
+      "type": ["string", "null"],
+      "description": "Payment-related notes."
+    },
+    "payment-date": {
+      "type": ["string", "null"],
+      "format": "date",
+      "description": "Actual payment date."
+    },
+    "payment-order-reference": {
+      "type": ["string", "null"],
+      "description": "Payment order reference number.",
+      "maxLength": 255
+    },
+    "net-due-date": {
+      "type": ["string", "null"],
+      "format": "date",
+      "description": "Net payment due date."
+    },
+    "exchange-rate": {
+      "type": ["number", "null"],
+      "description": "Currency exchange rate (up to 9 decimal places).",
+      "multipleOf": 0.000000001
+    },
+    "bill-to-address": {
+      "$ref": "#/$defs/AddressReference",
+      "description": "Billing address for the invoice."
+    },
+    "ship-to-address": {
+      "$ref": "#/$defs/AddressReference",
+      "description": "Shipping destination address."
+    },
+    "ship-from-address": {
+      "type": ["object", "null"],
+      "description": "Supplier ship-from address.",
+      "properties": {
+        "id": {
+          "type": "integer"
+        },
+        "name": {
+          "type": "string"
+        }
+      }
+    },
+    "invoice-from-address": {
+      "type": ["object", "null"],
+      "description": "Vendor address on the invoice.",
+      "properties": {
+        "id": {
+          "type": "integer"
+        }
+      }
+    },
+    "remit-to-address": {
+      "$ref": "#/$defs/AddressReference",
+      "description": "Remit-to address for payment."
+    },
+    "supplier-remit-to": {
+      "type": ["object", "null"],
+      "description": "Supplier remit-to address reference.",
+      "properties": {
+        "id": {
+          "type": "integer"
+        },
+        "name": {
+          "type": "string"
+        }
+      }
+    },
+    "invoice-lines": {
+      "type": "array",
+      "description": "Collection of invoice line items.",
+      "items": {
+        "$ref": "#/$defs/InvoiceLine"
+      }
+    },
+    "invoice-charges": {
+      "type": "array",
+      "description": "Collection of invoice charge allocations.",
+      "items": {
+        "$ref": "#/$defs/InvoiceCharge"
+      }
+    },
+    "tax-lines": {
+      "type": "array",
+      "description": "Tax line details for line-level taxation.",
+      "items": {
+        "$ref": "#/$defs/TaxLine"
+      }
+    },
+    "withholding-tax-lines": {
+      "type": "array",
+      "description": "Withholding tax line details.",
+      "items": {
+        "$ref": "#/$defs/WithholdingTaxLine"
+      }
+    },
+    "withholding-tax-override": {
+      "type": ["number", "null"],
+      "description": "Withholding tax override amount.",
+      "multipleOf": 0.001
+    },
+    "is-credit-note": {
+      "type": "boolean",
+      "description": "Indicates whether this document is a credit note."
+    },
+    "original-invoice-number": {
+      "type": ["string", "null"],
+      "description": "Original invoice number. Required when is-credit-note is true.",
+      "maxLength": 40
+    },
+    "original-invoice-date": {
+      "type": ["string", "null"],
+      "format": "date",
+      "description": "Original invoice date. Required when is-credit-note is true. Provide only the date."
+    },
+    "credit-reason": {
+      "type": ["string", "null"],
+      "description": "Reason for the credit adjustment.",
+      "maxLength": 255
+    },
+    "credit-note-differences-with-original-invoice": {
+      "type": ["number", "null"],
+      "description": "Variance amount between the credit note and the original invoice.",
+      "multipleOf": 0.0001
+    },
+    "comments": {
+      "type": ["string", "null"],
+      "description": "Invoice comments.",
+      "maxLength": 255
+    },
+    "internal-note": {
+      "type": ["string", "null"],
+      "description": "Internal note (not visible to supplier)."
+    },
+    "supplier-note": {
+      "type": ["string", "null"],
+      "description": "Note from the supplier."
+    },
+    "confirmation": {
+      "type": ["string", "null"],
+      "description": "Invoice confirmation status.",
+      "maxLength": 50
+    },
+    "contract": {
+      "type": ["object", "null"],
+      "description": "Associated contract reference.",
+      "properties": {
+        "id": {
+          "type": "integer"
+        },
+        "name": {
+          "type": "string"
+        }
+      }
+    },
+    "requested-by": {
+      "$ref": "#/$defs/UserReference",
+      "description": "User who requested the invoice."
+    },
+    "paid": {
+      "type": "boolean",
+      "description": "Whether the invoice has been paid.",
+      "readOnly": true
+    },
+    "compliant": {
+      "type": "boolean",
+      "description": "Whether the invoice passes compliance validation.",
+      "readOnly": true
+    },
+    "canceled": {
+      "type": "boolean",
+      "description": "Whether the invoice has been cancelled.",
+      "readOnly": true
+    },
+    "supplier-created": {
+      "type": "boolean",
+      "description": "Whether the invoice was created by the supplier via CSP.",
+      "readOnly": true
+    },
+    "exported": {
+      "type": "boolean",
+      "description": "Whether the invoice has been exported to an external system (e.g., ERP)."
+    },
+    "delivery-date": {
+      "type": ["string", "null"],
+      "format": "date",
+      "description": "Delivery date for the goods or services."
+    },
+    "buyer-tax-registration": {
+      "type": ["object", "null"],
+      "description": "Purchaser tax registration. Required for compliant invoicing.",
+      "properties": {
+        "id": {
+          "type": "integer"
+        },
+        "number": {
+          "type": "string"
+        }
+      }
+    },
+    "supplier-tax-registration": {
+      "type": ["object", "null"],
+      "description": "Supplier tax registration. Required for compliant invoicing.",
+      "properties": {
+        "id": {
+          "type": "integer"
+        },
+        "number": {
+          "type": "string"
+        }
+      }
+    },
+    "legal-destination-country": {
+      "type": ["object", "null"],
+      "description": "Legal destination country for compliance purposes.",
+      "properties": {
+        "id": {
+          "type": "integer"
+        },
+        "code": {
+          "type": "string",
+          "description": "ISO 3166-1 alpha-2 country code."
+        }
+      }
+    },
+    "destination-country": {
+      "type": ["object", "null"],
+      "description": "Destination country for compliance.",
+      "properties": {
+        "id": {
+          "type": "integer"
+        },
+        "code": {
+          "type": "string"
+        }
+      }
+    },
+    "origin-country": {
+      "type": ["object", "null"],
+      "description": "Country of origin for the goods.",
+      "properties": {
+        "id": {
+          "type": "integer"
+        },
+        "code": {
+          "type": "string"
+        }
+      }
+    },
+    "origin-currency-gross": {
+      "type": ["number", "null"],
+      "description": "Gross total in the origin country currency.",
+      "multipleOf": 0.0001
+    },
+    "origin-currency-net": {
+      "type": ["number", "null"],
+      "description": "Net total in the origin country currency.",
+      "multipleOf": 0.0001
+    },
+    "taxes-in-origin-country-currency": {
+      "type": ["number", "null"],
+      "description": "Tax amount in the origin country currency.",
+      "multipleOf": 0.0001
+    },
+    "cash-accounting-scheme-reference": {
+      "type": ["string", "null"],
+      "description": "Cash accounting scheme reference flag.",
+      "maxLength": 255
+    },
+    "margin-scheme": {
+      "type": ["string", "null"],
+      "description": "Margin scheme reason.",
+      "maxLength": 255
+    },
+    "reverse-charge-reference": {
+      "type": ["string", "null"],
+      "description": "Reverse charge reference information.",
+      "maxLength": 255
+    },
+    "image-scan": {
+      "type": ["string", "null"],
+      "description": "Invoice image scan identifier.",
+      "maxLength": 25
+    },
+    "image-scan-url": {
+      "type": ["string", "null"],
+      "format": "uri",
+      "description": "URL of the scanned invoice image.",
+      "maxLength": 255
+    },
+    "image-scan-file-name": {
+      "type": ["string", "null"],
+      "description": "File name of the scanned image.",
+      "maxLength": 255
+    },
+    "image-scan-file-size": {
+      "type": ["string", "null"],
+      "description": "File size of the scanned image.",
+      "maxLength": 12
+    },
+    "image-scan-content-type": {
+      "type": ["string", "null"],
+      "description": "MIME content type of the scanned image.",
+      "maxLength": 191
+    },
+    "approvals": {
+      "type": "array",
+      "description": "Approval workflow records associated with this invoice.",
+      "items": {
+        "$ref": "#/$defs/ApprovalReference"
+      },
+      "readOnly": true
+    },
+    "abandon-reason": {
+      "type": ["object", "null"],
+      "description": "Reason insight for abandoning the invoice.",
+      "properties": {
+        "id": {
+          "type": "integer"
+        },
+        "description": {
+          "type": "string"
+        }
+      }
+    },
+    "dispute-reasons": {
+      "type": "array",
+      "description": "Reasons for disputing the invoice.",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer"
+          },
+          "description": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "dispute-method": {
+      "type": ["string", "null"],
+      "description": "Method used to dispute the invoice.",
+      "maxLength": 10
+    },
+    "tolerance-failures": {
+      "type": ["string", "null"],
+      "description": "Description of tolerance check failures.",
+      "maxLength": 512
+    },
+    "payments": {
+      "type": "array",
+      "description": "Payment records associated with this invoice.",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer"
+          },
+          "amount": {
+            "type": "number"
+          },
+          "payment-date": {
+            "type": "string",
+            "format": "date"
+          }
+        }
+      },
+      "readOnly": true
+    },
+    "attachments": {
+      "type": "array",
+      "description": "File attachments linked to the invoice.",
+      "items": {
+        "$ref": "#/$defs/AttachmentReference"
+      }
+    },
+    "tags": {
+      "type": "array",
+      "description": "Tags associated with the invoice.",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer"
+          },
+          "name": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "taggings": {
+      "type": "array",
+      "description": "Tag association records.",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer"
+          }
+        }
+      }
+    },
+    "created-at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Timestamp when the invoice was created. Automatically set by Coupa.",
+      "readOnly": true
+    },
+    "updated-at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Timestamp when the invoice was last updated. Automatically set by Coupa.",
+      "readOnly": true
+    },
+    "created-by": {
+      "$ref": "#/$defs/UserReference",
+      "description": "The user who created the invoice."
+    },
+    "updated-by": {
+      "$ref": "#/$defs/UserReference",
+      "description": "The user who last updated the invoice."
+    }
+  },
+  "required": [
+    "invoice-number",
+    "invoice-date",
+    "supplier",
+    "currency",
+    "invoice-lines"
+  ],
+  "$defs": {
+    "UserReference": {
+      "type": "object",
+      "description": "Reference to a Coupa user.",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "description": "Coupa unique identifier for the user."
+        },
+        "login": {
+          "type": "string",
+          "description": "User login name."
+        },
+        "email": {
+          "type": "string",
+          "format": "email",
+          "description": "User email address."
+        }
+      }
+    },
+    "SupplierReference": {
+      "type": "object",
+      "description": "Reference to a supplier (vendor) in Coupa.",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "description": "Coupa unique identifier for the supplier."
+        },
+        "name": {
+          "type": "string",
+          "description": "Supplier name.",
+          "maxLength": 100
+        },
+        "number": {
+          "type": "string",
+          "description": "Supplier number."
+        }
+      }
+    },
+    "CurrencyReference": {
+      "type": "object",
+      "description": "Reference to a currency.",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "description": "Coupa unique identifier for the currency."
+        },
+        "code": {
+          "type": "string",
+          "description": "ISO 4217 currency code.",
+          "pattern": "^[A-Z]{3}$",
+          "examples": ["USD", "EUR", "GBP"]
+        }
+      }
+    },
+    "AddressReference": {
+      "type": "object",
+      "description": "Reference to a physical address in Coupa.",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "description": "Coupa unique identifier for the address."
+        },
+        "name": {
+          "type": "string",
+          "description": "Address name or label."
+        },
+        "street1": {
+          "type": "string",
+          "description": "Street address line 1."
+        },
+        "street2": {
+          "type": ["string", "null"],
+          "description": "Street address line 2."
+        },
+        "city": {
+          "type": "string",
+          "description": "City name."
+        },
+        "state": {
+          "type": ["string", "null"],
+          "description": "State or province."
+        },
+        "postal-code": {
+          "type": ["string", "null"],
+          "description": "Postal or ZIP code."
+        },
+        "country": {
+          "type": "object",
+          "description": "Country reference.",
+          "properties": {
+            "id": {
+              "type": "integer"
+            },
+            "code": {
+              "type": "string",
+              "description": "ISO 3166-1 alpha-2 country code."
+            }
+          }
+        }
+      }
+    },
+    "PaymentTermReference": {
+      "type": "object",
+      "description": "Reference to a payment term definition.",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "description": "Coupa unique identifier for the payment term."
+        },
+        "code": {
+          "type": "string",
+          "description": "Payment term code."
+        }
+      }
+    },
+    "InvoiceLine": {
+      "type": "object",
+      "description": "A line item on an invoice representing a specific good or service being billed.",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "description": "Coupa unique identifier for the invoice line.",
+          "readOnly": true
+        },
+        "line-num": {
+          "type": "integer",
+          "description": "Sequential line number."
+        },
+        "description": {
+          "type": "string",
+          "description": "Description of the item or service.",
+          "maxLength": 255
+        },
+        "quantity": {
+          "type": "number",
+          "description": "Quantity invoiced."
+        },
+        "price": {
+          "type": "number",
+          "description": "Unit price of the item."
+        },
+        "total": {
+          "type": "number",
+          "description": "Line total (quantity multiplied by price).",
+          "readOnly": true
+        },
+        "uom": {
+          "type": "object",
+          "description": "Unit of measure.",
+          "properties": {
+            "id": {
+              "type": "integer"
+            },
+            "code": {
+              "type": "string",
+              "description": "Unit of measure code (e.g., EA, CS, BX)."
+            }
+          }
+        },
+        "tax-amount": {
+          "type": ["number", "null"],
+          "description": "Tax amount for this line."
+        },
+        "tax-code": {
+          "type": ["string", "null"],
+          "description": "Tax classification code for this line."
+        },
+        "tax-rate": {
+          "type": ["number", "null"],
+          "description": "Tax rate percentage for this line."
+        },
+        "order-line-id": {
+          "type": ["integer", "null"],
+          "description": "Reference to the backing purchase order line."
+        },
+        "commodity": {
+          "type": ["object", "null"],
+          "description": "Commodity classification for the line item.",
+          "properties": {
+            "id": {
+              "type": "integer"
+            },
+            "name": {
+              "type": "string"
+            }
+          }
+        },
+        "account": {
+          "type": ["object", "null"],
+          "description": "Chart of accounts reference for cost allocation.",
+          "properties": {
+            "id": {
+              "type": "integer"
+            },
+            "code": {
+              "type": "string"
+            }
+          }
+        },
+        "currency": {
+          "$ref": "#/$defs/CurrencyReference"
+        },
+        "created-at": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Timestamp when the line was created.",
+          "readOnly": true
+        },
+        "updated-at": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Timestamp when the line was last updated.",
+          "readOnly": true
+        }
+      },
+      "required": [
+        "description",
+        "quantity",
+        "price"
+      ]
+    },
+    "InvoiceCharge": {
+      "type": "object",
+      "description": "A charge allocation on an invoice (e.g., shipping, handling, miscellaneous).",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "description": "Coupa unique identifier for the charge.",
+          "readOnly": true
+        },
+        "type": {
+          "type": "string",
+          "description": "Charge type (e.g., ShippingCharge, HandlingCharge, MiscCharge)."
+        },
+        "amount": {
+          "type": "number",
+          "description": "Charge amount."
+        },
+        "account": {
+          "type": ["object", "null"],
+          "properties": {
+            "id": {
+              "type": "integer"
+            },
+            "code": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    },
+    "TaxLine": {
+      "type": "object",
+      "description": "Tax line detail for line-level taxation.",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "readOnly": true
+        },
+        "amount": {
+          "type": "number",
+          "description": "Tax amount."
+        },
+        "rate": {
+          "type": "number",
+          "description": "Tax rate percentage."
+        },
+        "code": {
+          "type": "string",
+          "description": "Tax code."
+        },
+        "description": {
+          "type": "string",
+          "description": "Tax line description."
+        }
+      }
+    },
+    "WithholdingTaxLine": {
+      "type": "object",
+      "description": "Withholding tax line detail.",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "readOnly": true
+        },
+        "amount": {
+          "type": "number",
+          "description": "Withholding tax amount."
+        },
+        "rate": {
+          "type": "number",
+          "description": "Withholding tax rate percentage."
+        },
+        "code": {
+          "type": "string",
+          "description": "Withholding tax code."
+        }
+      }
+    },
+    "ApprovalReference": {
+      "type": "object",
+      "description": "Reference to an approval record.",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "description": "Coupa unique identifier for the approval."
+        },
+        "status": {
+          "type": "string",
+          "description": "Approval status."
+        },
+        "approver": {
+          "$ref": "#/$defs/UserReference",
+          "description": "User assigned as approver."
+        },
+        "approval-date": {
+          "type": ["string", "null"],
+          "format": "date-time",
+          "description": "When the approval was granted."
+        }
+      }
+    },
+    "AttachmentReference": {
+      "type": "object",
+      "description": "Reference to a file attachment.",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "description": "Coupa unique identifier for the attachment."
+        },
+        "file-name": {
+          "type": "string",
+          "description": "Name of the attached file."
+        },
+        "file-url": {
+          "type": "string",
+          "format": "uri",
+          "description": "URL to download the attachment."
+        }
+      }
+    }
+  },
+  "examples": [
+    {
+      "id": 1,
+      "invoice-number": "INV-2024-001",
+      "invoice-date": "2024-03-15",
+      "status": "pending_approval",
+      "document-type": "Invoice",
+      "supplier": {
+        "id": 42,
+        "name": "Acme Office Supplies",
+        "number": "SUP-001"
+      },
+      "currency": {
+        "id": 1,
+        "code": "USD"
+      },
+      "gross-total": 5250.00,
+      "tax-amount": 250.00,
+      "line-level-taxation": false,
+      "payment-term": {
+        "id": 1,
+        "code": "Net 30"
+      },
+      "bill-to-address": {
+        "id": 5,
+        "name": "Main Office",
+        "street1": "123 Business Ave",
+        "city": "San Francisco",
+        "state": "CA",
+        "postal-code": "94105",
+        "country": {
+          "id": 1,
+          "code": "US"
+        }
+      },
+      "invoice-lines": [
+        {
+          "id": 101,
+          "line-num": 1,
+          "description": "Office Desk Chair - Ergonomic",
+          "quantity": 10,
+          "price": 500.00,
+          "total": 5000.00,
+          "uom": {
+            "id": 1,
+            "code": "EA"
+          },
+          "order-line-id": 201
+        }
+      ],
+      "is-credit-note": false,
+      "exported": false,
+      "paid": false,
+      "compliant": true,
+      "created-at": "2024-03-15T10:30:00+00:00",
+      "updated-at": "2024-03-15T10:30:00+00:00"
+    }
+  ]
+}

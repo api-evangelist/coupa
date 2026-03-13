@@ -1,0 +1,864 @@
+{
+  "@context": {
+    "@version": 1.1,
+    "coupa": "https://compass.coupa.com/ns/",
+    "schema": "https://schema.org/",
+    "xsd": "http://www.w3.org/2001/XMLSchema#",
+    "dcterms": "http://purl.org/dc/terms/",
+    "gr": "http://purl.org/goodrelations/v1#",
+
+    "PurchaseOrder": {
+      "@id": "coupa:PurchaseOrder",
+      "@context": {
+        "id": {
+          "@id": "coupa:identifier",
+          "@type": "xsd:integer"
+        },
+        "po-number": {
+          "@id": "coupa:poNumber",
+          "@type": "xsd:string"
+        },
+        "status": {
+          "@id": "coupa:status",
+          "@type": "xsd:string"
+        },
+        "type": {
+          "@id": "coupa:orderType",
+          "@type": "xsd:string"
+        },
+        "version": {
+          "@id": "coupa:version",
+          "@type": "xsd:integer"
+        },
+        "internal-revision": {
+          "@id": "coupa:internalRevision",
+          "@type": "xsd:integer"
+        },
+        "total": {
+          "@id": "schema:totalPrice",
+          "@type": "xsd:decimal"
+        },
+        "currency": {
+          "@id": "coupa:currency",
+          "@type": "@id"
+        },
+        "supplier": {
+          "@id": "coupa:supplier",
+          "@type": "@id"
+        },
+        "requester": {
+          "@id": "coupa:requester",
+          "@type": "@id"
+        },
+        "ship-to-address": {
+          "@id": "coupa:shipToAddress",
+          "@type": "@id"
+        },
+        "ship-to-attention": {
+          "@id": "coupa:shipToAttention",
+          "@type": "xsd:string"
+        },
+        "payment-term": {
+          "@id": "coupa:paymentTerm",
+          "@type": "@id"
+        },
+        "payment-method": {
+          "@id": "schema:paymentMethod",
+          "@type": "xsd:string"
+        },
+        "shipping-term": {
+          "@id": "coupa:shippingTerm",
+          "@type": "@id"
+        },
+        "order-lines": {
+          "@id": "coupa:orderLines",
+          "@type": "@id",
+          "@container": "@set"
+        },
+        "acknowledged-flag": {
+          "@id": "coupa:acknowledgedFlag",
+          "@type": "xsd:boolean"
+        },
+        "acknowledged-at": {
+          "@id": "coupa:acknowledgedAt",
+          "@type": "xsd:dateTime"
+        },
+        "invoice-stop": {
+          "@id": "coupa:invoiceStop",
+          "@type": "xsd:boolean"
+        },
+        "exported": {
+          "@id": "coupa:exported",
+          "@type": "xsd:boolean"
+        },
+        "last-exported-at": {
+          "@id": "coupa:lastExportedAt",
+          "@type": "xsd:dateTime"
+        },
+        "created-at": {
+          "@id": "dcterms:created",
+          "@type": "xsd:dateTime"
+        },
+        "updated-at": {
+          "@id": "dcterms:modified",
+          "@type": "xsd:dateTime"
+        },
+        "created-by": {
+          "@id": "dcterms:creator",
+          "@type": "@id"
+        },
+        "updated-by": {
+          "@id": "coupa:updatedBy",
+          "@type": "@id"
+        }
+      }
+    },
+
+    "OrderLine": {
+      "@id": "coupa:OrderLine",
+      "@context": {
+        "id": {
+          "@id": "coupa:identifier",
+          "@type": "xsd:integer"
+        },
+        "line-num": {
+          "@id": "coupa:lineNumber",
+          "@type": "xsd:integer"
+        },
+        "description": {
+          "@id": "schema:description",
+          "@type": "xsd:string"
+        },
+        "quantity": {
+          "@id": "schema:amount",
+          "@type": "xsd:decimal"
+        },
+        "price": {
+          "@id": "schema:price",
+          "@type": "xsd:decimal"
+        },
+        "total": {
+          "@id": "schema:totalPrice",
+          "@type": "xsd:decimal"
+        },
+        "uom": {
+          "@id": "coupa:unitOfMeasure",
+          "@type": "@id"
+        },
+        "need-by-date": {
+          "@id": "coupa:needByDate",
+          "@type": "xsd:dateTime"
+        },
+        "source-part-num": {
+          "@id": "schema:sku",
+          "@type": "xsd:string"
+        },
+        "commodity": {
+          "@id": "coupa:commodity",
+          "@type": "@id"
+        },
+        "account": {
+          "@id": "coupa:account",
+          "@type": "@id"
+        },
+        "status": {
+          "@id": "coupa:status",
+          "@type": "xsd:string"
+        },
+        "currency": {
+          "@id": "coupa:currency",
+          "@type": "@id"
+        }
+      }
+    },
+
+    "Invoice": {
+      "@id": "coupa:Invoice",
+      "@context": {
+        "id": {
+          "@id": "coupa:identifier",
+          "@type": "xsd:integer"
+        },
+        "invoice-number": {
+          "@id": "coupa:invoiceNumber",
+          "@type": "xsd:string"
+        },
+        "invoice-date": {
+          "@id": "coupa:invoiceDate",
+          "@type": "xsd:date"
+        },
+        "status": {
+          "@id": "coupa:status",
+          "@type": "xsd:string"
+        },
+        "document-type": {
+          "@id": "coupa:documentType",
+          "@type": "xsd:string"
+        },
+        "supplier": {
+          "@id": "coupa:supplier",
+          "@type": "@id"
+        },
+        "currency": {
+          "@id": "coupa:currency",
+          "@type": "@id"
+        },
+        "gross-total": {
+          "@id": "coupa:grossTotal",
+          "@type": "xsd:decimal"
+        },
+        "tax-amount": {
+          "@id": "coupa:taxAmount",
+          "@type": "xsd:decimal"
+        },
+        "tax-code": {
+          "@id": "coupa:taxCode",
+          "@type": "xsd:string"
+        },
+        "tax-rate": {
+          "@id": "coupa:taxRate",
+          "@type": "xsd:float"
+        },
+        "line-level-taxation": {
+          "@id": "coupa:lineLevelTaxation",
+          "@type": "xsd:boolean"
+        },
+        "discount-amount": {
+          "@id": "schema:discount",
+          "@type": "xsd:decimal"
+        },
+        "discount-percent": {
+          "@id": "coupa:discountPercent",
+          "@type": "xsd:float"
+        },
+        "discount-due-date": {
+          "@id": "coupa:discountDueDate",
+          "@type": "xsd:date"
+        },
+        "shipping-amount": {
+          "@id": "coupa:shippingAmount",
+          "@type": "xsd:decimal"
+        },
+        "handling-amount": {
+          "@id": "coupa:handlingAmount",
+          "@type": "xsd:decimal"
+        },
+        "payment-term": {
+          "@id": "coupa:paymentTerm",
+          "@type": "@id"
+        },
+        "payment-method": {
+          "@id": "schema:paymentMethod",
+          "@type": "xsd:string"
+        },
+        "payment-notes": {
+          "@id": "coupa:paymentNotes",
+          "@type": "xsd:string"
+        },
+        "payment-date": {
+          "@id": "coupa:paymentDate",
+          "@type": "xsd:date"
+        },
+        "net-due-date": {
+          "@id": "coupa:netDueDate",
+          "@type": "xsd:date"
+        },
+        "exchange-rate": {
+          "@id": "coupa:exchangeRate",
+          "@type": "xsd:decimal"
+        },
+        "bill-to-address": {
+          "@id": "coupa:billToAddress",
+          "@type": "@id"
+        },
+        "ship-to-address": {
+          "@id": "coupa:shipToAddress",
+          "@type": "@id"
+        },
+        "remit-to-address": {
+          "@id": "coupa:remitToAddress",
+          "@type": "@id"
+        },
+        "supplier-remit-to": {
+          "@id": "coupa:supplierRemitTo",
+          "@type": "@id"
+        },
+        "invoice-lines": {
+          "@id": "coupa:invoiceLines",
+          "@type": "@id",
+          "@container": "@set"
+        },
+        "invoice-charges": {
+          "@id": "coupa:invoiceCharges",
+          "@type": "@id",
+          "@container": "@set"
+        },
+        "tax-lines": {
+          "@id": "coupa:taxLines",
+          "@type": "@id",
+          "@container": "@set"
+        },
+        "is-credit-note": {
+          "@id": "coupa:isCreditNote",
+          "@type": "xsd:boolean"
+        },
+        "original-invoice-number": {
+          "@id": "coupa:originalInvoiceNumber",
+          "@type": "xsd:string"
+        },
+        "original-invoice-date": {
+          "@id": "coupa:originalInvoiceDate",
+          "@type": "xsd:date"
+        },
+        "credit-reason": {
+          "@id": "coupa:creditReason",
+          "@type": "xsd:string"
+        },
+        "comments": {
+          "@id": "coupa:comments",
+          "@type": "xsd:string"
+        },
+        "internal-note": {
+          "@id": "coupa:internalNote",
+          "@type": "xsd:string"
+        },
+        "supplier-note": {
+          "@id": "coupa:supplierNote",
+          "@type": "xsd:string"
+        },
+        "requested-by": {
+          "@id": "coupa:requestedBy",
+          "@type": "@id"
+        },
+        "paid": {
+          "@id": "coupa:paid",
+          "@type": "xsd:boolean"
+        },
+        "compliant": {
+          "@id": "coupa:compliant",
+          "@type": "xsd:boolean"
+        },
+        "supplier-created": {
+          "@id": "coupa:supplierCreated",
+          "@type": "xsd:boolean"
+        },
+        "exported": {
+          "@id": "coupa:exported",
+          "@type": "xsd:boolean"
+        },
+        "legal-destination-country": {
+          "@id": "coupa:legalDestinationCountry",
+          "@type": "@id"
+        },
+        "origin-country": {
+          "@id": "coupa:originCountry",
+          "@type": "@id"
+        },
+        "buyer-tax-registration": {
+          "@id": "coupa:buyerTaxRegistration",
+          "@type": "@id"
+        },
+        "supplier-tax-registration": {
+          "@id": "coupa:supplierTaxRegistration",
+          "@type": "@id"
+        },
+        "image-scan-url": {
+          "@id": "coupa:imageScanUrl",
+          "@type": "xsd:anyURI"
+        },
+        "approvals": {
+          "@id": "coupa:approvals",
+          "@type": "@id",
+          "@container": "@set"
+        },
+        "attachments": {
+          "@id": "coupa:attachments",
+          "@type": "@id",
+          "@container": "@set"
+        },
+        "created-at": {
+          "@id": "dcterms:created",
+          "@type": "xsd:dateTime"
+        },
+        "updated-at": {
+          "@id": "dcterms:modified",
+          "@type": "xsd:dateTime"
+        },
+        "created-by": {
+          "@id": "dcterms:creator",
+          "@type": "@id"
+        },
+        "updated-by": {
+          "@id": "coupa:updatedBy",
+          "@type": "@id"
+        }
+      }
+    },
+
+    "InvoiceLine": {
+      "@id": "coupa:InvoiceLine",
+      "@context": {
+        "id": {
+          "@id": "coupa:identifier",
+          "@type": "xsd:integer"
+        },
+        "line-num": {
+          "@id": "coupa:lineNumber",
+          "@type": "xsd:integer"
+        },
+        "description": {
+          "@id": "schema:description",
+          "@type": "xsd:string"
+        },
+        "quantity": {
+          "@id": "schema:amount",
+          "@type": "xsd:decimal"
+        },
+        "price": {
+          "@id": "schema:price",
+          "@type": "xsd:decimal"
+        },
+        "total": {
+          "@id": "schema:totalPrice",
+          "@type": "xsd:decimal"
+        },
+        "tax-amount": {
+          "@id": "coupa:taxAmount",
+          "@type": "xsd:decimal"
+        },
+        "tax-code": {
+          "@id": "coupa:taxCode",
+          "@type": "xsd:string"
+        },
+        "tax-rate": {
+          "@id": "coupa:taxRate",
+          "@type": "xsd:float"
+        }
+      }
+    },
+
+    "Requisition": {
+      "@id": "coupa:Requisition",
+      "@context": {
+        "id": {
+          "@id": "coupa:identifier",
+          "@type": "xsd:integer"
+        },
+        "req_title": {
+          "@id": "coupa:requisitionTitle",
+          "@type": "xsd:string"
+        },
+        "status": {
+          "@id": "coupa:status",
+          "@type": "xsd:string"
+        },
+        "currency": {
+          "@id": "coupa:currency",
+          "@type": "@id"
+        },
+        "total": {
+          "@id": "schema:totalPrice",
+          "@type": "xsd:decimal"
+        },
+        "requester": {
+          "@id": "coupa:requester",
+          "@type": "@id"
+        },
+        "requested-by": {
+          "@id": "coupa:requestedBy",
+          "@type": "@id"
+        },
+        "department": {
+          "@id": "coupa:department",
+          "@type": "@id"
+        },
+        "ship-to-address": {
+          "@id": "coupa:shipToAddress",
+          "@type": "@id"
+        },
+        "need-by-date": {
+          "@id": "coupa:needByDate",
+          "@type": "xsd:dateTime"
+        },
+        "justification": {
+          "@id": "coupa:justification",
+          "@type": "xsd:string"
+        },
+        "buyer-note": {
+          "@id": "coupa:buyerNote",
+          "@type": "xsd:string"
+        },
+        "requisition-lines": {
+          "@id": "coupa:requisitionLines",
+          "@type": "@id",
+          "@container": "@set"
+        },
+        "approvals": {
+          "@id": "coupa:approvals",
+          "@type": "@id",
+          "@container": "@set"
+        },
+        "submitted-at": {
+          "@id": "coupa:submittedAt",
+          "@type": "xsd:dateTime"
+        },
+        "exported": {
+          "@id": "coupa:exported",
+          "@type": "xsd:boolean"
+        },
+        "created-at": {
+          "@id": "dcterms:created",
+          "@type": "xsd:dateTime"
+        },
+        "updated-at": {
+          "@id": "dcterms:modified",
+          "@type": "xsd:dateTime"
+        },
+        "created-by": {
+          "@id": "dcterms:creator",
+          "@type": "@id"
+        },
+        "updated-by": {
+          "@id": "coupa:updatedBy",
+          "@type": "@id"
+        }
+      }
+    },
+
+    "RequisitionLine": {
+      "@id": "coupa:RequisitionLine",
+      "@context": {
+        "id": {
+          "@id": "coupa:identifier",
+          "@type": "xsd:integer"
+        },
+        "line-num": {
+          "@id": "coupa:lineNumber",
+          "@type": "xsd:integer"
+        },
+        "description": {
+          "@id": "schema:description",
+          "@type": "xsd:string"
+        },
+        "quantity": {
+          "@id": "schema:amount",
+          "@type": "xsd:decimal"
+        },
+        "unit-price": {
+          "@id": "schema:price",
+          "@type": "xsd:decimal"
+        },
+        "total": {
+          "@id": "schema:totalPrice",
+          "@type": "xsd:decimal"
+        },
+        "need-by-date": {
+          "@id": "coupa:needByDate",
+          "@type": "xsd:dateTime"
+        },
+        "supplier": {
+          "@id": "coupa:supplier",
+          "@type": "@id"
+        },
+        "commodity": {
+          "@id": "coupa:commodity",
+          "@type": "@id"
+        },
+        "account": {
+          "@id": "coupa:account",
+          "@type": "@id"
+        },
+        "item": {
+          "@id": "coupa:catalogItem",
+          "@type": "@id"
+        }
+      }
+    },
+
+    "Supplier": {
+      "@id": "coupa:Supplier",
+      "@context": {
+        "id": {
+          "@id": "coupa:identifier",
+          "@type": "xsd:integer"
+        },
+        "name": {
+          "@id": "schema:name",
+          "@type": "xsd:string"
+        },
+        "number": {
+          "@id": "coupa:supplierNumber",
+          "@type": "xsd:string"
+        },
+        "display-name": {
+          "@id": "coupa:displayName",
+          "@type": "xsd:string"
+        },
+        "status": {
+          "@id": "coupa:status",
+          "@type": "xsd:string"
+        },
+        "duns": {
+          "@id": "schema:duns",
+          "@type": "xsd:string"
+        },
+        "tax-id": {
+          "@id": "schema:taxID",
+          "@type": "xsd:string"
+        },
+        "corporate-url": {
+          "@id": "schema:url",
+          "@type": "xsd:anyURI"
+        },
+        "website": {
+          "@id": "schema:url",
+          "@type": "xsd:anyURI"
+        },
+        "primary-contact": {
+          "@id": "schema:email",
+          "@type": "xsd:string"
+        },
+        "primary-address": {
+          "@id": "schema:address",
+          "@type": "@id"
+        },
+        "payment-method": {
+          "@id": "schema:paymentMethod",
+          "@type": "xsd:string"
+        },
+        "payment-term": {
+          "@id": "coupa:paymentTerm",
+          "@type": "@id"
+        },
+        "shipping-term": {
+          "@id": "coupa:shippingTerm",
+          "@type": "@id"
+        },
+        "invoice-matching-level": {
+          "@id": "coupa:invoiceMatchingLevel",
+          "@type": "xsd:string"
+        },
+        "po-method": {
+          "@id": "coupa:poMethod",
+          "@type": "xsd:string"
+        },
+        "po-email": {
+          "@id": "coupa:poEmail",
+          "@type": "xsd:string"
+        },
+        "on-hold": {
+          "@id": "coupa:onHold",
+          "@type": "xsd:boolean"
+        },
+        "buyer-hold": {
+          "@id": "coupa:buyerHold",
+          "@type": "xsd:boolean"
+        },
+        "strategic-supplier": {
+          "@id": "coupa:strategicSupplier",
+          "@type": "xsd:boolean"
+        },
+        "one-time-supplier": {
+          "@id": "coupa:oneTimeSupplier",
+          "@type": "xsd:boolean"
+        },
+        "account-number": {
+          "@id": "coupa:accountNumber",
+          "@type": "xsd:string"
+        },
+        "savings-pct": {
+          "@id": "coupa:savingsPercent",
+          "@type": "xsd:decimal"
+        },
+        "cxml-url": {
+          "@id": "coupa:cxmlUrl",
+          "@type": "xsd:anyURI"
+        },
+        "cxml-domain": {
+          "@id": "coupa:cxmlDomain",
+          "@type": "xsd:string"
+        },
+        "cxml-identity": {
+          "@id": "coupa:cxmlIdentity",
+          "@type": "xsd:string"
+        },
+        "cxml-supplier-domain": {
+          "@id": "coupa:cxmlSupplierDomain",
+          "@type": "xsd:string"
+        },
+        "cxml-supplier-identity": {
+          "@id": "coupa:cxmlSupplierIdentity",
+          "@type": "xsd:string"
+        },
+        "cxml-protocol": {
+          "@id": "coupa:cxmlProtocol",
+          "@type": "xsd:string"
+        },
+        "allow-cxml-invoicing": {
+          "@id": "coupa:allowCxmlInvoicing",
+          "@type": "xsd:boolean"
+        },
+        "allow-inv-from-connect": {
+          "@id": "coupa:allowInvFromConnect",
+          "@type": "xsd:boolean"
+        },
+        "hold-invoices-for-ap-review": {
+          "@id": "coupa:holdInvoicesForApReview",
+          "@type": "xsd:boolean"
+        },
+        "send-invoices-to-approvals": {
+          "@id": "coupa:sendInvoicesToApprovals",
+          "@type": "xsd:boolean"
+        },
+        "scope-three-emissions": {
+          "@id": "coupa:scopeThreeEmissions",
+          "@type": "xsd:boolean"
+        },
+        "contacts": {
+          "@id": "schema:contactPoint",
+          "@type": "@id",
+          "@container": "@set"
+        },
+        "remit-to-addresses": {
+          "@id": "coupa:remitToAddresses",
+          "@type": "@id",
+          "@container": "@set"
+        },
+        "diversities": {
+          "@id": "coupa:diversities",
+          "@type": "@id",
+          "@container": "@set"
+        },
+        "tags": {
+          "@id": "coupa:tags",
+          "@type": "@id",
+          "@container": "@set"
+        },
+        "created-at": {
+          "@id": "dcterms:created",
+          "@type": "xsd:dateTime"
+        },
+        "updated-at": {
+          "@id": "dcterms:modified",
+          "@type": "xsd:dateTime"
+        },
+        "created-by": {
+          "@id": "dcterms:creator",
+          "@type": "@id"
+        },
+        "updated-by": {
+          "@id": "coupa:updatedBy",
+          "@type": "@id"
+        }
+      }
+    },
+
+    "Currency": {
+      "@id": "coupa:Currency",
+      "@context": {
+        "id": {
+          "@id": "coupa:identifier",
+          "@type": "xsd:integer"
+        },
+        "code": {
+          "@id": "schema:currency",
+          "@type": "xsd:string"
+        }
+      }
+    },
+
+    "Address": {
+      "@id": "coupa:Address",
+      "@context": {
+        "id": {
+          "@id": "coupa:identifier",
+          "@type": "xsd:integer"
+        },
+        "name": {
+          "@id": "schema:name",
+          "@type": "xsd:string"
+        },
+        "street1": {
+          "@id": "schema:streetAddress",
+          "@type": "xsd:string"
+        },
+        "city": {
+          "@id": "schema:addressLocality",
+          "@type": "xsd:string"
+        },
+        "state": {
+          "@id": "schema:addressRegion",
+          "@type": "xsd:string"
+        },
+        "postal-code": {
+          "@id": "schema:postalCode",
+          "@type": "xsd:string"
+        },
+        "country": {
+          "@id": "schema:addressCountry",
+          "@type": "@id"
+        }
+      }
+    },
+
+    "User": {
+      "@id": "coupa:User",
+      "@context": {
+        "id": {
+          "@id": "coupa:identifier",
+          "@type": "xsd:integer"
+        },
+        "login": {
+          "@id": "coupa:login",
+          "@type": "xsd:string"
+        },
+        "email": {
+          "@id": "schema:email",
+          "@type": "xsd:string"
+        }
+      }
+    },
+
+    "PaymentTerm": {
+      "@id": "coupa:PaymentTerm",
+      "@context": {
+        "id": {
+          "@id": "coupa:identifier",
+          "@type": "xsd:integer"
+        },
+        "code": {
+          "@id": "coupa:code",
+          "@type": "xsd:string"
+        }
+      }
+    },
+
+    "Department": {
+      "@id": "coupa:Department",
+      "@context": {
+        "id": {
+          "@id": "coupa:identifier",
+          "@type": "xsd:integer"
+        },
+        "name": {
+          "@id": "schema:name",
+          "@type": "xsd:string"
+        }
+      }
+    },
+
+    "Approval": {
+      "@id": "coupa:Approval",
+      "@context": {
+        "id": {
+          "@id": "coupa:identifier",
+          "@type": "xsd:integer"
+        },
+        "status": {
+          "@id": "coupa:status",
+          "@type": "xsd:string"
+        }
+      }
+    }
+  }
+}

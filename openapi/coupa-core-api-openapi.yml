@@ -1,0 +1,2711 @@
+openapi: 3.1.0
+info:
+  title: Coupa Core API
+  description: >-
+    The primary RESTful API for accessing and managing core Coupa Business Spend
+    Management (BSM) resources including purchase orders, invoices, requisitions,
+    and suppliers. Supports both JSON and XML response formats. All endpoints
+    require OAuth 2.0 or API key authentication. Coupa recommends using query
+    parameters to limit result sets for optimal performance.
+  version: 1.0.0
+  termsOfService: https://www.coupa.com/company/trust/agreements
+  contact:
+    name: Coupa Support
+    url: https://compass.coupa.com/en-us/support
+  license:
+    name: Proprietary
+    url: https://www.coupa.com/company/trust/agreements
+  x-logo:
+    url: https://www.coupa.com/wp-content/themes/coupa/images/coupa-logo.svg
+    altText: Coupa
+servers:
+  - url: https://{instance}.coupahost.com/api
+    description: Coupa Production Instance
+    variables:
+      instance:
+        default: your-instance
+        description: Your Coupa instance subdomain
+security:
+  - oauth2: []
+  - apiKey: []
+tags:
+  - name: Purchase Orders
+    description: >-
+      Create, retrieve, update, and manage purchase orders. Purchase orders
+      represent commitments to buy goods or services from suppliers.
+    externalDocs:
+      url: https://compass.coupa.com/en-us/products/product-documentation/integration-technical-documentation/the-coupa-core-api/resources/transactional-resources/purchase-orders-api-(purchase_orders)
+  - name: Invoices
+    description: >-
+      Create, retrieve, update, and manage invoices. Invoices represent billing
+      documents from suppliers for goods or services delivered.
+    externalDocs:
+      url: https://compass.coupa.com/en-us/products/product-documentation/integration-technical-documentation/the-coupa-core-api/resources/transactional-resources/invoices-api-(invoices)
+  - name: Requisitions
+    description: >-
+      Create, retrieve, update, and manage requisitions. Requisitions are
+      internal requests to purchase goods or services that go through approval
+      workflows before becoming purchase orders.
+    externalDocs:
+      url: https://compass.coupa.com/en-us/products/product-documentation/integration-technical-documentation/the-coupa-core-api/resources/transactional-resources/requisitions-api-(requisitions)
+  - name: Suppliers
+    description: >-
+      Create, retrieve, update, and manage supplier records. Suppliers represent
+      vendor organizations that provide goods or services.
+    externalDocs:
+      url: https://compass.coupa.com/en-us/products/product-documentation/integration-technical-documentation/the-coupa-core-api/resources/reference-data-resources/suppliers-api-(suppliers)
+paths:
+  /purchase_orders:
+    get:
+      operationId: listPurchaseOrders
+      summary: List purchase orders
+      description: >-
+        Retrieve a list of purchase orders. Use query parameters to filter
+        results. Coupa recommends always limiting result sets with GET criteria
+        for optimal performance.
+      tags:
+        - Purchase Orders
+      parameters:
+        - $ref: '#/components/parameters/offsetParam'
+        - $ref: '#/components/parameters/limitParam'
+        - $ref: '#/components/parameters/returnObjectParam'
+        - $ref: '#/components/parameters/dirParam'
+        - name: status
+          in: query
+          description: >-
+            Filter by order status. Includes buyer_hold, cancelled, closed,
+            currency_hold, draft, error, expensed, issued, supplier_hold,
+            supplier_window_hold, and exported.
+          schema:
+            type: string
+            enum:
+              - buyer_hold
+              - cancelled
+              - closed
+              - currency_hold
+              - draft
+              - error
+              - expensed
+              - issued
+              - supplier_hold
+              - supplier_window_hold
+              - exported
+        - name: po-number
+          in: query
+          description: Filter by purchase order number
+          schema:
+            type: string
+        - name: supplier[name]
+          in: query
+          description: Filter by supplier name
+          schema:
+            type: string
+        - name: updated-at[gt]
+          in: query
+          description: Filter for records updated after this datetime
+          schema:
+            type: string
+            format: date-time
+        - name: created-at[gt]
+          in: query
+          description: Filter for records created after this datetime
+          schema:
+            type: string
+            format: date-time
+        - name: exported
+          in: query
+          description: Filter by export status
+          schema:
+            type: boolean
+      responses:
+        '200':
+          description: A list of purchase orders
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/PurchaseOrder'
+            application/xml:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/PurchaseOrder'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+    post:
+      operationId: createPurchaseOrder
+      summary: Create a purchase order
+      description: >-
+        Create a new external purchase order. The type must be set to
+        ExternalOrderHeader. A supplier and at least one order line are required.
+      tags:
+        - Purchase Orders
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PurchaseOrderCreate'
+          application/xml:
+            schema:
+              $ref: '#/components/schemas/PurchaseOrderCreate'
+      responses:
+        '201':
+          description: Purchase order created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PurchaseOrder'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '422':
+          $ref: '#/components/responses/UnprocessableEntity'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+  /purchase_orders/{id}:
+    get:
+      operationId: getPurchaseOrder
+      summary: Get a purchase order
+      description: Retrieve a single purchase order by its Coupa internal ID.
+      tags:
+        - Purchase Orders
+      parameters:
+        - $ref: '#/components/parameters/idParam'
+        - $ref: '#/components/parameters/returnObjectParam'
+      responses:
+        '200':
+          description: A single purchase order
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PurchaseOrder'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+    put:
+      operationId: updatePurchaseOrder
+      summary: Update a purchase order
+      description: Update an existing purchase order by its Coupa internal ID.
+      tags:
+        - Purchase Orders
+      parameters:
+        - $ref: '#/components/parameters/idParam'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PurchaseOrderUpdate'
+          application/xml:
+            schema:
+              $ref: '#/components/schemas/PurchaseOrderUpdate'
+      responses:
+        '200':
+          description: Purchase order updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PurchaseOrder'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '422':
+          $ref: '#/components/responses/UnprocessableEntity'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+  /purchase_orders/{id}/cancel:
+    put:
+      operationId: cancelPurchaseOrder
+      summary: Cancel a purchase order
+      description: Cancel an existing purchase order.
+      tags:
+        - Purchase Orders
+      parameters:
+        - $ref: '#/components/parameters/idParam'
+      responses:
+        '200':
+          description: Purchase order cancelled successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PurchaseOrder'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '422':
+          $ref: '#/components/responses/UnprocessableEntity'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+  /purchase_orders/{id}/close:
+    put:
+      operationId: closePurchaseOrder
+      summary: Close a purchase order
+      description: Close an existing purchase order.
+      tags:
+        - Purchase Orders
+      parameters:
+        - $ref: '#/components/parameters/idParam'
+      responses:
+        '200':
+          description: Purchase order closed successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PurchaseOrder'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '422':
+          $ref: '#/components/responses/UnprocessableEntity'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+  /purchase_orders/{id}/issue:
+    put:
+      operationId: issuePurchaseOrder
+      summary: Issue a purchase order
+      description: Issue and send the purchase order to the supplier.
+      tags:
+        - Purchase Orders
+      parameters:
+        - $ref: '#/components/parameters/idParam'
+      responses:
+        '200':
+          description: Purchase order issued successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PurchaseOrder'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '422':
+          $ref: '#/components/responses/UnprocessableEntity'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+  /purchase_orders/{id}/reopen:
+    put:
+      operationId: reopenPurchaseOrder
+      summary: Reopen a purchase order
+      description: Reopen a soft-closed purchase order.
+      tags:
+        - Purchase Orders
+      parameters:
+        - $ref: '#/components/parameters/idParam'
+      responses:
+        '200':
+          description: Purchase order reopened successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PurchaseOrder'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '422':
+          $ref: '#/components/responses/UnprocessableEntity'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+  /invoices:
+    get:
+      operationId: listInvoices
+      summary: List invoices
+      description: >-
+        Retrieve a list of invoices. Use query parameters to filter results.
+        Supports filtering by status, supplier, date ranges, and export status.
+      tags:
+        - Invoices
+      parameters:
+        - $ref: '#/components/parameters/offsetParam'
+        - $ref: '#/components/parameters/limitParam'
+        - $ref: '#/components/parameters/returnObjectParam'
+        - $ref: '#/components/parameters/dirParam'
+        - name: status
+          in: query
+          description: >-
+            Filter by invoice status. Full list includes new, draft,
+            pending_approval, approved, pending_receipt, processing,
+            payable_adjustment, on_hold, ap_hold, booking_hold,
+            pending_action, rejected, disputed, abandoned, voided, invalid.
+          schema:
+            type: string
+            enum:
+              - new
+              - draft
+              - pending_approval
+              - approved
+              - pending_receipt
+              - processing
+              - payable_adjustment
+              - on_hold
+              - ap_hold
+              - booking_hold
+              - pending_action
+              - rejected
+              - disputed
+              - abandoned
+              - voided
+              - invalid
+        - name: invoice-number
+          in: query
+          description: Filter by invoice number
+          schema:
+            type: string
+        - name: supplier[name]
+          in: query
+          description: Filter by supplier name
+          schema:
+            type: string
+        - name: updated-at[gt]
+          in: query
+          description: Filter for records updated after this datetime
+          schema:
+            type: string
+            format: date-time
+        - name: exported
+          in: query
+          description: Filter by export status
+          schema:
+            type: boolean
+      responses:
+        '200':
+          description: A list of invoices
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Invoice'
+            application/xml:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Invoice'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+    post:
+      operationId: createInvoice
+      summary: Create an invoice
+      description: >-
+        Create a new invoice. Requires an invoice number, invoice date,
+        supplier, currency, and at least one invoice line.
+      tags:
+        - Invoices
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/InvoiceCreate'
+          application/xml:
+            schema:
+              $ref: '#/components/schemas/InvoiceCreate'
+      responses:
+        '201':
+          description: Invoice created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Invoice'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '422':
+          $ref: '#/components/responses/UnprocessableEntity'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+  /invoices/{id}:
+    get:
+      operationId: getInvoice
+      summary: Get an invoice
+      description: Retrieve a single invoice by its Coupa internal ID.
+      tags:
+        - Invoices
+      parameters:
+        - $ref: '#/components/parameters/idParam'
+        - $ref: '#/components/parameters/returnObjectParam'
+      responses:
+        '200':
+          description: A single invoice
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Invoice'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+    put:
+      operationId: updateInvoice
+      summary: Update an invoice
+      description: Update an existing invoice by its Coupa internal ID.
+      tags:
+        - Invoices
+      parameters:
+        - $ref: '#/components/parameters/idParam'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/InvoiceUpdate'
+          application/xml:
+            schema:
+              $ref: '#/components/schemas/InvoiceUpdate'
+      responses:
+        '200':
+          description: Invoice updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Invoice'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '422':
+          $ref: '#/components/responses/UnprocessableEntity'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+  /invoices/{id}/submit:
+    put:
+      operationId: submitInvoice
+      summary: Submit a draft invoice for approval
+      description: >-
+        Submit a draft invoice for approval. The invoice must be in draft status.
+        Once submitted, the invoice enters the approval workflow.
+      tags:
+        - Invoices
+      parameters:
+        - $ref: '#/components/parameters/idParam'
+      responses:
+        '200':
+          description: Invoice submitted for approval
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Invoice'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '422':
+          $ref: '#/components/responses/UnprocessableEntity'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+  /invoices/{id}/abandon:
+    put:
+      operationId: abandonInvoice
+      summary: Abandon an invoice
+      description: Abandon an invoice, removing it from active processing.
+      tags:
+        - Invoices
+      parameters:
+        - $ref: '#/components/parameters/idParam'
+      responses:
+        '200':
+          description: Invoice abandoned successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Invoice'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '422':
+          $ref: '#/components/responses/UnprocessableEntity'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+  /invoices/{id}/void:
+    put:
+      operationId: voidInvoice
+      summary: Void an approved or pending invoice
+      description: >-
+        Void an invoice that is in approved or pending status. Voided invoices
+        cannot be reactivated.
+      tags:
+        - Invoices
+      parameters:
+        - $ref: '#/components/parameters/idParam'
+      responses:
+        '200':
+          description: Invoice voided successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Invoice'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '422':
+          $ref: '#/components/responses/UnprocessableEntity'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+  /invoices/{id}/dispute:
+    put:
+      operationId: disputeInvoice
+      summary: Dispute an invoice
+      description: >-
+        Dispute an invoice. The supplier will be notified and the invoice
+        status changes to disputed.
+      tags:
+        - Invoices
+      parameters:
+        - $ref: '#/components/parameters/idParam'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                dispute-reason:
+                  type: string
+                  description: Reason for disputing the invoice
+      responses:
+        '200':
+          description: Invoice disputed successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Invoice'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '422':
+          $ref: '#/components/responses/UnprocessableEntity'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+  /requisitions:
+    get:
+      operationId: listRequisitions
+      summary: List requisitions
+      description: >-
+        Retrieve a list of requisitions. Use query parameters to filter results.
+        Supports filtering by status, requester, date ranges, and export status.
+      tags:
+        - Requisitions
+      parameters:
+        - $ref: '#/components/parameters/offsetParam'
+        - $ref: '#/components/parameters/limitParam'
+        - $ref: '#/components/parameters/returnObjectParam'
+        - $ref: '#/components/parameters/dirParam'
+        - name: status
+          in: query
+          description: >-
+            Filter by requisition status (draft, cart, pending_buyer_action,
+            pending_approval, approved, ordered, partially_received, received,
+            abandoned, withdrawn)
+          schema:
+            type: string
+            enum:
+              - draft
+              - cart
+              - pending_buyer_action
+              - pending_approval
+              - approved
+              - ordered
+              - partially_received
+              - received
+              - abandoned
+              - withdrawn
+        - name: requester[login]
+          in: query
+          description: Filter by requester login
+          schema:
+            type: string
+        - name: updated-at[gt]
+          in: query
+          description: Filter for records updated after this datetime
+          schema:
+            type: string
+            format: date-time
+        - name: exported
+          in: query
+          description: Filter by export status
+          schema:
+            type: boolean
+      responses:
+        '200':
+          description: A list of requisitions
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Requisition'
+            application/xml:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Requisition'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+    post:
+      operationId: createRequisition
+      summary: Create a requisition
+      description: >-
+        Create a new requisition. Requires at least one requisition line.
+        Line numbers must increment by one; duplicate line numbers are ignored.
+        Currencies and users must have active status.
+      tags:
+        - Requisitions
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RequisitionCreate'
+          application/xml:
+            schema:
+              $ref: '#/components/schemas/RequisitionCreate'
+      responses:
+        '201':
+          description: Requisition created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Requisition'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '422':
+          $ref: '#/components/responses/UnprocessableEntity'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+  /requisitions/{id}:
+    get:
+      operationId: getRequisition
+      summary: Get a requisition
+      description: Retrieve a single requisition by its Coupa internal ID.
+      tags:
+        - Requisitions
+      parameters:
+        - $ref: '#/components/parameters/idParam'
+        - $ref: '#/components/parameters/returnObjectParam'
+      responses:
+        '200':
+          description: A single requisition
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Requisition'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+    put:
+      operationId: updateRequisition
+      summary: Update a requisition
+      description: Update an existing requisition by its Coupa internal ID.
+      tags:
+        - Requisitions
+      parameters:
+        - $ref: '#/components/parameters/idParam'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RequisitionUpdate'
+          application/xml:
+            schema:
+              $ref: '#/components/schemas/RequisitionUpdate'
+      responses:
+        '200':
+          description: Requisition updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Requisition'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '422':
+          $ref: '#/components/responses/UnprocessableEntity'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+    delete:
+      operationId: deleteRequisition
+      summary: Delete a requisition
+      description: >-
+        Delete an existing requisition by its Coupa internal ID. Only
+        requisitions in draft status can be deleted.
+      tags:
+        - Requisitions
+      parameters:
+        - $ref: '#/components/parameters/idParam'
+      responses:
+        '200':
+          description: Requisition deleted successfully
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '422':
+          $ref: '#/components/responses/UnprocessableEntity'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+  /requisitions/submit_for_approval:
+    post:
+      operationId: submitRequisitionForApproval
+      summary: Submit a requisition for approval
+      description: >-
+        Submit a requisition for approval. The requisition must have at least
+        one line item and valid accounting allocations.
+      tags:
+        - Requisitions
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - id
+              properties:
+                id:
+                  type: integer
+                  description: The ID of the requisition to submit
+      responses:
+        '200':
+          description: Requisition submitted for approval
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Requisition'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '422':
+          $ref: '#/components/responses/UnprocessableEntity'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+  /requisitions/{id}/update_and_submit_for_approval:
+    put:
+      operationId: updateAndSubmitRequisition
+      summary: Update and submit a requisition for approval
+      description: >-
+        Update a requisition and submit it for approval in a single operation.
+      tags:
+        - Requisitions
+      parameters:
+        - $ref: '#/components/parameters/idParam'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RequisitionUpdate'
+      responses:
+        '200':
+          description: Requisition updated and submitted for approval
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Requisition'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '422':
+          $ref: '#/components/responses/UnprocessableEntity'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+  /suppliers:
+    get:
+      operationId: listSuppliers
+      summary: List suppliers
+      description: >-
+        Retrieve a list of suppliers. Use query parameters to filter results.
+        Supports filtering by name, number, status, and date ranges.
+      tags:
+        - Suppliers
+      parameters:
+        - $ref: '#/components/parameters/offsetParam'
+        - $ref: '#/components/parameters/limitParam'
+        - $ref: '#/components/parameters/returnObjectParam'
+        - $ref: '#/components/parameters/dirParam'
+        - name: name
+          in: query
+          description: Filter by supplier name
+          schema:
+            type: string
+        - name: number
+          in: query
+          description: Filter by supplier number
+          schema:
+            type: string
+        - name: status
+          in: query
+          description: Filter by supplier status (active, inactive, draft)
+          schema:
+            type: string
+            enum:
+              - active
+              - inactive
+              - draft
+        - name: updated-at[gt]
+          in: query
+          description: Filter for records updated after this datetime
+          schema:
+            type: string
+            format: date-time
+      responses:
+        '200':
+          description: A list of suppliers
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Supplier'
+            application/xml:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Supplier'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+    post:
+      operationId: createSupplier
+      summary: Create a supplier
+      description: >-
+        Create a new supplier record. The supplier name is required. Default
+        status is draft if not specified. Default payment method is invoice.
+      tags:
+        - Suppliers
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SupplierCreate'
+          application/xml:
+            schema:
+              $ref: '#/components/schemas/SupplierCreate'
+      responses:
+        '201':
+          description: Supplier created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Supplier'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '422':
+          $ref: '#/components/responses/UnprocessableEntity'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+  /suppliers/{id}:
+    get:
+      operationId: getSupplier
+      summary: Get a supplier
+      description: Retrieve a single supplier by its Coupa internal ID.
+      tags:
+        - Suppliers
+      parameters:
+        - $ref: '#/components/parameters/idParam'
+        - $ref: '#/components/parameters/returnObjectParam'
+      responses:
+        '200':
+          description: A single supplier
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Supplier'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+    put:
+      operationId: updateSupplier
+      summary: Update a supplier
+      description: >-
+        Update an existing supplier by its Coupa internal ID. Cannot reassign
+        address or contact IDs when updating primary address or contact.
+      tags:
+        - Suppliers
+      parameters:
+        - $ref: '#/components/parameters/idParam'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SupplierUpdate'
+          application/xml:
+            schema:
+              $ref: '#/components/schemas/SupplierUpdate'
+      responses:
+        '200':
+          description: Supplier updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Supplier'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '422':
+          $ref: '#/components/responses/UnprocessableEntity'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+components:
+  securitySchemes:
+    oauth2:
+      type: oauth2
+      description: >-
+        OAuth 2.0 authentication. Coupa supports the client_credentials grant
+        type. Obtain client credentials from Coupa instance setup.
+      flows:
+        clientCredentials:
+          tokenUrl: https://{instance}.coupahost.com/oauth2/token
+          scopes:
+            core.purchase_orders.read: Read purchase orders
+            core.purchase_orders.write: Create and update purchase orders
+            core.invoices.read: Read invoices
+            core.invoices.write: Create and update invoices
+            core.requisitions.read: Read requisitions
+            core.requisitions.write: Create and update requisitions
+            core.suppliers.read: Read suppliers
+            core.suppliers.write: Create and update suppliers
+    apiKey:
+      type: apiKey
+      in: header
+      name: X-COUPA-API-KEY
+      description: >-
+        Legacy API key authentication. Coupa recommends migrating to OAuth 2.0.
+        API keys are configured per Coupa instance.
+  parameters:
+    idParam:
+      name: id
+      in: path
+      required: true
+      description: Coupa internal unique identifier
+      schema:
+        type: integer
+    offsetParam:
+      name: offset
+      in: query
+      description: Number of records to skip for pagination
+      schema:
+        type: integer
+        default: 0
+    limitParam:
+      name: limit
+      in: query
+      description: Maximum number of records to return (max 50)
+      schema:
+        type: integer
+        default: 50
+        maximum: 50
+    returnObjectParam:
+      name: return_object
+      in: query
+      description: >-
+        Set to limited to return only key fields, or shallow to exclude nested
+        objects
+      schema:
+        type: string
+        enum:
+          - limited
+          - shallow
+    dirParam:
+      name: dir
+      in: query
+      description: Sort direction (asc or desc)
+      schema:
+        type: string
+        enum:
+          - asc
+          - desc
+  responses:
+    BadRequest:
+      description: Bad request - invalid parameters or malformed request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Unauthorized:
+      description: Unauthorized - invalid or missing authentication credentials
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    NotFound:
+      description: Resource not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    UnprocessableEntity:
+      description: Unprocessable entity - validation errors
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    InternalServerError:
+      description: Internal server error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+  schemas:
+    Error:
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            type: object
+            properties:
+              message:
+                type: string
+                description: Human-readable error message
+              field:
+                type: string
+                description: Field that caused the error
+    UserReference:
+      type: object
+      description: Reference to a Coupa user
+      properties:
+        id:
+          type: integer
+          description: Coupa unique identifier for the user
+        login:
+          type: string
+          description: User login name
+        email:
+          type: string
+          format: email
+          description: User email address
+    SupplierReference:
+      type: object
+      description: Reference to a supplier
+      properties:
+        id:
+          type: integer
+          description: Coupa unique identifier for the supplier
+        name:
+          type: string
+          description: Supplier name
+        number:
+          type: string
+          description: Supplier number
+    CurrencyReference:
+      type: object
+      description: Reference to a currency
+      properties:
+        id:
+          type: integer
+          description: Coupa unique identifier for the currency
+        code:
+          type: string
+          description: ISO 4217 currency code
+          example: USD
+    AddressReference:
+      type: object
+      description: Reference to an address
+      properties:
+        id:
+          type: integer
+          description: Coupa unique identifier for the address
+        name:
+          type: string
+          description: Address name
+        street1:
+          type: string
+          description: Street address line 1
+        street2:
+          type: string
+          description: Street address line 2
+        city:
+          type: string
+          description: City
+        state:
+          type: string
+          description: State or province
+        postal-code:
+          type: string
+          description: Postal or ZIP code
+        country:
+          type: object
+          properties:
+            id:
+              type: integer
+            code:
+              type: string
+              description: ISO 3166-1 alpha-2 country code
+    PaymentTermReference:
+      type: object
+      description: Reference to a payment term
+      properties:
+        id:
+          type: integer
+          description: Coupa unique identifier for the payment term
+        code:
+          type: string
+          description: Payment term code
+    ShippingTermReference:
+      type: object
+      description: Reference to a shipping term
+      properties:
+        id:
+          type: integer
+          description: Coupa unique identifier for the shipping term
+        code:
+          type: string
+          description: Shipping term code
+    DepartmentReference:
+      type: object
+      description: Reference to a department
+      properties:
+        id:
+          type: integer
+          description: Coupa unique identifier for the department
+        name:
+          type: string
+          description: Department name
+    ApprovalReference:
+      type: object
+      description: Reference to an approval record
+      properties:
+        id:
+          type: integer
+          description: Coupa unique identifier for the approval
+        status:
+          type: string
+          description: Approval status
+    OrderLine:
+      type: object
+      description: A line item on a purchase order
+      properties:
+        id:
+          type: integer
+          description: Coupa unique identifier
+          readOnly: true
+        line-num:
+          type: integer
+          description: Line number
+        description:
+          type: string
+          description: Item description
+          maxLength: 255
+        quantity:
+          type: number
+          format: decimal
+          description: Quantity ordered
+        price:
+          type: number
+          format: decimal
+          description: Unit price
+        total:
+          type: number
+          format: decimal
+          description: Line total (quantity x price)
+          readOnly: true
+        uom:
+          type: object
+          description: Unit of measure
+          properties:
+            id:
+              type: integer
+            code:
+              type: string
+        need-by-date:
+          type: string
+          format: date-time
+          description: Date the item is needed by
+        source-part-num:
+          type: string
+          description: Supplier part number
+          maxLength: 255
+        commodity:
+          type: object
+          description: Commodity classification
+          properties:
+            id:
+              type: integer
+            name:
+              type: string
+        account:
+          type: object
+          description: Chart of accounts reference
+          properties:
+            id:
+              type: integer
+            code:
+              type: string
+        status:
+          type: string
+          description: Line status
+          readOnly: true
+        currency:
+          $ref: '#/components/schemas/CurrencyReference'
+        supplier-aux-part-num:
+          type: string
+          description: Supplier auxiliary part number
+        receiving-warehouse:
+          type: object
+          description: Receiving warehouse reference
+          properties:
+            id:
+              type: integer
+            name:
+              type: string
+        created-at:
+          type: string
+          format: date-time
+          description: Timestamp when the line was created
+          readOnly: true
+        updated-at:
+          type: string
+          format: date-time
+          description: Timestamp when the line was last updated
+          readOnly: true
+    PurchaseOrder:
+      type: object
+      description: >-
+        A purchase order representing a commitment to purchase goods or services
+        from a supplier.
+      properties:
+        id:
+          type: integer
+          description: Coupa unique identifier
+          readOnly: true
+        po-number:
+          type: string
+          description: Purchase order number
+          maxLength: 20
+        status:
+          type: string
+          description: Current order status
+          enum:
+            - buyer_hold
+            - cancelled
+            - closed
+            - currency_hold
+            - draft
+            - error
+            - expensed
+            - issued
+            - supplier_hold
+            - supplier_window_hold
+            - exported
+        type:
+          type: string
+          description: Order type (ExternalOrderHeader for externally created orders)
+        version:
+          type: integer
+          description: PO supplier version number
+        internal-revision:
+          type: integer
+          description: Internal revision number, increases each time a change is made
+          readOnly: true
+        change-type:
+          type: string
+          description: Last modification method
+          enum:
+            - change
+            - revision
+            - confirmation
+        confirmation_status:
+          type: string
+          description: Current confirmation state
+          enum:
+            - pending_supplier_action
+            - confirmed
+            - partially_confirmed
+            - rejected
+        acknowledged-flag:
+          type: boolean
+          description: Whether the PO has been acknowledged by the supplier
+        acknowledged-at:
+          type: string
+          format: date-time
+          description: When the PO was acknowledged
+        total:
+          type: number
+          format: decimal
+          description: Total order amount
+          readOnly: true
+        currency:
+          $ref: '#/components/schemas/CurrencyReference'
+        supplier:
+          $ref: '#/components/schemas/SupplierReference'
+        supplier-site:
+          type: object
+          description: Supplier site reference
+          properties:
+            id:
+              type: integer
+            name:
+              type: string
+        requester:
+          $ref: '#/components/schemas/UserReference'
+        ship-to-address:
+          $ref: '#/components/schemas/AddressReference'
+        ship-to-attention:
+          type: string
+          description: Recipient contact name at the shipping address
+          maxLength: 255
+        ship-to-user:
+          $ref: '#/components/schemas/UserReference'
+        payment-term:
+          $ref: '#/components/schemas/PaymentTermReference'
+        payment-method:
+          type: string
+          description: Payment processing method
+          enum:
+            - invoice
+            - pcard
+            - invoice_only
+            - pcard_only
+            - virtual_card
+        shipping-term:
+          $ref: '#/components/schemas/ShippingTermReference'
+        order-lines:
+          type: array
+          description: Collection of order line items
+          items:
+            $ref: '#/components/schemas/OrderLine'
+        requisition-header:
+          type: object
+          description: Source requisition reference
+          properties:
+            id:
+              type: integer
+        invoice-stop:
+          type: boolean
+          description: Whether invoicing is blocked for this PO
+        exported:
+          type: boolean
+          description: Whether the PO has been exported to an external system
+        last-exported-at:
+          type: string
+          format: date-time
+          description: When the PO was last exported
+        hide-price:
+          type: boolean
+          description: Whether to hide pricing from the supplier
+        price-hidden:
+          type: boolean
+          description: Whether pricing is hidden from the supplier
+        transmission-method-override:
+          type: string
+          description: Override for the PO transmission method
+          enum:
+            - email
+            - cxml
+            - xml
+            - do_not_transmit
+        transmission-status:
+          type: string
+          description: Current transmission status
+          enum:
+            - sent_via_email
+            - sent_via_cxml
+            - sent_via_xml
+            - pending
+            - not_sent
+        transmission-emails:
+          type: string
+          description: Comma-separated list of email addresses for PO transmission
+        coupa-accelerate-status:
+          type: string
+          description: Status indicating whether the invoice has discount payment terms
+        classification:
+          type: string
+          description: Order classification
+          enum:
+            - msp
+            - supplier
+            - vms
+        confirm-by-hrs:
+          type: integer
+          description: Number of hours the supplier has to confirm the order
+        order-confirmation-level:
+          type: integer
+          description: Confirmation depth indicator
+        created-at:
+          type: string
+          format: date-time
+          description: Timestamp when the PO was created
+          readOnly: true
+        updated-at:
+          type: string
+          format: date-time
+          description: Timestamp when the PO was last updated
+          readOnly: true
+        created-by:
+          $ref: '#/components/schemas/UserReference'
+        updated-by:
+          $ref: '#/components/schemas/UserReference'
+    PurchaseOrderCreate:
+      type: object
+      description: Schema for creating a new purchase order
+      required:
+        - type
+        - supplier
+        - currency
+        - order-lines
+      properties:
+        type:
+          type: string
+          description: Must be ExternalOrderHeader for externally created orders
+          enum:
+            - ExternalOrderHeader
+        po-number:
+          type: string
+          description: Purchase order number (auto-generated if not provided)
+          maxLength: 20
+        supplier:
+          $ref: '#/components/schemas/SupplierReference'
+        currency:
+          $ref: '#/components/schemas/CurrencyReference'
+        ship-to-address:
+          $ref: '#/components/schemas/AddressReference'
+        ship-to-attention:
+          type: string
+          maxLength: 255
+        ship-to-user:
+          $ref: '#/components/schemas/UserReference'
+        payment-term:
+          $ref: '#/components/schemas/PaymentTermReference'
+        payment-method:
+          type: string
+          enum:
+            - invoice
+            - pcard
+            - invoice_only
+            - pcard_only
+            - virtual_card
+        shipping-term:
+          $ref: '#/components/schemas/ShippingTermReference'
+        order-lines:
+          type: array
+          minItems: 1
+          items:
+            $ref: '#/components/schemas/OrderLine'
+        hide-price:
+          type: boolean
+        transmission-method-override:
+          type: string
+          enum:
+            - email
+            - cxml
+            - xml
+            - do_not_transmit
+        transmission-emails:
+          type: string
+    PurchaseOrderUpdate:
+      type: object
+      description: Schema for updating a purchase order
+      properties:
+        po-number:
+          type: string
+          maxLength: 20
+        ship-to-address:
+          $ref: '#/components/schemas/AddressReference'
+        ship-to-attention:
+          type: string
+          maxLength: 255
+        ship-to-user:
+          $ref: '#/components/schemas/UserReference'
+        payment-term:
+          $ref: '#/components/schemas/PaymentTermReference'
+        payment-method:
+          type: string
+          enum:
+            - invoice
+            - pcard
+            - invoice_only
+            - pcard_only
+            - virtual_card
+        shipping-term:
+          $ref: '#/components/schemas/ShippingTermReference'
+        order-lines:
+          type: array
+          items:
+            $ref: '#/components/schemas/OrderLine'
+        hide-price:
+          type: boolean
+        transmission-method-override:
+          type: string
+          enum:
+            - email
+            - cxml
+            - xml
+            - do_not_transmit
+        transmission-emails:
+          type: string
+        exported:
+          type: boolean
+    InvoiceLine:
+      type: object
+      description: A line item on an invoice
+      properties:
+        id:
+          type: integer
+          description: Coupa unique identifier
+          readOnly: true
+        line-num:
+          type: integer
+          description: Line number
+        description:
+          type: string
+          description: Line item description
+          maxLength: 255
+        quantity:
+          type: number
+          format: decimal
+          description: Quantity invoiced
+        price:
+          type: number
+          format: decimal
+          description: Unit price
+        total:
+          type: number
+          format: decimal
+          description: Line total
+          readOnly: true
+        uom:
+          type: object
+          description: Unit of measure
+          properties:
+            id:
+              type: integer
+            code:
+              type: string
+        tax-amount:
+          type: number
+          format: decimal
+          description: Tax amount at line level
+        tax-code:
+          type: string
+          description: Tax classification code
+        tax-rate:
+          type: number
+          format: float
+          description: Tax rate percentage
+        order-line-id:
+          type: integer
+          description: Reference to the backing purchase order line
+        account:
+          type: object
+          description: Chart of accounts reference
+          properties:
+            id:
+              type: integer
+            code:
+              type: string
+        commodity:
+          type: object
+          description: Commodity classification
+          properties:
+            id:
+              type: integer
+            name:
+              type: string
+        currency:
+          $ref: '#/components/schemas/CurrencyReference'
+        created-at:
+          type: string
+          format: date-time
+          readOnly: true
+        updated-at:
+          type: string
+          format: date-time
+          readOnly: true
+    Invoice:
+      type: object
+      description: >-
+        An invoice representing a billing document from a supplier for goods or
+        services delivered.
+      properties:
+        id:
+          type: integer
+          description: Coupa unique identifier
+          readOnly: true
+        invoice-number:
+          type: string
+          description: Invoice identification number
+          maxLength: 40
+        invoice-date:
+          type: string
+          format: date-time
+          description: Date of the invoice
+        status:
+          type: string
+          description: Current invoice processing status
+          enum:
+            - new
+            - draft
+            - pending_approval
+            - approved
+            - pending_receipt
+            - processing
+            - payable_adjustment
+            - on_hold
+            - ap_hold
+            - booking_hold
+            - pending_action
+            - rejected
+            - disputed
+            - abandoned
+            - voided
+            - invalid
+        document-type:
+          type: string
+          description: Document type
+          enum:
+            - Invoice
+            - Credit Note
+        supplier:
+          $ref: '#/components/schemas/SupplierReference'
+        currency:
+          $ref: '#/components/schemas/CurrencyReference'
+        gross-total:
+          type: number
+          format: decimal
+          description: Total amount before discounts and taxes
+        tax-amount:
+          type: number
+          format: decimal
+          description: Tax amount (not used if tax provided at line level)
+        discount-amount:
+          type: number
+          format: decimal
+          description: Discount amount provided by supplier
+        shipping-amount:
+          type: number
+          format: decimal
+          description: Freight charges
+        handling-amount:
+          type: number
+          format: decimal
+          description: Processing and handling fees
+        amount-due-less-discount:
+          type: number
+          format: decimal
+          description: Amount after discount application
+          readOnly: true
+        payment-term:
+          $ref: '#/components/schemas/PaymentTermReference'
+        bill-to-address:
+          $ref: '#/components/schemas/AddressReference'
+        ship-to-address:
+          $ref: '#/components/schemas/AddressReference'
+        supplier-remit-to:
+          type: object
+          description: Supplier remit-to address
+          properties:
+            id:
+              type: integer
+            name:
+              type: string
+        invoice-from-address:
+          type: object
+          description: Vendor address on the invoice
+          properties:
+            id:
+              type: integer
+        line-level-taxation:
+          type: boolean
+          description: Flag indicating whether taxes are provided at line level
+        tax-code:
+          type: string
+          description: Tax classification code
+        tax-rate:
+          type: number
+          format: float
+          description: Percentage tax rate applied
+        buyer-tax-registration:
+          type: object
+          description: Purchaser tax identification
+          properties:
+            id:
+              type: integer
+            number:
+              type: string
+        supplier-tax-registration:
+          type: object
+          description: Vendor tax identification
+          properties:
+            id:
+              type: integer
+            number:
+              type: string
+        legal-destination-country:
+          type: object
+          description: Legal destination country
+          properties:
+            id:
+              type: integer
+            code:
+              type: string
+        origin-country:
+          type: object
+          description: Country of origin for goods
+          properties:
+            id:
+              type: integer
+            code:
+              type: string
+        invoice-lines:
+          type: array
+          description: Collection of invoice line items
+          items:
+            $ref: '#/components/schemas/InvoiceLine'
+        payment-method:
+          type: string
+          description: Payment processing method
+          maxLength: 10
+        payment-notes:
+          type: string
+          description: Payment-related notes
+        payment-date:
+          type: string
+          format: date
+          description: Actual payment date
+        net-due-date:
+          type: string
+          format: date
+          description: Net payment due date
+        discount-due-date:
+          type: string
+          format: date
+          description: Date by which discount applies
+        discount-percent:
+          type: number
+          format: float
+          description: Discount percentage
+        exchange-rate:
+          type: number
+          format: decimal
+          description: Currency exchange rate (up to 9 decimal places)
+        comments:
+          type: string
+          description: Invoice comments
+          maxLength: 255
+        internal-note:
+          type: string
+          description: Internal note (not visible to supplier)
+        supplier-note:
+          type: string
+          description: Note from the supplier
+        delivery-date:
+          type: string
+          format: date
+          description: Delivery date for the goods or services
+        requested-by:
+          $ref: '#/components/schemas/UserReference'
+        image-scan-url:
+          type: string
+          format: uri
+          description: URL of the scanned invoice image
+        is-credit-note:
+          type: boolean
+          description: Whether this document is a credit note
+        original-invoice-number:
+          type: string
+          description: Referenced invoice number for credit notes
+          maxLength: 40
+        original-invoice-date:
+          type: string
+          format: date
+          description: Original invoice date (required for credit notes). Provide only the date.
+        credit-reason:
+          type: string
+          description: Reason for the credit adjustment
+          maxLength: 255
+        paid:
+          type: boolean
+          description: Whether the invoice has been paid
+          readOnly: true
+        compliant:
+          type: boolean
+          description: Whether the invoice passes compliance validation
+          readOnly: true
+        canceled:
+          type: boolean
+          description: Whether the invoice has been cancelled
+          readOnly: true
+        exported:
+          type: boolean
+          description: Whether the invoice has been exported to an external system
+        approvals:
+          type: array
+          description: Approval workflow records
+          items:
+            $ref: '#/components/schemas/ApprovalReference'
+          readOnly: true
+        date-received:
+          type: string
+          format: date-time
+          description: When the invoice was received
+        created-at:
+          type: string
+          format: date-time
+          description: Timestamp when the invoice was created
+          readOnly: true
+        updated-at:
+          type: string
+          format: date-time
+          description: Timestamp when the invoice was last updated
+          readOnly: true
+        created-by:
+          $ref: '#/components/schemas/UserReference'
+        updated-by:
+          $ref: '#/components/schemas/UserReference'
+    InvoiceCreate:
+      type: object
+      description: Schema for creating a new invoice
+      required:
+        - invoice-number
+        - invoice-date
+        - supplier
+        - currency
+        - invoice-lines
+      properties:
+        invoice-number:
+          type: string
+          maxLength: 40
+        invoice-date:
+          type: string
+          format: date-time
+        document-type:
+          type: string
+          enum:
+            - Invoice
+            - Credit Note
+        supplier:
+          $ref: '#/components/schemas/SupplierReference'
+        currency:
+          $ref: '#/components/schemas/CurrencyReference'
+        payment-term:
+          $ref: '#/components/schemas/PaymentTermReference'
+        bill-to-address:
+          $ref: '#/components/schemas/AddressReference'
+        ship-to-address:
+          $ref: '#/components/schemas/AddressReference'
+        supplier-remit-to:
+          type: object
+          properties:
+            id:
+              type: integer
+        invoice-from-address:
+          type: object
+          properties:
+            id:
+              type: integer
+        tax-amount:
+          type: number
+          format: decimal
+        discount-amount:
+          type: number
+          format: decimal
+        shipping-amount:
+          type: number
+          format: decimal
+        handling-amount:
+          type: number
+          format: decimal
+        line-level-taxation:
+          type: boolean
+        tax-code:
+          type: string
+        tax-rate:
+          type: number
+          format: float
+        invoice-lines:
+          type: array
+          minItems: 1
+          items:
+            $ref: '#/components/schemas/InvoiceLine'
+        is-credit-note:
+          type: boolean
+        original-invoice-number:
+          type: string
+          maxLength: 40
+        original-invoice-date:
+          type: string
+          format: date-time
+        credit-reason:
+          type: string
+    InvoiceUpdate:
+      type: object
+      description: Schema for updating an invoice
+      properties:
+        invoice-date:
+          type: string
+          format: date-time
+        payment-term:
+          $ref: '#/components/schemas/PaymentTermReference'
+        bill-to-address:
+          $ref: '#/components/schemas/AddressReference'
+        ship-to-address:
+          $ref: '#/components/schemas/AddressReference'
+        tax-amount:
+          type: number
+          format: decimal
+        discount-amount:
+          type: number
+          format: decimal
+        shipping-amount:
+          type: number
+          format: decimal
+        handling-amount:
+          type: number
+          format: decimal
+        line-level-taxation:
+          type: boolean
+        invoice-lines:
+          type: array
+          items:
+            $ref: '#/components/schemas/InvoiceLine'
+        exported:
+          type: boolean
+    RequisitionLine:
+      type: object
+      description: A line item on a requisition
+      properties:
+        id:
+          type: integer
+          description: Coupa unique identifier
+          readOnly: true
+        line-num:
+          type: integer
+          description: Line number (must increment by one)
+        description:
+          type: string
+          description: Item description
+          maxLength: 255
+        quantity:
+          type: number
+          format: decimal
+          description: Quantity requested
+        unit-price:
+          type: number
+          format: decimal
+          description: Unit price (overrides preferred supplier pricing if item ID provided)
+        total:
+          type: number
+          format: decimal
+          description: Line total
+          readOnly: true
+        uom:
+          type: object
+          description: Unit of measure
+          properties:
+            id:
+              type: integer
+            code:
+              type: string
+        need-by-date:
+          type: string
+          format: date-time
+          description: Date the item is needed by
+        source-part-num:
+          type: string
+          description: Supplier part number
+        supplier:
+          $ref: '#/components/schemas/SupplierReference'
+        commodity:
+          type: object
+          description: Commodity classification
+          properties:
+            id:
+              type: integer
+            name:
+              type: string
+        account:
+          type: object
+          description: Chart of accounts reference
+          properties:
+            id:
+              type: integer
+            code:
+              type: string
+        currency:
+          $ref: '#/components/schemas/CurrencyReference'
+        item:
+          type: object
+          description: Catalog item reference
+          properties:
+            id:
+              type: integer
+            name:
+              type: string
+        contract:
+          type: object
+          description: Contract reference for this line
+          properties:
+            id:
+              type: integer
+            name:
+              type: string
+        created-at:
+          type: string
+          format: date-time
+          readOnly: true
+        updated-at:
+          type: string
+          format: date-time
+          readOnly: true
+    Requisition:
+      type: object
+      description: >-
+        A requisition representing an internal request to purchase goods or
+        services, subject to approval workflows.
+      properties:
+        id:
+          type: integer
+          description: Coupa unique identifier
+          readOnly: true
+        req_title:
+          type: string
+          description: Optional title of the requisition
+          maxLength: 50
+        status:
+          type: string
+          description: Current requisition status
+          enum:
+            - draft
+            - cart
+            - pending_buyer_action
+            - pending_approval
+            - approved
+            - ordered
+            - partially_received
+            - received
+            - abandoned
+            - backgrounded
+            - withdrawn
+        currency:
+          $ref: '#/components/schemas/CurrencyReference'
+        total:
+          type: number
+          format: decimal
+          description: Total amount in the requisition currency
+          readOnly: true
+        mobile-total:
+          type: number
+          format: decimal
+          description: Total in mobile currency
+          readOnly: true
+        mobile-currency:
+          type: string
+          description: Default mobile currency code
+        line-count:
+          type: integer
+          description: Number of lines in the requisition
+          readOnly: true
+        requester:
+          $ref: '#/components/schemas/UserReference'
+        requested-by:
+          $ref: '#/components/schemas/UserReference'
+        department:
+          $ref: '#/components/schemas/DepartmentReference'
+        ship-to-address:
+          $ref: '#/components/schemas/AddressReference'
+        ship-to-attention:
+          type: string
+          description: Ship to address attention
+          maxLength: 255
+        need-by-date:
+          type: string
+          format: date-time
+          description: Date the items are needed by
+        justification:
+          type: string
+          description: Requisition justification comments
+        buyer-note:
+          type: string
+          description: Comments or notes from the buyer
+        external-po-reference:
+          type: string
+          description: >-
+            External PO reference that overrides auto-generated PO numbers
+          maxLength: 255
+        hide-price:
+          type: boolean
+          description: Whether to hide price from the supplier
+        price-hidden:
+          type: boolean
+          description: Whether pricing is hidden from the supplier
+        receiving-warehouse-id:
+          type: integer
+          description: Receiving warehouse ID
+        requisition-lines:
+          type: array
+          description: Collection of requisition line items
+          items:
+            $ref: '#/components/schemas/RequisitionLine'
+        approvals:
+          type: array
+          description: Approval workflow records
+          items:
+            $ref: '#/components/schemas/ApprovalReference'
+          readOnly: true
+        current-approval:
+          $ref: '#/components/schemas/ApprovalReference'
+        approver:
+          $ref: '#/components/schemas/UserReference'
+        pcard:
+          type: object
+          description: Purchasing card reference
+          properties:
+            id:
+              type: integer
+            name:
+              type: string
+        submitted-at:
+          type: string
+          format: date-time
+          description: When the requisition was submitted
+          readOnly: true
+        reject-reason-comment:
+          type: string
+          description: Last rejection reason comment
+          readOnly: true
+        exported:
+          type: boolean
+          description: Whether the requisition has been exported
+        last-exported-at:
+          type: string
+          format: date-time
+          description: When the requisition was last exported
+          readOnly: true
+        tags:
+          type: array
+          description: Associated tags
+          items:
+            type: object
+            properties:
+              id:
+                type: integer
+              name:
+                type: string
+        created-at:
+          type: string
+          format: date-time
+          description: Timestamp when the requisition was created
+          readOnly: true
+        updated-at:
+          type: string
+          format: date-time
+          description: Timestamp when the requisition was last updated
+          readOnly: true
+        created-by:
+          $ref: '#/components/schemas/UserReference'
+        updated-by:
+          $ref: '#/components/schemas/UserReference'
+    RequisitionCreate:
+      type: object
+      description: Schema for creating a new requisition
+      required:
+        - requisition-lines
+      properties:
+        req_title:
+          type: string
+          maxLength: 50
+        currency:
+          $ref: '#/components/schemas/CurrencyReference'
+        requester:
+          $ref: '#/components/schemas/UserReference'
+        requested-by:
+          $ref: '#/components/schemas/UserReference'
+        department:
+          $ref: '#/components/schemas/DepartmentReference'
+        ship-to-address:
+          $ref: '#/components/schemas/AddressReference'
+        ship-to-attention:
+          type: string
+          maxLength: 255
+        need-by-date:
+          type: string
+          format: date-time
+        justification:
+          type: string
+        buyer-note:
+          type: string
+        external-po-reference:
+          type: string
+          maxLength: 255
+        hide-price:
+          type: boolean
+        pcard:
+          type: object
+          properties:
+            id:
+              type: integer
+        requisition-lines:
+          type: array
+          minItems: 1
+          items:
+            $ref: '#/components/schemas/RequisitionLine'
+    RequisitionUpdate:
+      type: object
+      description: Schema for updating a requisition
+      properties:
+        req_title:
+          type: string
+          maxLength: 50
+        currency:
+          $ref: '#/components/schemas/CurrencyReference'
+        department:
+          $ref: '#/components/schemas/DepartmentReference'
+        ship-to-address:
+          $ref: '#/components/schemas/AddressReference'
+        ship-to-attention:
+          type: string
+          maxLength: 255
+        need-by-date:
+          type: string
+          format: date-time
+        justification:
+          type: string
+        buyer-note:
+          type: string
+        external-po-reference:
+          type: string
+          maxLength: 255
+        hide-price:
+          type: boolean
+        requisition-lines:
+          type: array
+          items:
+            $ref: '#/components/schemas/RequisitionLine'
+        exported:
+          type: boolean
+    Supplier:
+      type: object
+      description: >-
+        A supplier (vendor) organization that provides goods or services.
+        Represents the full supplier record with all configuration settings.
+      properties:
+        id:
+          type: integer
+          description: Coupa internal unique identifier
+          readOnly: true
+        name:
+          type: string
+          description: Supplier name
+          maxLength: 100
+        number:
+          type: string
+          description: Supplier number
+        display-name:
+          type: string
+          description: Display name for the supplier
+        status:
+          type: string
+          description: Supplier status
+          enum:
+            - active
+            - inactive
+            - draft
+        supplier-status:
+          type: string
+          description: Supplier status (draft when first created)
+        duns:
+          type: string
+          description: Supplier DUNS number
+        tax-id:
+          type: string
+          description: Supplier tax identification number
+        account-number:
+          type: string
+          description: Account number
+        corporate-url:
+          type: string
+          description: Corporate website URL
+        website:
+          type: string
+          description: Supplier website
+        on-hold:
+          type: boolean
+          description: Whether the supplier is on hold
+        buyer-hold:
+          type: boolean
+          description: Whether all POs are held for buyer review
+        one-time-supplier:
+          type: boolean
+          description: Whether this is a one-time supplier
+        strategic-supplier:
+          type: boolean
+          description: Whether this is a strategic supplier
+        commodity:
+          type: string
+          description: Default commodity
+        payment-method:
+          type: string
+          description: Default payment method
+          enum:
+            - invoice
+            - pcard
+            - invoice_only
+            - pcard_only
+            - virtual_card
+        payment-term:
+          $ref: '#/components/schemas/PaymentTermReference'
+        shipping-term:
+          $ref: '#/components/schemas/ShippingTermReference'
+        invoice-matching-level:
+          type: string
+          description: Invoice matching level
+          enum:
+            - 2-way
+            - 3-way
+            - 3-way-direct
+            - none
+        order-confirmation-level:
+          type: integer
+          description: >-
+            Order confirmation level (0=not_applicable, 1=header, 2=line)
+        confirm-by-hrs:
+          type: number
+          format: decimal
+          description: Confirmation deadline in hours
+        po-method:
+          type: string
+          description: Purchase order transmission method
+          enum:
+            - cxml
+            - xml
+            - email
+            - prompt
+            - mark_as_sent
+            - buy_online
+        po-email:
+          type: string
+          description: Email address for PO transmission
+        po-change-method:
+          type: string
+          description: Purchase order change transmission method
+        primary-contact:
+          type: string
+          description: Primary supplier contact email
+        primary-address:
+          $ref: '#/components/schemas/AddressReference'
+        contacts:
+          type: array
+          description: Supplier contact information
+          items:
+            type: object
+            properties:
+              id:
+                type: integer
+              name:
+                type: string
+              email:
+                type: string
+                format: email
+              phone:
+                type: string
+        remit-to-addresses:
+          type: array
+          description: Remit-to addresses for payments
+          items:
+            $ref: '#/components/schemas/AddressReference'
+        supplier-addresses:
+          type: array
+          description: List of supplier addresses
+          items:
+            $ref: '#/components/schemas/AddressReference'
+        default-locale:
+          type: string
+          description: Default locale for sending emails to this supplier
+        allow-cxml-invoicing:
+          type: boolean
+          description: Whether cXML invoicing is allowed
+        allow-inv-from-connect:
+          type: boolean
+          description: Whether the supplier can create invoices against POs or Contracts
+        allow-inv-no-backing-doc-from-connect:
+          type: boolean
+          description: Whether the supplier can create invoices without a backing PO
+        allow-inv-unbacked-lines-from-connect:
+          type: boolean
+          description: Whether the supplier can create unbacked invoice lines
+        allow-cn-no-backing-doc-from-connect:
+          type: boolean
+          description: Whether the supplier can create credit notes without a backing invoice
+        allow-csp-access-without-two-factor:
+          type: boolean
+          description: Whether CSP access is allowed without two-factor authentication
+        allow-change-requests:
+          type: boolean
+          description: Whether the supplier can initiate change requests via CSP
+        hold-invoices-for-ap-review:
+          type: boolean
+          description: Whether invoices from this supplier require AP review before approval
+        send-invoices-to-approvals:
+          type: boolean
+          description: Whether invoices are sent through approval workflows
+        invoice-emails:
+          type: string
+          description: Registered email addresses permitted to send invoices
+        savings-pct:
+          type: number
+          format: decimal
+          description: Savings percentage for using this supplier
+        cxml-domain:
+          type: string
+          description: cXML domain identifier
+        cxml-identity:
+          type: string
+          description: cXML identity
+        cxml-url:
+          type: string
+          description: URL where POs are sent for cXML transmission
+        cxml-protocol:
+          type: string
+          description: cXML transmission protocol
+        cxml-supplier-domain:
+          type: string
+          description: Supplier domain for cXML
+        cxml-supplier-identity:
+          type: string
+          description: Supplier identity for cXML
+        diversities:
+          type: array
+          description: Supplier diversity markers
+          items:
+            type: object
+            properties:
+              id:
+                type: integer
+              name:
+                type: string
+        tags:
+          type: array
+          description: Associated tags
+          items:
+            type: object
+            properties:
+              id:
+                type: integer
+              name:
+                type: string
+        scope-three-emissions:
+          type: boolean
+          description: Whether the supplier tracks Scope Three Emissions
+        do-not-accelerate:
+          type: boolean
+          description: Do not accelerate payment terms (Static Discounting)
+        created-at:
+          type: string
+          format: date-time
+          description: Timestamp when the supplier was created
+          readOnly: true
+        updated-at:
+          type: string
+          format: date-time
+          description: Timestamp when the supplier was last updated
+          readOnly: true
+        created-by:
+          $ref: '#/components/schemas/UserReference'
+        updated-by:
+          $ref: '#/components/schemas/UserReference'
+    SupplierCreate:
+      type: object
+      description: Schema for creating a new supplier
+      required:
+        - name
+      properties:
+        name:
+          type: string
+          maxLength: 100
+        number:
+          type: string
+        display-name:
+          type: string
+        duns:
+          type: string
+        tax-id:
+          type: string
+        account-number:
+          type: string
+        corporate-url:
+          type: string
+        website:
+          type: string
+        commodity:
+          type: string
+        payment-method:
+          type: string
+          enum:
+            - invoice
+            - pcard
+            - invoice_only
+            - pcard_only
+            - virtual_card
+        payment-term:
+          $ref: '#/components/schemas/PaymentTermReference'
+        shipping-term:
+          $ref: '#/components/schemas/ShippingTermReference'
+        invoice-matching-level:
+          type: string
+          enum:
+            - 2-way
+            - 3-way
+            - 3-way-direct
+            - none
+        po-method:
+          type: string
+          enum:
+            - cxml
+            - xml
+            - email
+            - prompt
+            - mark_as_sent
+            - buy_online
+        po-email:
+          type: string
+        primary-contact:
+          type: string
+        primary-address:
+          $ref: '#/components/schemas/AddressReference'
+        default-locale:
+          type: string
+        strategic-supplier:
+          type: boolean
+        one-time-supplier:
+          type: boolean
+        allow-cxml-invoicing:
+          type: boolean
+        allow-inv-from-connect:
+          type: boolean
+        allow-inv-no-backing-doc-from-connect:
+          type: boolean
+    SupplierUpdate:
+      type: object
+      description: Schema for updating a supplier
+      properties:
+        name:
+          type: string
+          maxLength: 100
+        number:
+          type: string
+        display-name:
+          type: string
+        duns:
+          type: string
+        tax-id:
+          type: string
+        account-number:
+          type: string
+        corporate-url:
+          type: string
+        website:
+          type: string
+        status:
+          type: string
+          enum:
+            - active
+            - inactive
+        on-hold:
+          type: boolean
+        commodity:
+          type: string
+        payment-method:
+          type: string
+          enum:
+            - invoice
+            - pcard
+            - invoice_only
+            - pcard_only
+            - virtual_card
+        payment-term:
+          $ref: '#/components/schemas/PaymentTermReference'
+        shipping-term:
+          $ref: '#/components/schemas/ShippingTermReference'
+        invoice-matching-level:
+          type: string
+          enum:
+            - 2-way
+            - 3-way
+            - 3-way-direct
+            - none
+        po-method:
+          type: string
+          enum:
+            - cxml
+            - xml
+            - email
+            - prompt
+            - mark_as_sent
+            - buy_online
+        po-email:
+          type: string
+        primary-contact:
+          type: string
+        default-locale:
+          type: string
+        strategic-supplier:
+          type: boolean
+        allow-cxml-invoicing:
+          type: boolean
+        allow-inv-from-connect:
+          type: boolean
+        hold-invoices-for-ap-review:
+          type: boolean
+        send-invoices-to-approvals:
+          type: boolean
+externalDocs:
+  description: Coupa Core API Documentation
+  url: https://compass.coupa.com/en-us/products/product-documentation/integration-technical-documentation/coupa-core-api
