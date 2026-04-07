@@ -58,7 +58,7 @@ paths:
   /purchase_orders:
     get:
       operationId: listPurchaseOrders
-      summary: List purchase orders
+      summary: Coupa List purchase orders
       description: >-
         Retrieve a list of purchase orders. Use query parameters to filter
         results. Coupa recommends always limiting result sets with GET criteria
@@ -141,7 +141,7 @@ paths:
           $ref: '#/components/responses/InternalServerError'
     post:
       operationId: createPurchaseOrder
-      summary: Create a purchase order
+      summary: Coupa Create a purchase order
       description: >-
         Create a new external purchase order. The type must be set to
         ExternalOrderHeader. A supplier and at least one order line are required.
@@ -174,7 +174,7 @@ paths:
   /purchase_orders/{id}:
     get:
       operationId: getPurchaseOrder
-      summary: Get a purchase order
+      summary: Coupa Get a purchase order
       description: Retrieve a single purchase order by its Coupa internal ID.
       tags:
         - Purchase Orders
@@ -196,7 +196,7 @@ paths:
           $ref: '#/components/responses/InternalServerError'
     put:
       operationId: updatePurchaseOrder
-      summary: Update a purchase order
+      summary: Coupa Update a purchase order
       description: Update an existing purchase order by its Coupa internal ID.
       tags:
         - Purchase Orders
@@ -231,7 +231,7 @@ paths:
   /purchase_orders/{id}/cancel:
     put:
       operationId: cancelPurchaseOrder
-      summary: Cancel a purchase order
+      summary: Coupa Cancel a purchase order
       description: Cancel an existing purchase order.
       tags:
         - Purchase Orders
@@ -255,7 +255,7 @@ paths:
   /purchase_orders/{id}/close:
     put:
       operationId: closePurchaseOrder
-      summary: Close a purchase order
+      summary: Coupa Close a purchase order
       description: Close an existing purchase order.
       tags:
         - Purchase Orders
@@ -279,7 +279,7 @@ paths:
   /purchase_orders/{id}/issue:
     put:
       operationId: issuePurchaseOrder
-      summary: Issue a purchase order
+      summary: Coupa Issue a purchase order
       description: Issue and send the purchase order to the supplier.
       tags:
         - Purchase Orders
@@ -303,7 +303,7 @@ paths:
   /purchase_orders/{id}/reopen:
     put:
       operationId: reopenPurchaseOrder
-      summary: Reopen a purchase order
+      summary: Coupa Reopen a purchase order
       description: Reopen a soft-closed purchase order.
       tags:
         - Purchase Orders
@@ -327,7 +327,7 @@ paths:
   /invoices:
     get:
       operationId: listInvoices
-      summary: List invoices
+      summary: Coupa List invoices
       description: >-
         Retrieve a list of invoices. Use query parameters to filter results.
         Supports filtering by status, supplier, date ranges, and export status.
@@ -407,7 +407,7 @@ paths:
           $ref: '#/components/responses/InternalServerError'
     post:
       operationId: createInvoice
-      summary: Create an invoice
+      summary: Coupa Create an invoice
       description: >-
         Create a new invoice. Requires an invoice number, invoice date,
         supplier, currency, and at least one invoice line.
@@ -440,7 +440,7 @@ paths:
   /invoices/{id}:
     get:
       operationId: getInvoice
-      summary: Get an invoice
+      summary: Coupa Get an invoice
       description: Retrieve a single invoice by its Coupa internal ID.
       tags:
         - Invoices
@@ -462,7 +462,7 @@ paths:
           $ref: '#/components/responses/InternalServerError'
     put:
       operationId: updateInvoice
-      summary: Update an invoice
+      summary: Coupa Update an invoice
       description: Update an existing invoice by its Coupa internal ID.
       tags:
         - Invoices
@@ -497,7 +497,7 @@ paths:
   /invoices/{id}/submit:
     put:
       operationId: submitInvoice
-      summary: Submit a draft invoice for approval
+      summary: Coupa Submit a draft invoice for approval
       description: >-
         Submit a draft invoice for approval. The invoice must be in draft status.
         Once submitted, the invoice enters the approval workflow.
@@ -523,7 +523,7 @@ paths:
   /invoices/{id}/abandon:
     put:
       operationId: abandonInvoice
-      summary: Abandon an invoice
+      summary: Coupa Abandon an invoice
       description: Abandon an invoice, removing it from active processing.
       tags:
         - Invoices
@@ -547,7 +547,7 @@ paths:
   /invoices/{id}/void:
     put:
       operationId: voidInvoice
-      summary: Void an approved or pending invoice
+      summary: Coupa Void an approved or pending invoice
       description: >-
         Void an invoice that is in approved or pending status. Voided invoices
         cannot be reactivated.
@@ -573,7 +573,7 @@ paths:
   /invoices/{id}/dispute:
     put:
       operationId: disputeInvoice
-      summary: Dispute an invoice
+      summary: Coupa Dispute an invoice
       description: >-
         Dispute an invoice. The supplier will be notified and the invoice
         status changes to disputed.
@@ -608,7 +608,7 @@ paths:
   /requisitions:
     get:
       operationId: listRequisitions
-      summary: List requisitions
+      summary: Coupa List requisitions
       description: >-
         Retrieve a list of requisitions. Use query parameters to filter results.
         Supports filtering by status, requester, date ranges, and export status.
@@ -676,7 +676,7 @@ paths:
           $ref: '#/components/responses/InternalServerError'
     post:
       operationId: createRequisition
-      summary: Create a requisition
+      summary: Coupa Create a requisition
       description: >-
         Create a new requisition. Requires at least one requisition line.
         Line numbers must increment by one; duplicate line numbers are ignored.
@@ -710,7 +710,7 @@ paths:
   /requisitions/{id}:
     get:
       operationId: getRequisition
-      summary: Get a requisition
+      summary: Coupa Get a requisition
       description: Retrieve a single requisition by its Coupa internal ID.
       tags:
         - Requisitions
@@ -732,7 +732,7 @@ paths:
           $ref: '#/components/responses/InternalServerError'
     put:
       operationId: updateRequisition
-      summary: Update a requisition
+      summary: Coupa Update a requisition
       description: Update an existing requisition by its Coupa internal ID.
       tags:
         - Requisitions
@@ -766,7 +766,7 @@ paths:
           $ref: '#/components/responses/InternalServerError'
     delete:
       operationId: deleteRequisition
-      summary: Delete a requisition
+      summary: Coupa Delete a requisition
       description: >-
         Delete an existing requisition by its Coupa internal ID. Only
         requisitions in draft status can be deleted.
@@ -788,7 +788,7 @@ paths:
   /requisitions/submit_for_approval:
     post:
       operationId: submitRequisitionForApproval
-      summary: Submit a requisition for approval
+      summary: Coupa Submit a requisition for approval
       description: >-
         Submit a requisition for approval. The requisition must have at least
         one line item and valid accounting allocations.
@@ -822,7 +822,7 @@ paths:
   /requisitions/{id}/update_and_submit_for_approval:
     put:
       operationId: updateAndSubmitRequisition
-      summary: Update and submit a requisition for approval
+      summary: Coupa Update and submit a requisition for approval
       description: >-
         Update a requisition and submit it for approval in a single operation.
       tags:
@@ -855,7 +855,7 @@ paths:
   /suppliers:
     get:
       operationId: listSuppliers
-      summary: List suppliers
+      summary: Coupa List suppliers
       description: >-
         Retrieve a list of suppliers. Use query parameters to filter results.
         Supports filtering by name, number, status, and date ranges.
@@ -913,7 +913,7 @@ paths:
           $ref: '#/components/responses/InternalServerError'
     post:
       operationId: createSupplier
-      summary: Create a supplier
+      summary: Coupa Create a supplier
       description: >-
         Create a new supplier record. The supplier name is required. Default
         status is draft if not specified. Default payment method is invoice.
@@ -946,7 +946,7 @@ paths:
   /suppliers/{id}:
     get:
       operationId: getSupplier
-      summary: Get a supplier
+      summary: Coupa Get a supplier
       description: Retrieve a single supplier by its Coupa internal ID.
       tags:
         - Suppliers
@@ -968,7 +968,7 @@ paths:
           $ref: '#/components/responses/InternalServerError'
     put:
       operationId: updateSupplier
-      summary: Update a supplier
+      summary: Coupa Update a supplier
       description: >-
         Update an existing supplier by its Coupa internal ID. Cannot reassign
         address or contact IDs when updating primary address or contact.
