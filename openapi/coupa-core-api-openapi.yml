@@ -29,18 +29,18 @@ security:
   - oauth2: []
   - apiKey: []
 tags:
-  - name: Purchase Orders
-    description: >-
-      Create, retrieve, update, and manage purchase orders. Purchase orders
-      represent commitments to buy goods or services from suppliers.
-    externalDocs:
-      url: https://compass.coupa.com/en-us/products/product-documentation/integration-technical-documentation/the-coupa-core-api/resources/transactional-resources/purchase-orders-api-(purchase_orders)
   - name: Invoices
     description: >-
       Create, retrieve, update, and manage invoices. Invoices represent billing
       documents from suppliers for goods or services delivered.
     externalDocs:
       url: https://compass.coupa.com/en-us/products/product-documentation/integration-technical-documentation/the-coupa-core-api/resources/transactional-resources/invoices-api-(invoices)
+  - name: Purchase Orders
+    description: >-
+      Create, retrieve, update, and manage purchase orders. Purchase orders
+      represent commitments to buy goods or services from suppliers.
+    externalDocs:
+      url: https://compass.coupa.com/en-us/products/product-documentation/integration-technical-documentation/the-coupa-core-api/resources/transactional-resources/purchase-orders-api-(purchase_orders)
   - name: Requisitions
     description: >-
       Create, retrieve, update, and manage requisitions. Requisitions are
