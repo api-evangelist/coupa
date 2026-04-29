@@ -1,9 +1,14 @@
+aid: coupa
 name: Coupa
+x-type: company
 description: Coupa is a leading Business Spend Management (BSM) platform that provides cloud-based solutions for procurement, invoicing, expenses, payments, sourcing, contracts, and supply chain design & planning.
 image: https://www.coupa.com/wp-content/themes/coupa/images/coupa-logo.svg
-url: https://www.coupa.com
+url: https://raw.githubusercontent.com/api-evangelist/coupa/refs/heads/main/apis.yml
+type: Index
+access: 3rd-Party
+position: Consuming
 created: '2024-01-01'
-modified: '2026-03-16'
+modified: '2026-04-28'
 tags:
   - BSM
   - Business Spend Management
@@ -52,6 +57,28 @@ apis:
         url: json-schema/coupa-invoice-schema.json
       - type: JSONLD
         url: json-ld/coupa-context.jsonld
+      - type: Vocabulary
+        url: vocabulary/coupa-vocabulary.yml
+      - type: Rules
+        url: rules/coupa-core-api-rules.yml
+      - type: Capabilities
+        url: capabilities/coupa-procure-to-pay-capabilities.yml
+    features:
+      - name: OAuth 2.0 and OIDC Authentication
+        description: Modern OAuth 2.0 and OpenID Connect support across all Coupa APIs.
+      - name: JSON and XML Response Formats
+        description: Endpoints return data in either JSON or XML based on Accept headers.
+      - name: Resource-Oriented REST Design
+        description: Predictable resource URLs covering procurement, invoicing, suppliers, and reference data.
+      - name: ERP Integration Patterns
+        description: Designed to support enterprise ERP synchronization with filtering and incremental updates.
+    useCases:
+      - name: ERP Procure-to-Pay Sync
+        description: Synchronize requisitions, purchase orders, invoices, and suppliers between Coupa and an ERP system.
+      - name: Supplier Onboarding Automation
+        description: Programmatically create and maintain supplier master data records and contacts.
+      - name: Spend Analytics Pipelines
+        description: Extract transactional data into business intelligence and reporting platforms.
     contact:
       - type: Support
         url: https://compass.coupa.com/en-us/support

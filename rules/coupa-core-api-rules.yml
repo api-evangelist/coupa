@@ -1,0 +1,102 @@
+extends: ["spectral:oas"]
+documentationUrl: https://compass.coupa.com/en-us/products/product-documentation/integration-technical-documentation
+rules:
+  coupa-info-contact:
+    description: API info object should include contact information.
+    message: "{{description}}: info.contact is required."
+    given: "$.info"
+    severity: error
+    then:
+      field: contact
+      function: truthy
+  coupa-info-license:
+    description: API info object should include license information.
+    given: "$.info"
+    severity: warn
+    then:
+      field: license
+      function: truthy
+  coupa-server-https:
+    description: All servers must use HTTPS.
+    given: "$.servers[*].url"
+    severity: error
+    then:
+      function: pattern
+      functionOptions:
+        match: "^https://"
+  coupa-base-url:
+    description: Servers should reference the Coupa instance host.
+    given: "$.servers[*].url"
+    severity: warn
+    then:
+      function: pattern
+      functionOptions:
+        match: "coupahost.com"
+  coupa-required-auth:
+    description: Operations should be protected by OAuth 2.0 or API key.
+    given: "$.security"
+    severity: error
+    then:
+      function: truthy
+  coupa-operation-tags:
+    description: Every operation must have at least one tag.
+    given: "$.paths.*[get,post,put,delete,patch]"
+    severity: error
+    then:
+      field: tags
+      function: truthy
+  coupa-operation-summary:
+    description: Every operation must have a summary.
+    given: "$.paths.*[get,post,put,delete,patch]"
+    severity: error
+    then:
+      field: summary
+      function: truthy
+  coupa-operation-description:
+    description: Operations should include a description.
+    given: "$.paths.*[get,post,put,delete,patch]"
+    severity: warn
+    then:
+      field: description
+      function: truthy
+  coupa-summary-prefix:
+    description: Every operation summary should be prefixed with "Coupa".
+    message: '{{description}}: summary should start with "Coupa".'
+    given: "$.paths.*[get,post,put,delete,patch].summary"
+    severity: warn
+    then:
+      function: pattern
+      functionOptions:
+        match: "^Coupa"
+  coupa-operation-id:
+    description: Every operation must have an operationId.
+    given: "$.paths.*[get,post,put,delete,patch]"
+    severity: error
+    then:
+      field: operationId
+      function: truthy
+  coupa-resource-naming:
+    description: Path segments should use snake_case to match Coupa resource naming.
+    given: "$.paths"
+    severity: warn
+    then:
+      field: "@key"
+      function: pattern
+      functionOptions:
+        match: "^/[a-z0-9_/{}]+$"
+  coupa-error-responses:
+    description: Operations should declare 401 and 404 error responses.
+    given: "$.paths.*[get,put,delete,patch]"
+    severity: warn
+    then:
+      field: responses.401
+      function: truthy
+  coupa-pagination-params:
+    description: List operations should support offset and limit query parameters.
+    given: "$.paths[?(@property.match(/.*s$/))][get].parameters"
+    severity: info
+    then:
+      function: schema
+      functionOptions:
+        schema:
+          type: array

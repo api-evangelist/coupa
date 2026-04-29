@@ -1,80 +1,91 @@
 # Coupa (coupa)
-Coupa is a leading Business Spend Management (BSM) platform that provides cloud-based solutions for procurement, invoicing, expenses, payments, sourcing, contracts, and supply chain design & planning.
 
-**URL:** [Visit APIs.json URL](https://www.coupa.com)
+Coupa is a leading Business Spend Management (BSM) platform that provides cloud-based solutions for procurement, invoicing, expenses, payments, sourcing, contracts, and supply chain design and planning.
 
-## Tags:
+**URL:** [Visit APIs.json URL](https://raw.githubusercontent.com/api-evangelist/coupa/refs/heads/main/apis.yml)
 
- - Procurement, Business Spend Management, BSM, Invoicing, Supply Chain, Financial Management, Enterprise, Cloud Platform
+## Scope
+
+- **Type:** Index
+- **Position:** Consuming
+- **Access:** 3rd-Party
+- **x-type:** company
+
+## Tags
+
+- BSM, Business Spend Management, Cloud Platform, Enterprise, Financial Management, Invoicing, Procurement, Supply Chain
 
 ## Timestamps
 
-- **Created:** 2024 
-- **Modified:** 2024 
+- **Created:** 2024-01-01
+- **Modified:** 2026-04-28
 
 ## APIs
 
 ### Coupa Core API
-The primary RESTful API for accessing and managing core Coupa resources including suppliers, purchase orders, invoices, and requisitions.
 
-**Human URL:** [https://compass.coupa.com/en-us/products/core-platform](https://compass.coupa.com/en-us/products/core-platform)
+The primary RESTful API for accessing and managing core Coupa Business Spend Management resources including suppliers, purchase orders, invoices, requisitions, contracts, and reference data. Supports both JSON and XML formats with OAuth 2.0 or API key authentication.
 
-
-#### Tags:
-
- - REST, Procurement, Purchase Orders, Invoices, Requisitions
-
-#### Properties
-
-- [Documentation](https://compass.coupa.com/en-us/products/product-documentation/integration-technical-documentation/coupa-core-api)
-- [OpenAPI](https://compass.coupa.com/en-us/api_docs)
-- [Authentication](https://compass.coupa.com/en-us/products/product-documentation/integration-technical-documentation/coupa-core-api/authentication)
+**Human URL:** https://compass.coupa.com/en-us/products/core-platform
+**Base URL:** `https://instance.coupahost.com/api`
 
 ### Coupa Integration API
-API designed for enterprise integrations with ERP systems and other third-party applications.
 
-**Human URL:** [https://compass.coupa.com/en-us/products/core-platform/integration](https://compass.coupa.com/en-us/products/core-platform/integration)
-
-
-#### Tags:
-
- - Integration, ERP, Enterprise, Webhooks
-
-#### Properties
-
-- [Documentation](https://compass.coupa.com/en-us/products/product-documentation/integration-technical-documentation)
-- [Webhooks](https://compass.coupa.com/en-us/products/product-documentation/integration-technical-documentation/webhooks)
-- [Best Practices](https://compass.coupa.com/en-us/products/product-documentation/integration-technical-documentation/integration-best-practices)
+API designed for enterprise integrations with ERP systems and other third-party applications, including webhooks and integration best practices.
 
 ### Coupa Supplier API
-API for supplier-specific operations including supplier information management, catalogs, and supplier collaboration.
 
-**Human URL:** [https://compass.coupa.com/en-us/products/supplier-portal](https://compass.coupa.com/en-us/products/supplier-portal)
-
-
-#### Tags:
-
- - Suppliers, Catalogs, Vendor Management
-
-#### Properties
-
-- [Documentation](https://compass.coupa.com/en-us/products/product-documentation/integration-technical-documentation/supplier-api)
-- [Getting Started](https://compass.coupa.com/en-us/products/supplier-portal/getting-started)
+API for supplier-specific operations including supplier information management, catalogs, cXML, punchout, and supplier collaboration.
 
 ### Coupa Analytics API
+
 API for accessing Coupa's analytics and reporting data for business intelligence and custom reporting needs.
 
-**Human URL:** [https://compass.coupa.com/en-us/products/analytics](https://compass.coupa.com/en-us/products/analytics)
+### Coupa CCW API
 
+The Coupa Contingent Workforce REST API for managing candidates, workers, and requisitions in contingent workforce operations.
 
-#### Tags:
+### Coupa CSO API
 
- - Analytics, Reporting, Business Intelligence, Data Export
+The Coupa Sourcing Optimization API for importing and exporting fact sheet data for sourcing optimization workflows.
 
-#### Properties
+### Coupa Treasury API
 
-- [Documentation](https://compass.coupa.com/en-us/products/product-documentation/analytics-reporting)
-- [Data Dictionary](https://compass.coupa.com/en-us/products/product-documentation/analytics-reporting/data-dictionary)
+REST API for retrieving and updating Coupa Treasury Management data such as cash flows and account balances.
+
+### Coupa Open Buy API
+
+A standard, secure interface for searching and purchasing items in real time across Coupa-enabled suppliers.
+
+### Coupa Payments API
+
+API for managing Coupa Pay invoice payments and expense payments, including retrieval, export tracking, and status management.
+
+### Coupa Procurement API
+
+RESTful endpoints for managing the full procure-to-order lifecycle including requisitions, purchase orders, contracts, and sourcing quote requests.
+
+### Coupa Invoicing API
+
+RESTful endpoints for creating, updating, and querying invoices, including invoice lines, charge allocations, and invoicing platform integration.
+
+### Coupa Expenses API
+
+RESTful endpoints for managing expense reports, expense lines, expense categories, and per diem calculations.
+
+### Coupa Inventory and Receipts API
+
+RESTful endpoints for receiving transactions, inventory adjustments and consumptions, pick lists, fulfillment reservations, warehouse operations, and advance ship notices.
+
+## Repository Artifacts
+
+- `apis.yml` - APIs.json index
+- `openapi/coupa-core-api-openapi.yml` - OpenAPI specification for the Core API
+- `json-schema/` - JSON Schema definitions for purchase orders and invoices
+- `json-ld/coupa-context.jsonld` - JSON-LD context mapping Coupa resources to schema.org
+- `vocabulary/coupa-vocabulary.yml` - Controlled vocabulary of Coupa resources and fields
+- `rules/coupa-core-api-rules.yml` - Spectral linting rules for Coupa API design
+- `capabilities/coupa-procure-to-pay-capabilities.yml` - Workflow capabilities mapping
 
 ## Common Properties
 
@@ -82,15 +93,10 @@ API for accessing Coupa's analytics and reporting data for business intelligence
 - [Authentication](https://compass.coupa.com/en-us/products/product-documentation/integration-technical-documentation/coupa-core-api/authentication)
 - [Rate Limits](https://compass.coupa.com/en-us/products/product-documentation/integration-technical-documentation/api-rate-limits)
 - [Status](https://trust.coupa.com/)
-- [Terms of Service](https://www.coupa.com/company/trust/agreements)
-- [Privacy Policy](https://www.coupa.com/company/trust/privacy)
 - [Support](https://compass.coupa.com/en-us/support)
-- [Blog](https://www.coupa.com/blog)
-- [LinkedIn](https://www.linkedin.com/company/coupa-software)
-- [Twitter](https://twitter.com/Coupa)
 
 ## Maintainers
 
-**FN:** Coupa Software
+**FN:** Kin Lane
 
-**Email:** support@coupa.com
+**Email:** kin@apievangelist.com

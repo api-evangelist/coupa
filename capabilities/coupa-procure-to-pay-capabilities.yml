@@ -1,0 +1,120 @@
+name: Coupa Procure-to-Pay Capabilities
+description: >-
+  Workflow capabilities provided by the Coupa Core API for orchestrating the
+  full procure-to-pay lifecycle including requisitions, purchase orders,
+  invoices, suppliers, and payments.
+url: https://compass.coupa.com/en-us/products/product-documentation/integration-technical-documentation
+version: '1.0'
+modified: '2026-04-28'
+api: Coupa Core API
+baseURL: https://instance.coupahost.com/api
+capabilities:
+  - name: Manage Purchase Orders
+    description: >-
+      Create, retrieve, update, and cancel external purchase orders, and query
+      orders by status, supplier, or update window for ERP synchronization.
+    operations:
+      - listPurchaseOrders
+      - createPurchaseOrder
+      - getPurchaseOrder
+      - updatePurchaseOrder
+      - cancelPurchaseOrder
+    inputs:
+      - PurchaseOrderCreate
+      - PurchaseOrderUpdate
+      - status
+      - supplier
+      - po-number
+    outputs:
+      - PurchaseOrder
+  - name: Manage Requisitions
+    description: >-
+      Submit and track internal purchase requests through approval workflows
+      until they convert into purchase orders.
+    operations:
+      - listRequisitions
+      - createRequisition
+      - getRequisition
+      - updateRequisition
+    inputs:
+      - Requisition
+      - justification
+      - requisition-lines
+    outputs:
+      - Requisition
+  - name: Manage Invoices
+    description: >-
+      Create supplier invoices, retrieve invoice records, attach charge
+      allocations, and track approval and payment status.
+    operations:
+      - listInvoices
+      - createInvoice
+      - getInvoice
+      - updateInvoice
+    inputs:
+      - Invoice
+      - invoice-lines
+      - charge-allocations
+    outputs:
+      - Invoice
+  - name: Manage Suppliers
+    description: >-
+      Maintain supplier master data including contact information, addresses,
+      payment terms, and remit-to records to support sourcing and payments.
+    operations:
+      - listSuppliers
+      - createSupplier
+      - getSupplier
+      - updateSupplier
+    inputs:
+      - Supplier
+      - addresses
+      - primary-contact
+    outputs:
+      - Supplier
+  - name: Manage Expense Reports
+    description: >-
+      Submit, query, and update employee expense reports including itemized
+      lines, per diem calculations, and tax detail.
+    operations:
+      - listExpenseReports
+      - createExpenseReport
+      - getExpenseReport
+      - updateExpenseReport
+    inputs:
+      - ExpenseReport
+      - expense-lines
+    outputs:
+      - ExpenseReport
+  - name: Process Payments
+    description: >-
+      Retrieve and reconcile invoice and expense payments processed through
+      Coupa Pay, including export tracking and status management.
+    operations:
+      - listPayments
+      - getPayment
+      - updatePaymentStatus
+    inputs:
+      - payment-method
+      - reference
+      - amount
+    outputs:
+      - Payment
+  - name: Receive Goods and Manage Inventory
+    description: >-
+      Record receiving transactions, perform inventory adjustments and
+      consumptions, manage warehouses and pick lists, and process advance ship
+      notices.
+    operations:
+      - createReceivingTransaction
+      - listInventoryAdjustments
+      - createInventoryConsumption
+      - listPickLists
+      - createAdvanceShipNotice
+    inputs:
+      - ReceivingTransaction
+      - InventoryAdjustment
+      - AdvanceShipNotice
+    outputs:
+      - ReceivingTransaction
+      - InventoryBalance

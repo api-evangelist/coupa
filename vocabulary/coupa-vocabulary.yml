@@ -1,0 +1,162 @@
+name: Coupa Core API Vocabulary
+description: >-
+  Controlled vocabulary of resources, fields, and concepts used by the Coupa
+  Core API for Business Spend Management workflows including procurement,
+  invoicing, and supplier collaboration.
+url: https://compass.coupa.com/en-us/products/product-documentation/integration-technical-documentation
+version: '1.0'
+modified: '2026-04-28'
+resources:
+  - name: PurchaseOrder
+    description: A commitment to buy goods or services from a supplier, sent after a requisition is approved.
+    fields:
+      - name: id
+        type: integer
+        description: Unique Coupa-internal identifier of the purchase order.
+      - name: po-number
+        type: string
+        description: Human-readable purchase order number.
+      - name: status
+        type: string
+        description: Lifecycle state such as draft, issued, closed, cancelled, or buyer_hold.
+      - name: supplier
+        type: object
+        description: The supplier organization fulfilling the order.
+      - name: order-lines
+        type: array
+        description: Line items describing goods or services on the order.
+      - name: total
+        type: number
+        description: Total monetary value of the purchase order.
+      - name: currency
+        type: object
+        description: Currency code applied to the order total and line amounts.
+      - name: created-at
+        type: string
+        description: Timestamp when the purchase order was created.
+      - name: updated-at
+        type: string
+        description: Timestamp when the purchase order was last modified.
+  - name: Requisition
+    description: An internal request to purchase goods or services that must pass approval workflows before becoming a purchase order.
+    fields:
+      - name: id
+        type: integer
+        description: Unique identifier of the requisition.
+      - name: status
+        type: string
+        description: Approval and processing state.
+      - name: requested-by
+        type: object
+        description: User who submitted the requisition.
+      - name: requisition-lines
+        type: array
+        description: Items being requested.
+      - name: justification
+        type: string
+        description: Business reason for the request.
+      - name: total
+        type: number
+        description: Total requested amount.
+  - name: Invoice
+    description: A billing document submitted by a supplier for goods delivered or services performed.
+    fields:
+      - name: id
+        type: integer
+        description: Unique identifier of the invoice.
+      - name: invoice-number
+        type: string
+        description: Supplier-provided invoice number.
+      - name: status
+        type: string
+        description: Approval and payment state of the invoice.
+      - name: supplier
+        type: object
+        description: Supplier issuing the invoice.
+      - name: invoice-lines
+        type: array
+        description: Itemized billing lines.
+      - name: invoice-date
+        type: string
+        description: Date the invoice was issued.
+      - name: total
+        type: number
+        description: Total invoiced amount.
+      - name: tax-amount
+        type: number
+        description: Tax portion applied to the invoice.
+  - name: Supplier
+    description: A vendor organization that provides goods or services to the buying organization.
+    fields:
+      - name: id
+        type: integer
+        description: Unique identifier of the supplier.
+      - name: name
+        type: string
+        description: Legal or display name of the supplier.
+      - name: status
+        type: string
+        description: Onboarding or approval state of the supplier record.
+      - name: primary-contact
+        type: object
+        description: Primary point of contact at the supplier.
+      - name: addresses
+        type: array
+        description: Mailing and remit-to addresses.
+      - name: payment-terms
+        type: object
+        description: Default payment terms negotiated with the supplier.
+  - name: Contract
+    description: A negotiated agreement governing pricing, terms, and obligations between buyer and supplier.
+    fields:
+      - name: id
+        type: integer
+        description: Unique identifier of the contract.
+      - name: name
+        type: string
+        description: Contract title.
+      - name: start-date
+        type: string
+        description: Effective start date of the agreement.
+      - name: end-date
+        type: string
+        description: Expiration date of the agreement.
+      - name: supplier
+        type: object
+        description: Supplier party to the contract.
+  - name: ExpenseReport
+    description: A submitted set of expense lines for reimbursement or reconciliation.
+    fields:
+      - name: id
+        type: integer
+        description: Unique identifier of the expense report.
+      - name: status
+        type: string
+        description: Approval state.
+      - name: submitted-by
+        type: object
+        description: User submitting the report.
+      - name: expense-lines
+        type: array
+        description: Individual expense entries.
+      - name: total
+        type: number
+        description: Total reimbursable amount.
+  - name: Payment
+    description: A monetary disbursement made through Coupa Pay against an invoice or expense report.
+    fields:
+      - name: id
+        type: integer
+        description: Unique identifier of the payment.
+      - name: status
+        type: string
+        description: Payment processing state.
+      - name: amount
+        type: number
+        description: Payment amount.
+      - name: payment-method
+        type: string
+        description: Method used such as ACH, wire, virtual card, or check.
+      - name: reference
+        type: string
+        description: External reference number for the payment.
