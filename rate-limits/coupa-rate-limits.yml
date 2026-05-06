@@ -4,149 +4,56 @@ schema: https://raw.githubusercontent.com/api-evangelist/interface-research/main
 provider: Coupa
 providerId: coupa
 created: '2026-05-04'
-modified: '2026-05-04'
+modified: '2026-05-05'
+reconciled: false
 tags:
   - BSM
   - Business Spend Management
   - Cloud Platform
   - Enterprise
-  - Financial Management
-  - Invoicing
   - Procurement
-  - Supply Chain
   - Rate Limiting
   - Quotas
   - Throttling
-description: Machine-readable rate limit definitions for the Coupa API surface. Captures per-tier quotas,
-  burst behavior, response signaling, and recovery semantics. Defaults are scaffold values to be replaced
-  with published provider limits.
-headers:
-  limit: X-RateLimit-Limit
-  remaining: X-RateLimit-Remaining
-  reset: X-RateLimit-Reset
-  retryAfter: Retry-After
-  policy: RateLimit-Policy
+description: Coupa enforces API rate limits per tenant on the per-instance Coupa hosts (instance.coupahost.com,
+  instance.cso.coupahost.com, instance.ctm.coupahost.com), but specific per-second / per-minute numeric
+  thresholds are documented in the Coupa Compass customer portal rather than on the public web. Coupa's
+  documented behavior on throttling is HTTP 429 with a Retry-After header; long-running list and report
+  endpoints additionally support pagination and ETag-based incremental sync to keep call rates low.
+sources:
+  - https://compass.coupa.com/
 responseCodes:
   throttled: 429
-  quotaExceeded: 429
   serviceUnavailable: 503
 limits:
-  - tier: free
-    name: Free Tier Default
-    scope: api-key
-    metric: requests_per_minute
-    limit: 10
-    burst: 20
-    timeFrame: minute
-    applies:
-      - Coupa Core API
-      - Coupa Integration API
-      - Coupa Supplier API
-      - Coupa Analytics API
-      - Coupa CCW API
-      - Coupa CSO API
-      - Coupa Treasury API
-      - Coupa Open Buy API
-      - Coupa Payments API
-      - Coupa Procurement API
-      - Coupa Invoicing API
-      - Coupa Expenses API
-      - Coupa Inventory and Receipts API
-  - tier: free
-    name: Free Tier Monthly Quota
-    scope: api-key
-    metric: requests_per_month
-    limit: 1000
-    timeFrame: month
-    applies:
-      - Coupa Core API
-      - Coupa Integration API
-      - Coupa Supplier API
-      - Coupa Analytics API
-      - Coupa CCW API
-      - Coupa CSO API
-      - Coupa Treasury API
-      - Coupa Open Buy API
-      - Coupa Payments API
-      - Coupa Procurement API
-      - Coupa Invoicing API
-      - Coupa Expenses API
-      - Coupa Inventory and Receipts API
-  - tier: professional
-    name: Professional Tier Default
-    scope: api-key
-    metric: requests_per_minute
-    limit: 100
-    burst: 200
-    timeFrame: minute
-    applies:
-      - Coupa Core API
-      - Coupa Integration API
-      - Coupa Supplier API
-      - Coupa Analytics API
-      - Coupa CCW API
-      - Coupa CSO API
-      - Coupa Treasury API
-      - Coupa Open Buy API
-      - Coupa Payments API
-      - Coupa Procurement API
-      - Coupa Invoicing API
-      - Coupa Expenses API
-      - Coupa Inventory and Receipts API
-  - tier: professional
-    name: Professional Tier Monthly Quota
-    scope: api-key
-    metric: requests_per_month
-    limit: 100000
-    timeFrame: month
-    applies:
-      - Coupa Core API
-      - Coupa Integration API
-      - Coupa Supplier API
-      - Coupa Analytics API
-      - Coupa CCW API
-      - Coupa CSO API
-      - Coupa Treasury API
-      - Coupa Open Buy API
-      - Coupa Payments API
-      - Coupa Procurement API
-      - Coupa Invoicing API
-      - Coupa Expenses API
-      - Coupa Inventory and Receipts API
-  - tier: enterprise
-    name: Enterprise Negotiated Limit
-    scope: contract
-    metric: requests_per_minute
-    limit: 1000
-    burst: 5000
-    timeFrame: minute
-    applies:
-      - Coupa Core API
-      - Coupa Integration API
-      - Coupa Supplier API
-      - Coupa Analytics API
-      - Coupa CCW API
-      - Coupa CSO API
-      - Coupa Treasury API
-      - Coupa Open Buy API
-      - Coupa Payments API
-      - Coupa Procurement API
-      - Coupa Invoicing API
-      - Coupa Expenses API
-      - Coupa Inventory and Receipts API
+  - name: Per-tenant API request rate
+    scope: tenant
+    metric: varies
+    limit: see Coupa Compass portal
+    notes: Coupa publishes per-endpoint rate limits inside the authenticated Compass documentation
+      portal. Public docs do not expose numeric values. Limits typically apply per Coupa instance host
+      and per integration user.
 policies:
+  - name: Authenticated docs
+    description: Detailed rate-limit numbers and bulk-API guidelines live in the Coupa Compass customer
+      portal (compass.coupa.com), behind authentication. Customers should consult their Coupa integration
+      docs for the exact thresholds in their contract.
   - name: Backoff Strategy
-    description: Clients should implement exponential backoff with jitter, honoring the Retry-After header
-      when present.
-  - name: Burst Handling
-    description: Short bursts above the steady-state limit are tolerated up to the documented burst ceiling
-      before throttling engages.
-  - name: Quota Reset
-    description: Monthly quotas reset at the start of each calendar month in UTC. Per-minute and per-second
-      windows reset on a sliding-window basis.
-  - name: Fair Use
-    description: Even on uncapped enterprise tiers, sustained usage that materially impacts shared infrastructure
-      may be subject to fair-use throttling.
+    description: On HTTP 429, honor the Retry-After header and back off with jitter. Avoid tight retry
+      loops as they accelerate further throttling.
+  - name: Pagination and incremental sync
+    description: Use the documented pagination parameters and updated_at filters / ETags to drive incremental
+      syncs rather than re-pulling full collections; this is the primary way to stay within tenant
+      rate limits.
+  - name: Bulk imports vs REST
+    description: For large data loads, use Coupa's bulk import / loader interfaces rather than per-record
+      REST calls; bulk paths have separate, higher-throughput budgets.
+  - name: Integration user scoping
+    description: Coupa rate limits are scoped per integration user and per Coupa host. Provision separate
+      integration users per consuming system to isolate limits and audit usage.
+notes: Coupa does not publish concrete per-second or per-minute API rate limits in public documentation.
+  Per-tenant limits are documented inside the authenticated Coupa Compass portal. Reconciled is false
+  until those numeric limits are available for transcription.
 maintainers:
   - FN: Kin Lane
     email: kin@apievangelist.com

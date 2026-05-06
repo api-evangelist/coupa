@@ -1,5 +1,6 @@
 specification: FinOps Framework
 specificationVersion: '1.0'
+schema: https://www.finops.org/framework/
 alignedWith:
   framework: FinOps Foundation Framework
   frameworkUrl: https://www.finops.org/framework/
@@ -8,249 +9,111 @@ alignedWith:
   dataSpecUrl: https://focus.finops.org/focus-specification/v1-3/
 provider: Coupa
 providerId: coupa
-publisherName: Coupa
-serviceCategory: API
+publisherName: Coupa Software Incorporated
+serviceCategory: Business Spend Management
 created: '2026-05-04'
-modified: '2026-05-04'
+modified: '2026-05-05'
+reconciled: false
 tags:
   - BSM
   - Business Spend Management
   - Cloud Platform
   - Enterprise
   - Financial Management
-  - Invoicing
   - Procurement
   - Supply Chain
   - FinOps
   - Cost Management
   - FOCUS
-description: FinOps framework definition for the Coupa API surface. Provides a FOCUS-aligned mapping for
-  cost allocation, usage measurement, and unit-economics reporting across the provider's APIs.
-principles:
-  - name: Visibility
-    description: Make API consumption costs visible to engineering, product, and finance teams in near
-      real-time.
-  - name: Allocation
-    description: Tag every chargeable API call with the consuming team, environment, application, and
-      feature so cost can be allocated.
-  - name: Optimization
-    description: Continuously evaluate request patterns, caching, batching, and tier selection to reduce
-      cost per useful unit of work.
-  - name: Accountability
-    description: Establish budget owners and chargeback or showback flows for each consuming team.
-domains:
-  - name: Understand Usage and Cost
-    capabilities:
-      - Data Ingestion
-      - Allocation
-      - Reporting and Analytics
-      - Anomaly Management
-  - name: Quantify Business Value
-    capabilities:
-      - Planning and Estimating
-      - Forecasting
-      - Budgeting
-      - Benchmarking
-      - Unit Economics
-  - name: Optimize Usage and Cost
-    capabilities:
-      - Architecting for Cloud
-      - Rate Optimization
-      - Workload Optimization
-      - Cloud Sustainability
-      - Licensing and SaaS
-  - name: Manage the FinOps Practice
-    capabilities:
-      - FinOps Practice Operations
-      - FinOps Education and Enablement
-      - Invoicing and Chargeback
-      - Onboarding Workloads
-      - Intersecting Disciplines
+description: FOCUS-aligned FinOps for Coupa - enterprise SaaS sold under custom annual contracts that
+  bundle module licenses, user counts, and transaction / spend volume. APIs are included in the platform
+  subscription rather than priced separately. Public per-unit pricing is not disclosed.
+sources:
+  - https://www.coupa.com/products
+  - https://compass.coupa.com/
+  - https://focus.finops.org/focus-specification/v1-3/
 billingModel:
-  pricingCategory: Usage-Based
-  billingFrequency: Monthly
-  billingCurrency: USD
+  pricingCategory: Subscription (Custom)
+  billingFrequency: Annual
+  billingCurrency: USD/EUR/GBP
   chargeCategories:
-    - Usage
     - Purchase
     - Tax
-    - Credit
     - Adjustment
+    - Refund
+    - Credit
   chargeFrequency: Recurring
 focusColumns:
   ServiceName: Coupa
-  ServiceCategory: Developer Tools / API
+  ServiceCategory: Business Spend Management
   ProviderName: Coupa
-  PublisherName: Coupa
-  InvoiceIssuerName: Coupa
-  PricingCategory: Usage-Based
-  PricingUnit: request
+  PublisherName: Coupa Software Incorporated
+  InvoiceIssuerName: Coupa Software Incorporated
+  PricingCategory: Subscription
   BillingCurrency: USD
-  ChargeCategory: Usage
+  ChargeCategory: Purchase
 meters:
-  - name: api_requests
-    description: Count of billable API requests
-    unit: request
-    aggregation: sum
+  - name: platform_subscription
+    description: Annual Coupa platform subscription baseline
+    unit: month
+    aggregation: max
     dimensions:
-      - api
-      - endpoint
-      - tier
+      - module
       - region
-      - consumer
-  - name: data_egress
-    description: Bytes returned over the network in API responses
-    unit: GB
+  - name: module_licensing
+    description: Per-module licensing (Procurement, Invoicing, Expenses, Pay, Sourcing, CLM, Treasury,
+      Supply Chain Design, Analytics)
+    unit: month
+    aggregation: max
+    dimensions:
+      - module
+      - business_unit
+  - name: user_seats
+    description: Named or transactional user seats included in the Coupa contract
+    unit: seat
+    aggregation: max
+    dimensions:
+      - role
+      - module
+      - business_unit
+  - name: transaction_volume
+    description: Transactional volume (POs, invoices, expense reports, payment volume) used as a sizing
+      input to the Coupa contract
+    unit: transaction
     aggregation: sum
     dimensions:
-      - api
+      - module
+      - business_unit
       - region
-      - consumer
-  - name: compute_seconds
-    description: Server-side compute consumed by the request, where applicable
-    unit: second
-    aggregation: sum
+  - name: supplier_count
+    description: Active suppliers managed in Coupa, often a sizing input for the Supplier and Procurement
+      modules
+    unit: supplier
+    aggregation: max
     dimensions:
-      - api
-      - endpoint
-      - tier
-apis:
-  - name: Coupa Core API
-    baseURL: https://instance.coupahost.com/api
-    tags:
-      - Invoices
-      - Procurement
-      - Purchase Orders
-      - Requisitions
-      - REST
-    serviceName: Coupa Core API
-    serviceCategory: API
-  - name: Coupa Integration API
-    baseURL: https://instance.coupahost.com/api
-    tags:
-      - Enterprise
-      - ERP
-      - Integration
-      - Webhooks
-    serviceName: Coupa Integration API
-    serviceCategory: API
-  - name: Coupa Supplier API
-    baseURL: https://instance.coupahost.com/api/suppliers
-    tags:
-      - Catalogs
-      - Suppliers
-      - Vendor Management
-    serviceName: Coupa Supplier API
-    serviceCategory: API
-  - name: Coupa Analytics API
-    baseURL: https://instance.coupahost.com/api/analytics
-    tags:
-      - Analytics
-      - Business Intelligence
-      - Data Export
-      - Reporting
-    serviceName: Coupa Analytics API
-    serviceCategory: API
-  - name: Coupa CCW API
-    baseURL: https://instance.coupahost.com/api
-    tags:
-      - Candidates
-      - Contingent Workforce
-      - REST
-      - Staffing
-      - Workers
-    serviceName: Coupa CCW API
-    serviceCategory: API
-  - name: Coupa CSO API
-    baseURL: https://instance.cso.coupahost.com/api
-    tags:
-      - Fact Sheets
-      - Markets
-      - Optimization
-      - REST
-      - Sourcing
-    serviceName: Coupa CSO API
-    serviceCategory: API
-  - name: Coupa Treasury API
-    baseURL: https://instance.ctm.coupahost.com/v1
-    tags:
-      - Account Balances
-      - Cash Management
-      - Payments
-      - REST
-      - Treasury
-    serviceName: Coupa Treasury API
-    serviceCategory: API
-  - name: Coupa Open Buy API
-    baseURL: https://instance.coupahost.com
-    tags:
-      - Catalog
-      - eCommerce
-      - Open Buy
-      - REST
-      - Search
-      - Suppliers
-    serviceName: Coupa Open Buy API
-    serviceCategory: API
-  - name: Coupa Payments API
-    baseURL: https://instance.coupahost.com/api/coupa_pay/payments
-    tags:
-      - Coupa Pay
-      - Expense Payments
-      - Invoice Payments
-      - Payments
-      - REST
-    serviceName: Coupa Payments API
-    serviceCategory: API
-  - name: Coupa Procurement API
-    baseURL: https://instance.coupahost.com/api
-    tags:
-      - Contracts
-      - Procurement
-      - Purchase Orders
-      - Requisitions
-      - REST
-      - Sourcing
-    serviceName: Coupa Procurement API
-    serviceCategory: API
-  - name: Coupa Invoicing API
-    baseURL: https://instance.coupahost.com/api/invoices
-    tags:
-      - Accounts Payable
-      - Charge Allocations
-      - Invoices
-      - Invoicing
-      - REST
-    serviceName: Coupa Invoicing API
-    serviceCategory: API
-  - name: Coupa Expenses API
-    baseURL: https://instance.coupahost.com/api/expense_reports
-    tags:
-      - Expense Lines
-      - Expense Reports
-      - Expenses
-      - Per Diem
-      - REST
-    serviceName: Coupa Expenses API
-    serviceCategory: API
-  - name: Coupa Inventory and Receipts API
-    baseURL: https://instance.coupahost.com/api
-    tags:
-      - Advance Ship Notices
-      - Fulfillment
-      - Inventory
-      - Receipts
-      - REST
-      - Warehouse
-    serviceName: Coupa Inventory and Receipts API
-    serviceCategory: API
-unitEconomics:
-  - name: Cost per 1K Requests
-    metric: billed_cost / (api_requests / 1000)
-    target: TBD
-  - name: Cost per Active Consumer
-    metric: billed_cost / active_consumers
-    target: TBD
+      - business_unit
+      - region
+principles:
+  - name: Visibility
+    description: Track Coupa platform consumption (transactions, active users, supplier counts, integrations)
+      via Coupa Analytics and the Integration / Audit APIs. The same telemetry is the input that drives
+      the next contract renewal sizing.
+  - name: Allocation
+    description: Allocate Coupa cost across business units using the chart-of-accounts and cost-object
+      tags applied to POs, invoices, expense reports, and contracts. Coupa's own spend-classification
+      surface is the natural allocation engine.
+  - name: Optimization
+    description: Right-size module subscriptions against actual module usage; consolidate redundant
+      integration users; use bulk loaders instead of per-record REST calls; renegotiate volume bands
+      against actual transaction volume at renewal; retire low-utilization modules (Treasury, Supply
+      Chain Design) when not actively in use.
+  - name: Accountability
+    description: Assign a Coupa application owner inside finance / procurement; review module utilization
+      and integration health quarterly; tie Coupa ROI metrics (cycle-time reduction, captured savings,
+      processed-spend) into FinOps reviews to justify renewal sizing.
+notes: Coupa does not publish public list pricing. FOCUS columns and meters are modeled around the
+  documented commercial structure (modules, seats, transactions, suppliers); reconciled is false until
+  customer contract terms are referenced directly.
 maintainers:
   - FN: Kin Lane
     email: kin@apievangelist.com
