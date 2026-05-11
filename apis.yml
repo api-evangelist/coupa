@@ -414,6 +414,13 @@ common:
     url: https://compass.coupa.com/en-us/products/total-spend-management-platform/integration-playbooks-and-resources/other-integration-playbooks
   - type: RESTAPIIntegration
     url: https://compass.coupa.com/en-us/products/total-spend-management-platform/integration-playbooks-and-resources/other-integration-playbooks/erp-integration-adapters/build-your-integration/integration-methods/coupa-rest-api-integration
+  - type: Integrations
+    url: https://compass.coupa.com/integrations
+integrations:
+  - name: Coupa
+  - name: globe
+  - name: user
+  - name: Coupa white footer
 maintainers:
   - FN: Kin Lane
     email: kin@apievangelist.com
