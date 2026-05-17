@@ -1,6 +1,6 @@
 aid: coupa
 name: Coupa
-x-type: company
+kind: company
 description: Coupa is a leading Business Spend Management (BSM) platform that provides cloud-based solutions for procurement, invoicing, expenses, payments, sourcing, contracts, and supply chain design & planning.
 image: https://www.coupa.com/wp-content/themes/coupa/images/coupa-logo.svg
 url: https://raw.githubusercontent.com/api-evangelist/coupa/refs/heads/main/apis.yml
@@ -115,7 +115,7 @@ apis:
     properties:
       - type: Documentation
         url: https://compass.coupa.com/en-us/products/product-documentation/integration-technical-documentation/supplier-api
-      - type: Getting Started
+      - type: GettingStarted
         url: https://compass.coupa.com/en-us/products/supplier-portal/getting-started
       - type: PunchoutDocumentation
         url: https://compass.coupa.com/en-us/products/product-documentation/supplier-resources/for-suppliers/integration-resources/purchase-orders-and-punchouts
@@ -356,7 +356,7 @@ common:
     url: https://compass.coupa.com/en-us/products/product-documentation/integration-technical-documentation/the-coupa-core-api/oauth-2.0-and-oidc/openid-connect-clients
   - type: GettingStarted
     url: https://compass.coupa.com/en-us/products/product-documentation/integration-technical-documentation/the-coupa-core-api/get-started-with-the-api
-  - type: Rate Limits
+  - type: RateLimits
     url: https://compass.coupa.com/en-us/products/product-documentation/integration-technical-documentation/api-rate-limits
   - type: Errors
     url: https://compass.coupa.com/en-us/products/product-documentation/integration-technical-documentation/the-coupa-core-api/get-started-with-the-api/exception-handling-and-error-codes
@@ -372,13 +372,13 @@ common:
     url: https://compass.coupa.com/en-us/products/release-notes
   - type: IntegrationKnowledgeBase
     url: https://compass.coupa.com/en-us/products/total-spend-management-platform/integration-playbooks-and-resources/integration-knowledge-articles
-  - type: Status
+  - type: StatusPage
     url: https://trust.coupa.com/
   - type: Trust
     url: https://compass.coupa.com/en-us/trust
-  - type: Terms of Service
+  - type: TermsOfService
     url: https://www.coupa.com/company/trust/agreements
-  - type: Privacy Policy
+  - type: PrivacyPolicy
     url: https://www.coupa.com/company/trust/privacy
   - type: Support
     url: https://compass.coupa.com/en-us/support
