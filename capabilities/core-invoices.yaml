@@ -1,0 +1,344 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Coupa Core API — Invoices
+  description: 'Coupa Core API — Invoices. 8 operations. Lead operation: Coupa List invoices. Self-contained Naftiko capability
+    covering one Coupa business surface.'
+  tags:
+  - Coupa
+  - Invoices
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    COUPA_API_KEY: COUPA_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: core-invoices
+    baseUri: https://{instance}.coupahost.com/api
+    description: Coupa Core API — Invoices business capability. Self-contained, no shared references.
+    resources:
+    - name: invoices
+      path: /invoices
+      operations:
+      - name: listinvoices
+        method: GET
+        description: Coupa List invoices
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: status
+          in: query
+          type: string
+          description: Filter by invoice status. Full list includes new, draft, pending_approval, approved, pending_receipt,
+            processing, payable_adjustment, on_hold, ap_hold, booking_
+        - name: invoice-number
+          in: query
+          type: string
+          description: Filter by invoice number
+        - name: supplier[name]
+          in: query
+          type: string
+          description: Filter by supplier name
+        - name: updated-at[gt]
+          in: query
+          type: string
+          description: Filter for records updated after this datetime
+        - name: exported
+          in: query
+          type: boolean
+          description: Filter by export status
+      - name: createinvoice
+        method: POST
+        description: Coupa Create an invoice
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: invoices-id
+      path: /invoices/{id}
+      operations:
+      - name: getinvoice
+        method: GET
+        description: Coupa Get an invoice
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+      - name: updateinvoice
+        method: PUT
+        description: Coupa Update an invoice
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: invoices-id-abandon
+      path: /invoices/{id}/abandon
+      operations:
+      - name: abandoninvoice
+        method: PUT
+        description: Coupa Abandon an invoice
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: invoices-id-dispute
+      path: /invoices/{id}/dispute
+      operations:
+      - name: disputeinvoice
+        method: PUT
+        description: Coupa Dispute an invoice
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: false
+    - name: invoices-id-submit
+      path: /invoices/{id}/submit
+      operations:
+      - name: submitinvoice
+        method: PUT
+        description: Coupa Submit a draft invoice for approval
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: invoices-id-void
+      path: /invoices/{id}/void
+      operations:
+      - name: voidinvoice
+        method: PUT
+        description: Coupa Void an approved or pending invoice
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    authentication:
+      type: bearer
+      token: '{{env.COUPA_API_KEY}}'
+  exposes:
+  - type: rest
+    namespace: core-invoices-rest
+    port: 8080
+    description: REST adapter for Coupa Core API — Invoices. One Spectral-compliant resource per consumed operation, prefixed
+      with /v1.
+    resources:
+    - path: /v1/invoices
+      name: invoices
+      description: REST surface for invoices.
+      operations:
+      - method: GET
+        name: listinvoices
+        description: Coupa List invoices
+        call: core-invoices.listinvoices
+        with:
+          status: rest.status
+          invoice-number: rest.invoice-number
+          supplier[name]: rest.supplier[name]
+          updated-at[gt]: rest.updated-at[gt]
+          exported: rest.exported
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: POST
+        name: createinvoice
+        description: Coupa Create an invoice
+        call: core-invoices.createinvoice
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/invoices/{id}
+      name: invoices-id
+      description: REST surface for invoices-id.
+      operations:
+      - method: GET
+        name: getinvoice
+        description: Coupa Get an invoice
+        call: core-invoices.getinvoice
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: PUT
+        name: updateinvoice
+        description: Coupa Update an invoice
+        call: core-invoices.updateinvoice
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/invoices/{id}/abandon
+      name: invoices-id-abandon
+      description: REST surface for invoices-id-abandon.
+      operations:
+      - method: PUT
+        name: abandoninvoice
+        description: Coupa Abandon an invoice
+        call: core-invoices.abandoninvoice
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/invoices/{id}/dispute
+      name: invoices-id-dispute
+      description: REST surface for invoices-id-dispute.
+      operations:
+      - method: PUT
+        name: disputeinvoice
+        description: Coupa Dispute an invoice
+        call: core-invoices.disputeinvoice
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/invoices/{id}/submit
+      name: invoices-id-submit
+      description: REST surface for invoices-id-submit.
+      operations:
+      - method: PUT
+        name: submitinvoice
+        description: Coupa Submit a draft invoice for approval
+        call: core-invoices.submitinvoice
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/invoices/{id}/void
+      name: invoices-id-void
+      description: REST surface for invoices-id-void.
+      operations:
+      - method: PUT
+        name: voidinvoice
+        description: Coupa Void an approved or pending invoice
+        call: core-invoices.voidinvoice
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: core-invoices-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Coupa Core API — Invoices. One tool per consumed operation, routed inline through this capability's
+      consumes block.
+    tools:
+    - name: coupa-list-invoices
+      description: Coupa List invoices
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: core-invoices.listinvoices
+      with:
+        status: tools.status
+        invoice-number: tools.invoice-number
+        supplier[name]: tools.supplier[name]
+        updated-at[gt]: tools.updated-at[gt]
+        exported: tools.exported
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: coupa-create-invoice
+      description: Coupa Create an invoice
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: core-invoices.createinvoice
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: coupa-get-invoice
+      description: Coupa Get an invoice
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: core-invoices.getinvoice
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: coupa-update-invoice
+      description: Coupa Update an invoice
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: true
+      call: core-invoices.updateinvoice
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: coupa-abandon-invoice
+      description: Coupa Abandon an invoice
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: true
+      call: core-invoices.abandoninvoice
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: coupa-dispute-invoice
+      description: Coupa Dispute an invoice
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: true
+      call: core-invoices.disputeinvoice
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: coupa-submit-draft-invoice-approval
+      description: Coupa Submit a draft invoice for approval
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: true
+      call: core-invoices.submitinvoice
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: coupa-void-approved-pending-invoice
+      description: Coupa Void an approved or pending invoice
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: true
+      call: core-invoices.voidinvoice
+      outputParameters:
+      - type: object
+        mapping: $.

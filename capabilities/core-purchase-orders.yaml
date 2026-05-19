@@ -1,0 +1,340 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Coupa Core API — Purchase Orders
+  description: 'Coupa Core API — Purchase Orders. 8 operations. Lead operation: Coupa List purchase orders. Self-contained
+    Naftiko capability covering one Coupa business surface.'
+  tags:
+  - Coupa
+  - Purchase Orders
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    COUPA_API_KEY: COUPA_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: core-purchase-orders
+    baseUri: https://{instance}.coupahost.com/api
+    description: Coupa Core API — Purchase Orders business capability. Self-contained, no shared references.
+    resources:
+    - name: purchase_orders
+      path: /purchase_orders
+      operations:
+      - name: listpurchaseorders
+        method: GET
+        description: Coupa List purchase orders
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: status
+          in: query
+          type: string
+          description: Filter by order status. Includes buyer_hold, cancelled, closed, currency_hold, draft, error, expensed,
+            issued, supplier_hold, supplier_window_hold, and exported
+        - name: po-number
+          in: query
+          type: string
+          description: Filter by purchase order number
+        - name: supplier[name]
+          in: query
+          type: string
+          description: Filter by supplier name
+        - name: updated-at[gt]
+          in: query
+          type: string
+          description: Filter for records updated after this datetime
+        - name: created-at[gt]
+          in: query
+          type: string
+          description: Filter for records created after this datetime
+        - name: exported
+          in: query
+          type: boolean
+          description: Filter by export status
+      - name: createpurchaseorder
+        method: POST
+        description: Coupa Create a purchase order
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: purchase_orders-id
+      path: /purchase_orders/{id}
+      operations:
+      - name: getpurchaseorder
+        method: GET
+        description: Coupa Get a purchase order
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+      - name: updatepurchaseorder
+        method: PUT
+        description: Coupa Update a purchase order
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: purchase_orders-id-cancel
+      path: /purchase_orders/{id}/cancel
+      operations:
+      - name: cancelpurchaseorder
+        method: PUT
+        description: Coupa Cancel a purchase order
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: purchase_orders-id-close
+      path: /purchase_orders/{id}/close
+      operations:
+      - name: closepurchaseorder
+        method: PUT
+        description: Coupa Close a purchase order
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: purchase_orders-id-issue
+      path: /purchase_orders/{id}/issue
+      operations:
+      - name: issuepurchaseorder
+        method: PUT
+        description: Coupa Issue a purchase order
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: purchase_orders-id-reopen
+      path: /purchase_orders/{id}/reopen
+      operations:
+      - name: reopenpurchaseorder
+        method: PUT
+        description: Coupa Reopen a purchase order
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    authentication:
+      type: bearer
+      token: '{{env.COUPA_API_KEY}}'
+  exposes:
+  - type: rest
+    namespace: core-purchase-orders-rest
+    port: 8080
+    description: REST adapter for Coupa Core API — Purchase Orders. One Spectral-compliant resource per consumed operation,
+      prefixed with /v1.
+    resources:
+    - path: /v1/purchase-orders
+      name: purchase-orders
+      description: REST surface for purchase_orders.
+      operations:
+      - method: GET
+        name: listpurchaseorders
+        description: Coupa List purchase orders
+        call: core-purchase-orders.listpurchaseorders
+        with:
+          status: rest.status
+          po-number: rest.po-number
+          supplier[name]: rest.supplier[name]
+          updated-at[gt]: rest.updated-at[gt]
+          created-at[gt]: rest.created-at[gt]
+          exported: rest.exported
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: POST
+        name: createpurchaseorder
+        description: Coupa Create a purchase order
+        call: core-purchase-orders.createpurchaseorder
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/purchase-orders/{id}
+      name: purchase-orders-id
+      description: REST surface for purchase_orders-id.
+      operations:
+      - method: GET
+        name: getpurchaseorder
+        description: Coupa Get a purchase order
+        call: core-purchase-orders.getpurchaseorder
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: PUT
+        name: updatepurchaseorder
+        description: Coupa Update a purchase order
+        call: core-purchase-orders.updatepurchaseorder
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/purchase-orders/{id}/cancel
+      name: purchase-orders-id-cancel
+      description: REST surface for purchase_orders-id-cancel.
+      operations:
+      - method: PUT
+        name: cancelpurchaseorder
+        description: Coupa Cancel a purchase order
+        call: core-purchase-orders.cancelpurchaseorder
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/purchase-orders/{id}/close
+      name: purchase-orders-id-close
+      description: REST surface for purchase_orders-id-close.
+      operations:
+      - method: PUT
+        name: closepurchaseorder
+        description: Coupa Close a purchase order
+        call: core-purchase-orders.closepurchaseorder
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/purchase-orders/{id}/issue
+      name: purchase-orders-id-issue
+      description: REST surface for purchase_orders-id-issue.
+      operations:
+      - method: PUT
+        name: issuepurchaseorder
+        description: Coupa Issue a purchase order
+        call: core-purchase-orders.issuepurchaseorder
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/purchase-orders/{id}/reopen
+      name: purchase-orders-id-reopen
+      description: REST surface for purchase_orders-id-reopen.
+      operations:
+      - method: PUT
+        name: reopenpurchaseorder
+        description: Coupa Reopen a purchase order
+        call: core-purchase-orders.reopenpurchaseorder
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: core-purchase-orders-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Coupa Core API — Purchase Orders. One tool per consumed operation, routed inline through
+      this capability's consumes block.
+    tools:
+    - name: coupa-list-purchase-orders
+      description: Coupa List purchase orders
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: core-purchase-orders.listpurchaseorders
+      with:
+        status: tools.status
+        po-number: tools.po-number
+        supplier[name]: tools.supplier[name]
+        updated-at[gt]: tools.updated-at[gt]
+        created-at[gt]: tools.created-at[gt]
+        exported: tools.exported
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: coupa-create-purchase-order
+      description: Coupa Create a purchase order
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: core-purchase-orders.createpurchaseorder
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: coupa-get-purchase-order
+      description: Coupa Get a purchase order
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: core-purchase-orders.getpurchaseorder
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: coupa-update-purchase-order
+      description: Coupa Update a purchase order
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: true
+      call: core-purchase-orders.updatepurchaseorder
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: coupa-cancel-purchase-order
+      description: Coupa Cancel a purchase order
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: true
+      call: core-purchase-orders.cancelpurchaseorder
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: coupa-close-purchase-order
+      description: Coupa Close a purchase order
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: true
+      call: core-purchase-orders.closepurchaseorder
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: coupa-issue-purchase-order
+      description: Coupa Issue a purchase order
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: true
+      call: core-purchase-orders.issuepurchaseorder
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: coupa-reopen-purchase-order
+      description: Coupa Reopen a purchase order
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: true
+      call: core-purchase-orders.reopenpurchaseorder
+      outputParameters:
+      - type: object
+        mapping: $.
