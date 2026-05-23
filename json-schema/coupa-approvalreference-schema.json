@@ -1,0 +1,17 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/ApprovalReference",
+  "title": "ApprovalReference",
+  "type": "object",
+  "description": "Reference to an approval record",
+  "properties": {
+    "id": {
+      "type": "integer",
+      "description": "Coupa unique identifier for the approval"
+    },
+    "status": {
+      "type": "string",
+      "description": "Approval status"
+    }
+  }
+}

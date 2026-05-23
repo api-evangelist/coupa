@@ -1,0 +1,18 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/CurrencyReference",
+  "title": "CurrencyReference",
+  "type": "object",
+  "description": "Reference to a currency",
+  "properties": {
+    "id": {
+      "type": "integer",
+      "description": "Coupa unique identifier for the currency"
+    },
+    "code": {
+      "type": "string",
+      "description": "ISO 4217 currency code",
+      "example": "USD"
+    }
+  }
+}

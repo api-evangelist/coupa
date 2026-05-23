@@ -1,0 +1,103 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/SupplierCreate",
+  "title": "SupplierCreate",
+  "type": "object",
+  "description": "Schema for creating a new supplier",
+  "required": [
+    "name"
+  ],
+  "properties": {
+    "name": {
+      "type": "string",
+      "maxLength": 100
+    },
+    "number": {
+      "type": "string"
+    },
+    "display-name": {
+      "type": "string"
+    },
+    "duns": {
+      "type": "string"
+    },
+    "tax-id": {
+      "type": "string"
+    },
+    "account-number": {
+      "type": "string"
+    },
+    "corporate-url": {
+      "type": "string"
+    },
+    "website": {
+      "type": "string"
+    },
+    "commodity": {
+      "type": "string"
+    },
+    "payment-method": {
+      "type": "string",
+      "enum": [
+        "invoice",
+        "pcard",
+        "invoice_only",
+        "pcard_only",
+        "virtual_card"
+      ]
+    },
+    "payment-term": {
+      "$ref": "#/components/schemas/PaymentTermReference"
+    },
+    "shipping-term": {
+      "$ref": "#/components/schemas/ShippingTermReference"
+    },
+    "invoice-matching-level": {
+      "type": "string",
+      "enum": [
+        "2-way",
+        "3-way",
+        "3-way-direct",
+        "none"
+      ]
+    },
+    "po-method": {
+      "type": "string",
+      "enum": [
+        "cxml",
+        "xml",
+        "email",
+        "prompt",
+        "mark_as_sent",
+        "buy_online"
+      ]
+    },
+    "po-email": {
+      "type": "string"
+    },
+    "primary-contact": {
+      "type": "string"
+    },
+    "primary-address": {
+      "$ref": "#/components/schemas/AddressReference"
+    },
+    "default-locale": {
+      "type": "string"
+    },
+    "strategic-supplier": {
+      "type": "boolean"
+    },
+    "one-time-supplier": {
+      "type": "boolean"
+    },
+    "allow-cxml-invoicing": {
+      "type": "boolean"
+    },
+    "allow-inv-from-connect": {
+      "type": "boolean"
+    },
+    "allow-inv-no-backing-doc-from-connect": {
+      "type": "boolean"
+    }
+  }
+}

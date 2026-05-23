@@ -1,0 +1,414 @@
+{
+  "provider": "Coupa",
+  "providerId": "coupa",
+  "kind": "json-structure",
+  "description": "Structural overview of the Coupa API surface; extracted from openapi/.",
+  "schemaCount": 24,
+  "operationCount": 27,
+  "schemas": [
+    {
+      "name": "Error",
+      "type": "object",
+      "propertyCount": 1,
+      "required": []
+    },
+    {
+      "name": "UserReference",
+      "type": "object",
+      "propertyCount": 3,
+      "required": []
+    },
+    {
+      "name": "SupplierReference",
+      "type": "object",
+      "propertyCount": 3,
+      "required": []
+    },
+    {
+      "name": "CurrencyReference",
+      "type": "object",
+      "propertyCount": 2,
+      "required": []
+    },
+    {
+      "name": "AddressReference",
+      "type": "object",
+      "propertyCount": 8,
+      "required": []
+    },
+    {
+      "name": "PaymentTermReference",
+      "type": "object",
+      "propertyCount": 2,
+      "required": []
+    },
+    {
+      "name": "ShippingTermReference",
+      "type": "object",
+      "propertyCount": 2,
+      "required": []
+    },
+    {
+      "name": "DepartmentReference",
+      "type": "object",
+      "propertyCount": 2,
+      "required": []
+    },
+    {
+      "name": "ApprovalReference",
+      "type": "object",
+      "propertyCount": 2,
+      "required": []
+    },
+    {
+      "name": "OrderLine",
+      "type": "object",
+      "propertyCount": 17,
+      "required": []
+    },
+    {
+      "name": "PurchaseOrder",
+      "type": "object",
+      "propertyCount": 39,
+      "required": []
+    },
+    {
+      "name": "PurchaseOrderCreate",
+      "type": "object",
+      "propertyCount": 14,
+      "required": [
+        "type",
+        "supplier",
+        "currency",
+        "order-lines"
+      ]
+    },
+    {
+      "name": "PurchaseOrderUpdate",
+      "type": "object",
+      "propertyCount": 12,
+      "required": []
+    },
+    {
+      "name": "InvoiceLine",
+      "type": "object",
+      "propertyCount": 16,
+      "required": []
+    },
+    {
+      "name": "Invoice",
+      "type": "object",
+      "propertyCount": 53,
+      "required": []
+    },
+    {
+      "name": "InvoiceCreate",
+      "type": "object",
+      "propertyCount": 22,
+      "required": [
+        "invoice-number",
+        "invoice-date",
+        "supplier",
+        "currency",
+        "invoice-lines"
+      ]
+    },
+    {
+      "name": "InvoiceUpdate",
+      "type": "object",
+      "propertyCount": 11,
+      "required": []
+    },
+    {
+      "name": "RequisitionLine",
+      "type": "object",
+      "propertyCount": 17,
+      "required": []
+    },
+    {
+      "name": "Requisition",
+      "type": "object",
+      "propertyCount": 34,
+      "required": []
+    },
+    {
+      "name": "RequisitionCreate",
+      "type": "object",
+      "propertyCount": 14,
+      "required": [
+        "requisition-lines"
+      ]
+    },
+    {
+      "name": "RequisitionUpdate",
+      "type": "object",
+      "propertyCount": 12,
+      "required": []
+    },
+    {
+      "name": "Supplier",
+      "type": "object",
+      "propertyCount": 56,
+      "required": []
+    },
+    {
+      "name": "SupplierCreate",
+      "type": "object",
+      "propertyCount": 23,
+      "required": [
+        "name"
+      ]
+    },
+    {
+      "name": "SupplierUpdate",
+      "type": "object",
+      "propertyCount": 24,
+      "required": []
+    }
+  ],
+  "operations": [
+    {
+      "method": "GET",
+      "path": "/purchase_orders",
+      "operationId": "listPurchaseOrders",
+      "summary": "Coupa List purchase orders",
+      "tags": [
+        "Purchase Orders"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/purchase_orders",
+      "operationId": "createPurchaseOrder",
+      "summary": "Coupa Create a purchase order",
+      "tags": [
+        "Purchase Orders"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/purchase_orders/{id}",
+      "operationId": "getPurchaseOrder",
+      "summary": "Coupa Get a purchase order",
+      "tags": [
+        "Purchase Orders"
+      ]
+    },
+    {
+      "method": "PUT",
+      "path": "/purchase_orders/{id}",
+      "operationId": "updatePurchaseOrder",
+      "summary": "Coupa Update a purchase order",
+      "tags": [
+        "Purchase Orders"
+      ]
+    },
+    {
+      "method": "PUT",
+      "path": "/purchase_orders/{id}/cancel",
+      "operationId": "cancelPurchaseOrder",
+      "summary": "Coupa Cancel a purchase order",
+      "tags": [
+        "Purchase Orders"
+      ]
+    },
+    {
+      "method": "PUT",
+      "path": "/purchase_orders/{id}/close",
+      "operationId": "closePurchaseOrder",
+      "summary": "Coupa Close a purchase order",
+      "tags": [
+        "Purchase Orders"
+      ]
+    },
+    {
+      "method": "PUT",
+      "path": "/purchase_orders/{id}/issue",
+      "operationId": "issuePurchaseOrder",
+      "summary": "Coupa Issue a purchase order",
+      "tags": [
+        "Purchase Orders"
+      ]
+    },
+    {
+      "method": "PUT",
+      "path": "/purchase_orders/{id}/reopen",
+      "operationId": "reopenPurchaseOrder",
+      "summary": "Coupa Reopen a purchase order",
+      "tags": [
+        "Purchase Orders"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/invoices",
+      "operationId": "listInvoices",
+      "summary": "Coupa List invoices",
+      "tags": [
+        "Invoices"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/invoices",
+      "operationId": "createInvoice",
+      "summary": "Coupa Create an invoice",
+      "tags": [
+        "Invoices"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/invoices/{id}",
+      "operationId": "getInvoice",
+      "summary": "Coupa Get an invoice",
+      "tags": [
+        "Invoices"
+      ]
+    },
+    {
+      "method": "PUT",
+      "path": "/invoices/{id}",
+      "operationId": "updateInvoice",
+      "summary": "Coupa Update an invoice",
+      "tags": [
+        "Invoices"
+      ]
+    },
+    {
+      "method": "PUT",
+      "path": "/invoices/{id}/submit",
+      "operationId": "submitInvoice",
+      "summary": "Coupa Submit a draft invoice for approval",
+      "tags": [
+        "Invoices"
+      ]
+    },
+    {
+      "method": "PUT",
+      "path": "/invoices/{id}/abandon",
+      "operationId": "abandonInvoice",
+      "summary": "Coupa Abandon an invoice",
+      "tags": [
+        "Invoices"
+      ]
+    },
+    {
+      "method": "PUT",
+      "path": "/invoices/{id}/void",
+      "operationId": "voidInvoice",
+      "summary": "Coupa Void an approved or pending invoice",
+      "tags": [
+        "Invoices"
+      ]
+    },
+    {
+      "method": "PUT",
+      "path": "/invoices/{id}/dispute",
+      "operationId": "disputeInvoice",
+      "summary": "Coupa Dispute an invoice",
+      "tags": [
+        "Invoices"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/requisitions",
+      "operationId": "listRequisitions",
+      "summary": "Coupa List requisitions",
+      "tags": [
+        "Requisitions"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/requisitions",
+      "operationId": "createRequisition",
+      "summary": "Coupa Create a requisition",
+      "tags": [
+        "Requisitions"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/requisitions/{id}",
+      "operationId": "getRequisition",
+      "summary": "Coupa Get a requisition",
+      "tags": [
+        "Requisitions"
+      ]
+    },
+    {
+      "method": "PUT",
+      "path": "/requisitions/{id}",
+      "operationId": "updateRequisition",
+      "summary": "Coupa Update a requisition",
+      "tags": [
+        "Requisitions"
+      ]
+    },
+    {
+      "method": "DELETE",
+      "path": "/requisitions/{id}",
+      "operationId": "deleteRequisition",
+      "summary": "Coupa Delete a requisition",
+      "tags": [
+        "Requisitions"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/requisitions/submit_for_approval",
+      "operationId": "submitRequisitionForApproval",
+      "summary": "Coupa Submit a requisition for approval",
+      "tags": [
+        "Requisitions"
+      ]
+    },
+    {
+      "method": "PUT",
+      "path": "/requisitions/{id}/update_and_submit_for_approval",
+      "operationId": "updateAndSubmitRequisition",
+      "summary": "Coupa Update and submit a requisition for approval",
+      "tags": [
+        "Requisitions"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/suppliers",
+      "operationId": "listSuppliers",
+      "summary": "Coupa List suppliers",
+      "tags": [
+        "Suppliers"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/suppliers",
+      "operationId": "createSupplier",
+      "summary": "Coupa Create a supplier",
+      "tags": [
+        "Suppliers"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/suppliers/{id}",
+      "operationId": "getSupplier",
+      "summary": "Coupa Get a supplier",
+      "tags": [
+        "Suppliers"
+      ]
+    },
+    {
+      "method": "PUT",
+      "path": "/suppliers/{id}",
+      "operationId": "updateSupplier",
+      "summary": "Coupa Update a supplier",
+      "tags": [
+        "Suppliers"
+      ]
+    }
+  ]
+}

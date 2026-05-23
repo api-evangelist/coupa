@@ -1,0 +1,50 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/InvoiceUpdate",
+  "title": "InvoiceUpdate",
+  "type": "object",
+  "description": "Schema for updating an invoice",
+  "properties": {
+    "invoice-date": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "payment-term": {
+      "$ref": "#/components/schemas/PaymentTermReference"
+    },
+    "bill-to-address": {
+      "$ref": "#/components/schemas/AddressReference"
+    },
+    "ship-to-address": {
+      "$ref": "#/components/schemas/AddressReference"
+    },
+    "tax-amount": {
+      "type": "number",
+      "format": "decimal"
+    },
+    "discount-amount": {
+      "type": "number",
+      "format": "decimal"
+    },
+    "shipping-amount": {
+      "type": "number",
+      "format": "decimal"
+    },
+    "handling-amount": {
+      "type": "number",
+      "format": "decimal"
+    },
+    "line-level-taxation": {
+      "type": "boolean"
+    },
+    "invoice-lines": {
+      "type": "array",
+      "items": {
+        "$ref": "#/components/schemas/InvoiceLine"
+      }
+    },
+    "exported": {
+      "type": "boolean"
+    }
+  }
+}

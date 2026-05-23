@@ -1,0 +1,63 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/PurchaseOrderUpdate",
+  "title": "PurchaseOrderUpdate",
+  "type": "object",
+  "description": "Schema for updating a purchase order",
+  "properties": {
+    "po-number": {
+      "type": "string",
+      "maxLength": 20
+    },
+    "ship-to-address": {
+      "$ref": "#/components/schemas/AddressReference"
+    },
+    "ship-to-attention": {
+      "type": "string",
+      "maxLength": 255
+    },
+    "ship-to-user": {
+      "$ref": "#/components/schemas/UserReference"
+    },
+    "payment-term": {
+      "$ref": "#/components/schemas/PaymentTermReference"
+    },
+    "payment-method": {
+      "type": "string",
+      "enum": [
+        "invoice",
+        "pcard",
+        "invoice_only",
+        "pcard_only",
+        "virtual_card"
+      ]
+    },
+    "shipping-term": {
+      "$ref": "#/components/schemas/ShippingTermReference"
+    },
+    "order-lines": {
+      "type": "array",
+      "items": {
+        "$ref": "#/components/schemas/OrderLine"
+      }
+    },
+    "hide-price": {
+      "type": "boolean"
+    },
+    "transmission-method-override": {
+      "type": "string",
+      "enum": [
+        "email",
+        "cxml",
+        "xml",
+        "do_not_transmit"
+      ]
+    },
+    "transmission-emails": {
+      "type": "string"
+    },
+    "exported": {
+      "type": "boolean"
+    }
+  }
+}

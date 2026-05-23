@@ -1,0 +1,52 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/RequisitionUpdate",
+  "title": "RequisitionUpdate",
+  "type": "object",
+  "description": "Schema for updating a requisition",
+  "properties": {
+    "req_title": {
+      "type": "string",
+      "maxLength": 50
+    },
+    "currency": {
+      "$ref": "#/components/schemas/CurrencyReference"
+    },
+    "department": {
+      "$ref": "#/components/schemas/DepartmentReference"
+    },
+    "ship-to-address": {
+      "$ref": "#/components/schemas/AddressReference"
+    },
+    "ship-to-attention": {
+      "type": "string",
+      "maxLength": 255
+    },
+    "need-by-date": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "justification": {
+      "type": "string"
+    },
+    "buyer-note": {
+      "type": "string"
+    },
+    "external-po-reference": {
+      "type": "string",
+      "maxLength": 255
+    },
+    "hide-price": {
+      "type": "boolean"
+    },
+    "requisition-lines": {
+      "type": "array",
+      "items": {
+        "$ref": "#/components/schemas/RequisitionLine"
+      }
+    },
+    "exported": {
+      "type": "boolean"
+    }
+  }
+}

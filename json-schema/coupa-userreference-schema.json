@@ -1,0 +1,22 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/UserReference",
+  "title": "UserReference",
+  "type": "object",
+  "description": "Reference to a Coupa user",
+  "properties": {
+    "id": {
+      "type": "integer",
+      "description": "Coupa unique identifier for the user"
+    },
+    "login": {
+      "type": "string",
+      "description": "User login name"
+    },
+    "email": {
+      "type": "string",
+      "format": "email",
+      "description": "User email address"
+    }
+  }
+}

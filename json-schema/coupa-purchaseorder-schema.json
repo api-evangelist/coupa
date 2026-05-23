@@ -1,0 +1,233 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/PurchaseOrder",
+  "title": "PurchaseOrder",
+  "type": "object",
+  "description": "A purchase order representing a commitment to purchase goods or services from a supplier.",
+  "properties": {
+    "id": {
+      "type": "integer",
+      "description": "Coupa unique identifier",
+      "readOnly": true
+    },
+    "po-number": {
+      "type": "string",
+      "description": "Purchase order number",
+      "maxLength": 20
+    },
+    "status": {
+      "type": "string",
+      "description": "Current order status",
+      "enum": [
+        "buyer_hold",
+        "cancelled",
+        "closed",
+        "currency_hold",
+        "draft",
+        "error",
+        "expensed",
+        "issued",
+        "supplier_hold",
+        "supplier_window_hold",
+        "exported"
+      ]
+    },
+    "type": {
+      "type": "string",
+      "description": "Order type (ExternalOrderHeader for externally created orders)"
+    },
+    "version": {
+      "type": "integer",
+      "description": "PO supplier version number"
+    },
+    "internal-revision": {
+      "type": "integer",
+      "description": "Internal revision number, increases each time a change is made",
+      "readOnly": true
+    },
+    "change-type": {
+      "type": "string",
+      "description": "Last modification method",
+      "enum": [
+        "change",
+        "revision",
+        "confirmation"
+      ]
+    },
+    "confirmation_status": {
+      "type": "string",
+      "description": "Current confirmation state",
+      "enum": [
+        "pending_supplier_action",
+        "confirmed",
+        "partially_confirmed",
+        "rejected"
+      ]
+    },
+    "acknowledged-flag": {
+      "type": "boolean",
+      "description": "Whether the PO has been acknowledged by the supplier"
+    },
+    "acknowledged-at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "When the PO was acknowledged"
+    },
+    "total": {
+      "type": "number",
+      "format": "decimal",
+      "description": "Total order amount",
+      "readOnly": true
+    },
+    "currency": {
+      "$ref": "#/components/schemas/CurrencyReference"
+    },
+    "supplier": {
+      "$ref": "#/components/schemas/SupplierReference"
+    },
+    "supplier-site": {
+      "type": "object",
+      "description": "Supplier site reference",
+      "properties": {
+        "id": {
+          "type": "integer"
+        },
+        "name": {
+          "type": "string"
+        }
+      }
+    },
+    "requester": {
+      "$ref": "#/components/schemas/UserReference"
+    },
+    "ship-to-address": {
+      "$ref": "#/components/schemas/AddressReference"
+    },
+    "ship-to-attention": {
+      "type": "string",
+      "description": "Recipient contact name at the shipping address",
+      "maxLength": 255
+    },
+    "ship-to-user": {
+      "$ref": "#/components/schemas/UserReference"
+    },
+    "payment-term": {
+      "$ref": "#/components/schemas/PaymentTermReference"
+    },
+    "payment-method": {
+      "type": "string",
+      "description": "Payment processing method",
+      "enum": [
+        "invoice",
+        "pcard",
+        "invoice_only",
+        "pcard_only",
+        "virtual_card"
+      ]
+    },
+    "shipping-term": {
+      "$ref": "#/components/schemas/ShippingTermReference"
+    },
+    "order-lines": {
+      "type": "array",
+      "description": "Collection of order line items",
+      "items": {
+        "$ref": "#/components/schemas/OrderLine"
+      }
+    },
+    "requisition-header": {
+      "type": "object",
+      "description": "Source requisition reference",
+      "properties": {
+        "id": {
+          "type": "integer"
+        }
+      }
+    },
+    "invoice-stop": {
+      "type": "boolean",
+      "description": "Whether invoicing is blocked for this PO"
+    },
+    "exported": {
+      "type": "boolean",
+      "description": "Whether the PO has been exported to an external system"
+    },
+    "last-exported-at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "When the PO was last exported"
+    },
+    "hide-price": {
+      "type": "boolean",
+      "description": "Whether to hide pricing from the supplier"
+    },
+    "price-hidden": {
+      "type": "boolean",
+      "description": "Whether pricing is hidden from the supplier"
+    },
+    "transmission-method-override": {
+      "type": "string",
+      "description": "Override for the PO transmission method",
+      "enum": [
+        "email",
+        "cxml",
+        "xml",
+        "do_not_transmit"
+      ]
+    },
+    "transmission-status": {
+      "type": "string",
+      "description": "Current transmission status",
+      "enum": [
+        "sent_via_email",
+        "sent_via_cxml",
+        "sent_via_xml",
+        "pending",
+        "not_sent"
+      ]
+    },
+    "transmission-emails": {
+      "type": "string",
+      "description": "Comma-separated list of email addresses for PO transmission"
+    },
+    "coupa-accelerate-status": {
+      "type": "string",
+      "description": "Status indicating whether the invoice has discount payment terms"
+    },
+    "classification": {
+      "type": "string",
+      "description": "Order classification",
+      "enum": [
+        "msp",
+        "supplier",
+        "vms"
+      ]
+    },
+    "confirm-by-hrs": {
+      "type": "integer",
+      "description": "Number of hours the supplier has to confirm the order"
+    },
+    "order-confirmation-level": {
+      "type": "integer",
+      "description": "Confirmation depth indicator"
+    },
+    "created-at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Timestamp when the PO was created",
+      "readOnly": true
+    },
+    "updated-at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Timestamp when the PO was last updated",
+      "readOnly": true
+    },
+    "created-by": {
+      "$ref": "#/components/schemas/UserReference"
+    },
+    "updated-by": {
+      "$ref": "#/components/schemas/UserReference"
+    }
+  }
+}

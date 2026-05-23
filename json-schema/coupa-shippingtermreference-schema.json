@@ -1,0 +1,17 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/ShippingTermReference",
+  "title": "ShippingTermReference",
+  "type": "object",
+  "description": "Reference to a shipping term",
+  "properties": {
+    "id": {
+      "type": "integer",
+      "description": "Coupa unique identifier for the shipping term"
+    },
+    "code": {
+      "type": "string",
+      "description": "Shipping term code"
+    }
+  }
+}

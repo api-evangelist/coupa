@@ -1,0 +1,124 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/RequisitionLine",
+  "title": "RequisitionLine",
+  "type": "object",
+  "description": "A line item on a requisition",
+  "properties": {
+    "id": {
+      "type": "integer",
+      "description": "Coupa unique identifier",
+      "readOnly": true
+    },
+    "line-num": {
+      "type": "integer",
+      "description": "Line number (must increment by one)"
+    },
+    "description": {
+      "type": "string",
+      "description": "Item description",
+      "maxLength": 255
+    },
+    "quantity": {
+      "type": "number",
+      "format": "decimal",
+      "description": "Quantity requested"
+    },
+    "unit-price": {
+      "type": "number",
+      "format": "decimal",
+      "description": "Unit price (overrides preferred supplier pricing if item ID provided)"
+    },
+    "total": {
+      "type": "number",
+      "format": "decimal",
+      "description": "Line total",
+      "readOnly": true
+    },
+    "uom": {
+      "type": "object",
+      "description": "Unit of measure",
+      "properties": {
+        "id": {
+          "type": "integer"
+        },
+        "code": {
+          "type": "string"
+        }
+      }
+    },
+    "need-by-date": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Date the item is needed by"
+    },
+    "source-part-num": {
+      "type": "string",
+      "description": "Supplier part number"
+    },
+    "supplier": {
+      "$ref": "#/components/schemas/SupplierReference"
+    },
+    "commodity": {
+      "type": "object",
+      "description": "Commodity classification",
+      "properties": {
+        "id": {
+          "type": "integer"
+        },
+        "name": {
+          "type": "string"
+        }
+      }
+    },
+    "account": {
+      "type": "object",
+      "description": "Chart of accounts reference",
+      "properties": {
+        "id": {
+          "type": "integer"
+        },
+        "code": {
+          "type": "string"
+        }
+      }
+    },
+    "currency": {
+      "$ref": "#/components/schemas/CurrencyReference"
+    },
+    "item": {
+      "type": "object",
+      "description": "Catalog item reference",
+      "properties": {
+        "id": {
+          "type": "integer"
+        },
+        "name": {
+          "type": "string"
+        }
+      }
+    },
+    "contract": {
+      "type": "object",
+      "description": "Contract reference for this line",
+      "properties": {
+        "id": {
+          "type": "integer"
+        },
+        "name": {
+          "type": "string"
+        }
+      }
+    },
+    "created-at": {
+      "type": "string",
+      "format": "date-time",
+      "readOnly": true
+    },
+    "updated-at": {
+      "type": "string",
+      "format": "date-time",
+      "readOnly": true
+    }
+  }
+}

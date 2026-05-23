@@ -1,0 +1,106 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/InvoiceLine",
+  "title": "InvoiceLine",
+  "type": "object",
+  "description": "A line item on an invoice",
+  "properties": {
+    "id": {
+      "type": "integer",
+      "description": "Coupa unique identifier",
+      "readOnly": true
+    },
+    "line-num": {
+      "type": "integer",
+      "description": "Line number"
+    },
+    "description": {
+      "type": "string",
+      "description": "Line item description",
+      "maxLength": 255
+    },
+    "quantity": {
+      "type": "number",
+      "format": "decimal",
+      "description": "Quantity invoiced"
+    },
+    "price": {
+      "type": "number",
+      "format": "decimal",
+      "description": "Unit price"
+    },
+    "total": {
+      "type": "number",
+      "format": "decimal",
+      "description": "Line total",
+      "readOnly": true
+    },
+    "uom": {
+      "type": "object",
+      "description": "Unit of measure",
+      "properties": {
+        "id": {
+          "type": "integer"
+        },
+        "code": {
+          "type": "string"
+        }
+      }
+    },
+    "tax-amount": {
+      "type": "number",
+      "format": "decimal",
+      "description": "Tax amount at line level"
+    },
+    "tax-code": {
+      "type": "string",
+      "description": "Tax classification code"
+    },
+    "tax-rate": {
+      "type": "number",
+      "format": "float",
+      "description": "Tax rate percentage"
+    },
+    "order-line-id": {
+      "type": "integer",
+      "description": "Reference to the backing purchase order line"
+    },
+    "account": {
+      "type": "object",
+      "description": "Chart of accounts reference",
+      "properties": {
+        "id": {
+          "type": "integer"
+        },
+        "code": {
+          "type": "string"
+        }
+      }
+    },
+    "commodity": {
+      "type": "object",
+      "description": "Commodity classification",
+      "properties": {
+        "id": {
+          "type": "integer"
+        },
+        "name": {
+          "type": "string"
+        }
+      }
+    },
+    "currency": {
+      "$ref": "#/components/schemas/CurrencyReference"
+    },
+    "created-at": {
+      "type": "string",
+      "format": "date-time",
+      "readOnly": true
+    },
+    "updated-at": {
+      "type": "string",
+      "format": "date-time",
+      "readOnly": true
+    }
+  }
+}

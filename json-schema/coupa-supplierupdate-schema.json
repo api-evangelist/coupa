@@ -1,0 +1,107 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/SupplierUpdate",
+  "title": "SupplierUpdate",
+  "type": "object",
+  "description": "Schema for updating a supplier",
+  "properties": {
+    "name": {
+      "type": "string",
+      "maxLength": 100
+    },
+    "number": {
+      "type": "string"
+    },
+    "display-name": {
+      "type": "string"
+    },
+    "duns": {
+      "type": "string"
+    },
+    "tax-id": {
+      "type": "string"
+    },
+    "account-number": {
+      "type": "string"
+    },
+    "corporate-url": {
+      "type": "string"
+    },
+    "website": {
+      "type": "string"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "active",
+        "inactive"
+      ]
+    },
+    "on-hold": {
+      "type": "boolean"
+    },
+    "commodity": {
+      "type": "string"
+    },
+    "payment-method": {
+      "type": "string",
+      "enum": [
+        "invoice",
+        "pcard",
+        "invoice_only",
+        "pcard_only",
+        "virtual_card"
+      ]
+    },
+    "payment-term": {
+      "$ref": "#/components/schemas/PaymentTermReference"
+    },
+    "shipping-term": {
+      "$ref": "#/components/schemas/ShippingTermReference"
+    },
+    "invoice-matching-level": {
+      "type": "string",
+      "enum": [
+        "2-way",
+        "3-way",
+        "3-way-direct",
+        "none"
+      ]
+    },
+    "po-method": {
+      "type": "string",
+      "enum": [
+        "cxml",
+        "xml",
+        "email",
+        "prompt",
+        "mark_as_sent",
+        "buy_online"
+      ]
+    },
+    "po-email": {
+      "type": "string"
+    },
+    "primary-contact": {
+      "type": "string"
+    },
+    "default-locale": {
+      "type": "string"
+    },
+    "strategic-supplier": {
+      "type": "boolean"
+    },
+    "allow-cxml-invoicing": {
+      "type": "boolean"
+    },
+    "allow-inv-from-connect": {
+      "type": "boolean"
+    },
+    "hold-invoices-for-ap-review": {
+      "type": "boolean"
+    },
+    "send-invoices-to-approvals": {
+      "type": "boolean"
+    }
+  }
+}

@@ -1,0 +1,308 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/Supplier",
+  "title": "Supplier",
+  "type": "object",
+  "description": "A supplier (vendor) organization that provides goods or services. Represents the full supplier record with all configuration settings.",
+  "properties": {
+    "id": {
+      "type": "integer",
+      "description": "Coupa internal unique identifier",
+      "readOnly": true
+    },
+    "name": {
+      "type": "string",
+      "description": "Supplier name",
+      "maxLength": 100
+    },
+    "number": {
+      "type": "string",
+      "description": "Supplier number"
+    },
+    "display-name": {
+      "type": "string",
+      "description": "Display name for the supplier"
+    },
+    "status": {
+      "type": "string",
+      "description": "Supplier status",
+      "enum": [
+        "active",
+        "inactive",
+        "draft"
+      ]
+    },
+    "supplier-status": {
+      "type": "string",
+      "description": "Supplier status (draft when first created)"
+    },
+    "duns": {
+      "type": "string",
+      "description": "Supplier DUNS number"
+    },
+    "tax-id": {
+      "type": "string",
+      "description": "Supplier tax identification number"
+    },
+    "account-number": {
+      "type": "string",
+      "description": "Account number"
+    },
+    "corporate-url": {
+      "type": "string",
+      "description": "Corporate website URL"
+    },
+    "website": {
+      "type": "string",
+      "description": "Supplier website"
+    },
+    "on-hold": {
+      "type": "boolean",
+      "description": "Whether the supplier is on hold"
+    },
+    "buyer-hold": {
+      "type": "boolean",
+      "description": "Whether all POs are held for buyer review"
+    },
+    "one-time-supplier": {
+      "type": "boolean",
+      "description": "Whether this is a one-time supplier"
+    },
+    "strategic-supplier": {
+      "type": "boolean",
+      "description": "Whether this is a strategic supplier"
+    },
+    "commodity": {
+      "type": "string",
+      "description": "Default commodity"
+    },
+    "payment-method": {
+      "type": "string",
+      "description": "Default payment method",
+      "enum": [
+        "invoice",
+        "pcard",
+        "invoice_only",
+        "pcard_only",
+        "virtual_card"
+      ]
+    },
+    "payment-term": {
+      "$ref": "#/components/schemas/PaymentTermReference"
+    },
+    "shipping-term": {
+      "$ref": "#/components/schemas/ShippingTermReference"
+    },
+    "invoice-matching-level": {
+      "type": "string",
+      "description": "Invoice matching level",
+      "enum": [
+        "2-way",
+        "3-way",
+        "3-way-direct",
+        "none"
+      ]
+    },
+    "order-confirmation-level": {
+      "type": "integer",
+      "description": "Order confirmation level (0=not_applicable, 1=header, 2=line)"
+    },
+    "confirm-by-hrs": {
+      "type": "number",
+      "format": "decimal",
+      "description": "Confirmation deadline in hours"
+    },
+    "po-method": {
+      "type": "string",
+      "description": "Purchase order transmission method",
+      "enum": [
+        "cxml",
+        "xml",
+        "email",
+        "prompt",
+        "mark_as_sent",
+        "buy_online"
+      ]
+    },
+    "po-email": {
+      "type": "string",
+      "description": "Email address for PO transmission"
+    },
+    "po-change-method": {
+      "type": "string",
+      "description": "Purchase order change transmission method"
+    },
+    "primary-contact": {
+      "type": "string",
+      "description": "Primary supplier contact email"
+    },
+    "primary-address": {
+      "$ref": "#/components/schemas/AddressReference"
+    },
+    "contacts": {
+      "type": "array",
+      "description": "Supplier contact information",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer"
+          },
+          "name": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string",
+            "format": "email"
+          },
+          "phone": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "remit-to-addresses": {
+      "type": "array",
+      "description": "Remit-to addresses for payments",
+      "items": {
+        "$ref": "#/components/schemas/AddressReference"
+      }
+    },
+    "supplier-addresses": {
+      "type": "array",
+      "description": "List of supplier addresses",
+      "items": {
+        "$ref": "#/components/schemas/AddressReference"
+      }
+    },
+    "default-locale": {
+      "type": "string",
+      "description": "Default locale for sending emails to this supplier"
+    },
+    "allow-cxml-invoicing": {
+      "type": "boolean",
+      "description": "Whether cXML invoicing is allowed"
+    },
+    "allow-inv-from-connect": {
+      "type": "boolean",
+      "description": "Whether the supplier can create invoices against POs or Contracts"
+    },
+    "allow-inv-no-backing-doc-from-connect": {
+      "type": "boolean",
+      "description": "Whether the supplier can create invoices without a backing PO"
+    },
+    "allow-inv-unbacked-lines-from-connect": {
+      "type": "boolean",
+      "description": "Whether the supplier can create unbacked invoice lines"
+    },
+    "allow-cn-no-backing-doc-from-connect": {
+      "type": "boolean",
+      "description": "Whether the supplier can create credit notes without a backing invoice"
+    },
+    "allow-csp-access-without-two-factor": {
+      "type": "boolean",
+      "description": "Whether CSP access is allowed without two-factor authentication"
+    },
+    "allow-change-requests": {
+      "type": "boolean",
+      "description": "Whether the supplier can initiate change requests via CSP"
+    },
+    "hold-invoices-for-ap-review": {
+      "type": "boolean",
+      "description": "Whether invoices from this supplier require AP review before approval"
+    },
+    "send-invoices-to-approvals": {
+      "type": "boolean",
+      "description": "Whether invoices are sent through approval workflows"
+    },
+    "invoice-emails": {
+      "type": "string",
+      "description": "Registered email addresses permitted to send invoices"
+    },
+    "savings-pct": {
+      "type": "number",
+      "format": "decimal",
+      "description": "Savings percentage for using this supplier"
+    },
+    "cxml-domain": {
+      "type": "string",
+      "description": "cXML domain identifier"
+    },
+    "cxml-identity": {
+      "type": "string",
+      "description": "cXML identity"
+    },
+    "cxml-url": {
+      "type": "string",
+      "description": "URL where POs are sent for cXML transmission"
+    },
+    "cxml-protocol": {
+      "type": "string",
+      "description": "cXML transmission protocol"
+    },
+    "cxml-supplier-domain": {
+      "type": "string",
+      "description": "Supplier domain for cXML"
+    },
+    "cxml-supplier-identity": {
+      "type": "string",
+      "description": "Supplier identity for cXML"
+    },
+    "diversities": {
+      "type": "array",
+      "description": "Supplier diversity markers",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer"
+          },
+          "name": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "tags": {
+      "type": "array",
+      "description": "Associated tags",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer"
+          },
+          "name": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "scope-three-emissions": {
+      "type": "boolean",
+      "description": "Whether the supplier tracks Scope Three Emissions"
+    },
+    "do-not-accelerate": {
+      "type": "boolean",
+      "description": "Do not accelerate payment terms (Static Discounting)"
+    },
+    "created-at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Timestamp when the supplier was created",
+      "readOnly": true
+    },
+    "updated-at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Timestamp when the supplier was last updated",
+      "readOnly": true
+    },
+    "created-by": {
+      "$ref": "#/components/schemas/UserReference"
+    },
+    "updated-by": {
+      "$ref": "#/components/schemas/UserReference"
+    }
+  }
+}

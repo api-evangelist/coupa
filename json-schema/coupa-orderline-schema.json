@@ -1,0 +1,121 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/OrderLine",
+  "title": "OrderLine",
+  "type": "object",
+  "description": "A line item on a purchase order",
+  "properties": {
+    "id": {
+      "type": "integer",
+      "description": "Coupa unique identifier",
+      "readOnly": true
+    },
+    "line-num": {
+      "type": "integer",
+      "description": "Line number"
+    },
+    "description": {
+      "type": "string",
+      "description": "Item description",
+      "maxLength": 255
+    },
+    "quantity": {
+      "type": "number",
+      "format": "decimal",
+      "description": "Quantity ordered"
+    },
+    "price": {
+      "type": "number",
+      "format": "decimal",
+      "description": "Unit price"
+    },
+    "total": {
+      "type": "number",
+      "format": "decimal",
+      "description": "Line total (quantity x price)",
+      "readOnly": true
+    },
+    "uom": {
+      "type": "object",
+      "description": "Unit of measure",
+      "properties": {
+        "id": {
+          "type": "integer"
+        },
+        "code": {
+          "type": "string"
+        }
+      }
+    },
+    "need-by-date": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Date the item is needed by"
+    },
+    "source-part-num": {
+      "type": "string",
+      "description": "Supplier part number",
+      "maxLength": 255
+    },
+    "commodity": {
+      "type": "object",
+      "description": "Commodity classification",
+      "properties": {
+        "id": {
+          "type": "integer"
+        },
+        "name": {
+          "type": "string"
+        }
+      }
+    },
+    "account": {
+      "type": "object",
+      "description": "Chart of accounts reference",
+      "properties": {
+        "id": {
+          "type": "integer"
+        },
+        "code": {
+          "type": "string"
+        }
+      }
+    },
+    "status": {
+      "type": "string",
+      "description": "Line status",
+      "readOnly": true
+    },
+    "currency": {
+      "$ref": "#/components/schemas/CurrencyReference"
+    },
+    "supplier-aux-part-num": {
+      "type": "string",
+      "description": "Supplier auxiliary part number"
+    },
+    "receiving-warehouse": {
+      "type": "object",
+      "description": "Receiving warehouse reference",
+      "properties": {
+        "id": {
+          "type": "integer"
+        },
+        "name": {
+          "type": "string"
+        }
+      }
+    },
+    "created-at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Timestamp when the line was created",
+      "readOnly": true
+    },
+    "updated-at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Timestamp when the line was last updated",
+      "readOnly": true
+    }
+  }
+}

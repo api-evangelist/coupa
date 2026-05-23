@@ -1,0 +1,17 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/PaymentTermReference",
+  "title": "PaymentTermReference",
+  "type": "object",
+  "description": "Reference to a payment term",
+  "properties": {
+    "id": {
+      "type": "integer",
+      "description": "Coupa unique identifier for the payment term"
+    },
+    "code": {
+      "type": "string",
+      "description": "Payment term code"
+    }
+  }
+}

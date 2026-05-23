@@ -1,0 +1,17 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/DepartmentReference",
+  "title": "DepartmentReference",
+  "type": "object",
+  "description": "Reference to a department",
+  "properties": {
+    "id": {
+      "type": "integer",
+      "description": "Coupa unique identifier for the department"
+    },
+    "name": {
+      "type": "string",
+      "description": "Department name"
+    }
+  }
+}

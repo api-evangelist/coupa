@@ -1,0 +1,67 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/RequisitionCreate",
+  "title": "RequisitionCreate",
+  "type": "object",
+  "description": "Schema for creating a new requisition",
+  "required": [
+    "requisition-lines"
+  ],
+  "properties": {
+    "req_title": {
+      "type": "string",
+      "maxLength": 50
+    },
+    "currency": {
+      "$ref": "#/components/schemas/CurrencyReference"
+    },
+    "requester": {
+      "$ref": "#/components/schemas/UserReference"
+    },
+    "requested-by": {
+      "$ref": "#/components/schemas/UserReference"
+    },
+    "department": {
+      "$ref": "#/components/schemas/DepartmentReference"
+    },
+    "ship-to-address": {
+      "$ref": "#/components/schemas/AddressReference"
+    },
+    "ship-to-attention": {
+      "type": "string",
+      "maxLength": 255
+    },
+    "need-by-date": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "justification": {
+      "type": "string"
+    },
+    "buyer-note": {
+      "type": "string"
+    },
+    "external-po-reference": {
+      "type": "string",
+      "maxLength": 255
+    },
+    "hide-price": {
+      "type": "boolean"
+    },
+    "pcard": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer"
+        }
+      }
+    },
+    "requisition-lines": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "$ref": "#/components/schemas/RequisitionLine"
+      }
+    }
+  }
+}

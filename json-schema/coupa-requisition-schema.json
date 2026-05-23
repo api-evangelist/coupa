@@ -1,0 +1,194 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/Requisition",
+  "title": "Requisition",
+  "type": "object",
+  "description": "A requisition representing an internal request to purchase goods or services, subject to approval workflows.",
+  "properties": {
+    "id": {
+      "type": "integer",
+      "description": "Coupa unique identifier",
+      "readOnly": true
+    },
+    "req_title": {
+      "type": "string",
+      "description": "Optional title of the requisition",
+      "maxLength": 50
+    },
+    "status": {
+      "type": "string",
+      "description": "Current requisition status",
+      "enum": [
+        "draft",
+        "cart",
+        "pending_buyer_action",
+        "pending_approval",
+        "approved",
+        "ordered",
+        "partially_received",
+        "received",
+        "abandoned",
+        "backgrounded",
+        "withdrawn"
+      ]
+    },
+    "currency": {
+      "$ref": "#/components/schemas/CurrencyReference"
+    },
+    "total": {
+      "type": "number",
+      "format": "decimal",
+      "description": "Total amount in the requisition currency",
+      "readOnly": true
+    },
+    "mobile-total": {
+      "type": "number",
+      "format": "decimal",
+      "description": "Total in mobile currency",
+      "readOnly": true
+    },
+    "mobile-currency": {
+      "type": "string",
+      "description": "Default mobile currency code"
+    },
+    "line-count": {
+      "type": "integer",
+      "description": "Number of lines in the requisition",
+      "readOnly": true
+    },
+    "requester": {
+      "$ref": "#/components/schemas/UserReference"
+    },
+    "requested-by": {
+      "$ref": "#/components/schemas/UserReference"
+    },
+    "department": {
+      "$ref": "#/components/schemas/DepartmentReference"
+    },
+    "ship-to-address": {
+      "$ref": "#/components/schemas/AddressReference"
+    },
+    "ship-to-attention": {
+      "type": "string",
+      "description": "Ship to address attention",
+      "maxLength": 255
+    },
+    "need-by-date": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Date the items are needed by"
+    },
+    "justification": {
+      "type": "string",
+      "description": "Requisition justification comments"
+    },
+    "buyer-note": {
+      "type": "string",
+      "description": "Comments or notes from the buyer"
+    },
+    "external-po-reference": {
+      "type": "string",
+      "description": "External PO reference that overrides auto-generated PO numbers",
+      "maxLength": 255
+    },
+    "hide-price": {
+      "type": "boolean",
+      "description": "Whether to hide price from the supplier"
+    },
+    "price-hidden": {
+      "type": "boolean",
+      "description": "Whether pricing is hidden from the supplier"
+    },
+    "receiving-warehouse-id": {
+      "type": "integer",
+      "description": "Receiving warehouse ID"
+    },
+    "requisition-lines": {
+      "type": "array",
+      "description": "Collection of requisition line items",
+      "items": {
+        "$ref": "#/components/schemas/RequisitionLine"
+      }
+    },
+    "approvals": {
+      "type": "array",
+      "description": "Approval workflow records",
+      "items": {
+        "$ref": "#/components/schemas/ApprovalReference"
+      },
+      "readOnly": true
+    },
+    "current-approval": {
+      "$ref": "#/components/schemas/ApprovalReference"
+    },
+    "approver": {
+      "$ref": "#/components/schemas/UserReference"
+    },
+    "pcard": {
+      "type": "object",
+      "description": "Purchasing card reference",
+      "properties": {
+        "id": {
+          "type": "integer"
+        },
+        "name": {
+          "type": "string"
+        }
+      }
+    },
+    "submitted-at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "When the requisition was submitted",
+      "readOnly": true
+    },
+    "reject-reason-comment": {
+      "type": "string",
+      "description": "Last rejection reason comment",
+      "readOnly": true
+    },
+    "exported": {
+      "type": "boolean",
+      "description": "Whether the requisition has been exported"
+    },
+    "last-exported-at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "When the requisition was last exported",
+      "readOnly": true
+    },
+    "tags": {
+      "type": "array",
+      "description": "Associated tags",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer"
+          },
+          "name": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "created-at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Timestamp when the requisition was created",
+      "readOnly": true
+    },
+    "updated-at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Timestamp when the requisition was last updated",
+      "readOnly": true
+    },
+    "created-by": {
+      "$ref": "#/components/schemas/UserReference"
+    },
+    "updated-by": {
+      "$ref": "#/components/schemas/UserReference"
+    }
+  }
+}

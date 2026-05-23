@@ -1,0 +1,81 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/PurchaseOrderCreate",
+  "title": "PurchaseOrderCreate",
+  "type": "object",
+  "description": "Schema for creating a new purchase order",
+  "required": [
+    "type",
+    "supplier",
+    "currency",
+    "order-lines"
+  ],
+  "properties": {
+    "type": {
+      "type": "string",
+      "description": "Must be ExternalOrderHeader for externally created orders",
+      "enum": [
+        "ExternalOrderHeader"
+      ]
+    },
+    "po-number": {
+      "type": "string",
+      "description": "Purchase order number (auto-generated if not provided)",
+      "maxLength": 20
+    },
+    "supplier": {
+      "$ref": "#/components/schemas/SupplierReference"
+    },
+    "currency": {
+      "$ref": "#/components/schemas/CurrencyReference"
+    },
+    "ship-to-address": {
+      "$ref": "#/components/schemas/AddressReference"
+    },
+    "ship-to-attention": {
+      "type": "string",
+      "maxLength": 255
+    },
+    "ship-to-user": {
+      "$ref": "#/components/schemas/UserReference"
+    },
+    "payment-term": {
+      "$ref": "#/components/schemas/PaymentTermReference"
+    },
+    "payment-method": {
+      "type": "string",
+      "enum": [
+        "invoice",
+        "pcard",
+        "invoice_only",
+        "pcard_only",
+        "virtual_card"
+      ]
+    },
+    "shipping-term": {
+      "$ref": "#/components/schemas/ShippingTermReference"
+    },
+    "order-lines": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "$ref": "#/components/schemas/OrderLine"
+      }
+    },
+    "hide-price": {
+      "type": "boolean"
+    },
+    "transmission-method-override": {
+      "type": "string",
+      "enum": [
+        "email",
+        "cxml",
+        "xml",
+        "do_not_transmit"
+      ]
+    },
+    "transmission-emails": {
+      "type": "string"
+    }
+  }
+}

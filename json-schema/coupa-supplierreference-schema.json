@@ -1,0 +1,21 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/SupplierReference",
+  "title": "SupplierReference",
+  "type": "object",
+  "description": "Reference to a supplier",
+  "properties": {
+    "id": {
+      "type": "integer",
+      "description": "Coupa unique identifier for the supplier"
+    },
+    "name": {
+      "type": "string",
+      "description": "Supplier name"
+    },
+    "number": {
+      "type": "string",
+      "description": "Supplier number"
+    }
+  }
+}
