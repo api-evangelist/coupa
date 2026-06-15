@@ -1,0 +1,780 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Coupa Core API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "oauth2",
+      "flow": "client_credentials",
+      "accessTokenUrl": "https://{instance}.coupahost.com/oauth2/token",
+      "credentials": {
+        "clientId": "{{clientId}}",
+        "clientSecret": "{{clientSecret}}"
+      }
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Purchase Orders",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Coupa List purchase orders",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{instance}.coupahost.com/api/purchase_orders",
+            "params": [
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "Number of records to skip for pagination"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of records to return (max 50)"
+              },
+              {
+                "name": "return_object",
+                "value": "",
+                "type": "query",
+                "description": "Set to limited to return only key fields, or shallow to exclude nested objects"
+              },
+              {
+                "name": "dir",
+                "value": "",
+                "type": "query",
+                "description": "Sort direction (asc or desc)"
+              },
+              {
+                "name": "status",
+                "value": "",
+                "type": "query",
+                "description": "Filter by order status. Includes buyer_hold, cancelled, closed, currency_hold, draft, error, expensed, issued, supplier_hold, supplier_window_hold, and exported."
+              },
+              {
+                "name": "po-number",
+                "value": "",
+                "type": "query",
+                "description": "Filter by purchase order number"
+              },
+              {
+                "name": "supplier[name]",
+                "value": "",
+                "type": "query",
+                "description": "Filter by supplier name"
+              },
+              {
+                "name": "updated-at[gt]",
+                "value": "",
+                "type": "query",
+                "description": "Filter for records updated after this datetime"
+              },
+              {
+                "name": "created-at[gt]",
+                "value": "",
+                "type": "query",
+                "description": "Filter for records created after this datetime"
+              },
+              {
+                "name": "exported",
+                "value": "",
+                "type": "query",
+                "description": "Filter by export status"
+              }
+            ]
+          },
+          "docs": "Retrieve a list of purchase orders. Use query parameters to filter results. Coupa recommends always limiting result sets with GET criteria for optimal performance."
+        },
+        {
+          "info": {
+            "name": "Coupa Create a purchase order",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{instance}.coupahost.com/api/purchase_orders",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a new external purchase order. The type must be set to ExternalOrderHeader. A supplier and at least one order line are required."
+        },
+        {
+          "info": {
+            "name": "Coupa Get a purchase order",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{instance}.coupahost.com/api/purchase_orders/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Coupa internal unique identifier"
+              },
+              {
+                "name": "return_object",
+                "value": "",
+                "type": "query",
+                "description": "Set to limited to return only key fields, or shallow to exclude nested objects"
+              }
+            ]
+          },
+          "docs": "Retrieve a single purchase order by its Coupa internal ID."
+        },
+        {
+          "info": {
+            "name": "Coupa Update a purchase order",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://{instance}.coupahost.com/api/purchase_orders/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Coupa internal unique identifier"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update an existing purchase order by its Coupa internal ID."
+        },
+        {
+          "info": {
+            "name": "Coupa Cancel a purchase order",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://{instance}.coupahost.com/api/purchase_orders/:id/cancel",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Coupa internal unique identifier"
+              }
+            ]
+          },
+          "docs": "Cancel an existing purchase order."
+        },
+        {
+          "info": {
+            "name": "Coupa Close a purchase order",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://{instance}.coupahost.com/api/purchase_orders/:id/close",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Coupa internal unique identifier"
+              }
+            ]
+          },
+          "docs": "Close an existing purchase order."
+        },
+        {
+          "info": {
+            "name": "Coupa Issue a purchase order",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://{instance}.coupahost.com/api/purchase_orders/:id/issue",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Coupa internal unique identifier"
+              }
+            ]
+          },
+          "docs": "Issue and send the purchase order to the supplier."
+        },
+        {
+          "info": {
+            "name": "Coupa Reopen a purchase order",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://{instance}.coupahost.com/api/purchase_orders/:id/reopen",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Coupa internal unique identifier"
+              }
+            ]
+          },
+          "docs": "Reopen a soft-closed purchase order."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Invoices",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Coupa List invoices",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{instance}.coupahost.com/api/invoices",
+            "params": [
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "Number of records to skip for pagination"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of records to return (max 50)"
+              },
+              {
+                "name": "return_object",
+                "value": "",
+                "type": "query",
+                "description": "Set to limited to return only key fields, or shallow to exclude nested objects"
+              },
+              {
+                "name": "dir",
+                "value": "",
+                "type": "query",
+                "description": "Sort direction (asc or desc)"
+              },
+              {
+                "name": "status",
+                "value": "",
+                "type": "query",
+                "description": "Filter by invoice status. Full list includes new, draft, pending_approval, approved, pending_receipt, processing, payable_adjustment, on_hold, ap_hold, booking_hold, pending_action, rejected, disputed, abandoned, voided, invalid."
+              },
+              {
+                "name": "invoice-number",
+                "value": "",
+                "type": "query",
+                "description": "Filter by invoice number"
+              },
+              {
+                "name": "supplier[name]",
+                "value": "",
+                "type": "query",
+                "description": "Filter by supplier name"
+              },
+              {
+                "name": "updated-at[gt]",
+                "value": "",
+                "type": "query",
+                "description": "Filter for records updated after this datetime"
+              },
+              {
+                "name": "exported",
+                "value": "",
+                "type": "query",
+                "description": "Filter by export status"
+              }
+            ]
+          },
+          "docs": "Retrieve a list of invoices. Use query parameters to filter results. Supports filtering by status, supplier, date ranges, and export status."
+        },
+        {
+          "info": {
+            "name": "Coupa Create an invoice",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{instance}.coupahost.com/api/invoices",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a new invoice. Requires an invoice number, invoice date, supplier, currency, and at least one invoice line."
+        },
+        {
+          "info": {
+            "name": "Coupa Get an invoice",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{instance}.coupahost.com/api/invoices/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Coupa internal unique identifier"
+              },
+              {
+                "name": "return_object",
+                "value": "",
+                "type": "query",
+                "description": "Set to limited to return only key fields, or shallow to exclude nested objects"
+              }
+            ]
+          },
+          "docs": "Retrieve a single invoice by its Coupa internal ID."
+        },
+        {
+          "info": {
+            "name": "Coupa Update an invoice",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://{instance}.coupahost.com/api/invoices/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Coupa internal unique identifier"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update an existing invoice by its Coupa internal ID."
+        },
+        {
+          "info": {
+            "name": "Coupa Submit a draft invoice for approval",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://{instance}.coupahost.com/api/invoices/:id/submit",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Coupa internal unique identifier"
+              }
+            ]
+          },
+          "docs": "Submit a draft invoice for approval. The invoice must be in draft status. Once submitted, the invoice enters the approval workflow."
+        },
+        {
+          "info": {
+            "name": "Coupa Abandon an invoice",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://{instance}.coupahost.com/api/invoices/:id/abandon",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Coupa internal unique identifier"
+              }
+            ]
+          },
+          "docs": "Abandon an invoice, removing it from active processing."
+        },
+        {
+          "info": {
+            "name": "Coupa Void an approved or pending invoice",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://{instance}.coupahost.com/api/invoices/:id/void",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Coupa internal unique identifier"
+              }
+            ]
+          },
+          "docs": "Void an invoice that is in approved or pending status. Voided invoices cannot be reactivated."
+        },
+        {
+          "info": {
+            "name": "Coupa Dispute an invoice",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://{instance}.coupahost.com/api/invoices/:id/dispute",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Coupa internal unique identifier"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Dispute an invoice. The supplier will be notified and the invoice status changes to disputed."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Requisitions",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Coupa List requisitions",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{instance}.coupahost.com/api/requisitions",
+            "params": [
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "Number of records to skip for pagination"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of records to return (max 50)"
+              },
+              {
+                "name": "return_object",
+                "value": "",
+                "type": "query",
+                "description": "Set to limited to return only key fields, or shallow to exclude nested objects"
+              },
+              {
+                "name": "dir",
+                "value": "",
+                "type": "query",
+                "description": "Sort direction (asc or desc)"
+              },
+              {
+                "name": "status",
+                "value": "",
+                "type": "query",
+                "description": "Filter by requisition status (draft, cart, pending_buyer_action, pending_approval, approved, ordered, partially_received, received, abandoned, withdrawn)"
+              },
+              {
+                "name": "requester[login]",
+                "value": "",
+                "type": "query",
+                "description": "Filter by requester login"
+              },
+              {
+                "name": "updated-at[gt]",
+                "value": "",
+                "type": "query",
+                "description": "Filter for records updated after this datetime"
+              },
+              {
+                "name": "exported",
+                "value": "",
+                "type": "query",
+                "description": "Filter by export status"
+              }
+            ]
+          },
+          "docs": "Retrieve a list of requisitions. Use query parameters to filter results. Supports filtering by status, requester, date ranges, and export status."
+        },
+        {
+          "info": {
+            "name": "Coupa Create a requisition",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{instance}.coupahost.com/api/requisitions",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a new requisition. Requires at least one requisition line. Line numbers must increment by one; duplicate line numbers are ignored. Currencies and users must have active status."
+        },
+        {
+          "info": {
+            "name": "Coupa Get a requisition",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{instance}.coupahost.com/api/requisitions/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Coupa internal unique identifier"
+              },
+              {
+                "name": "return_object",
+                "value": "",
+                "type": "query",
+                "description": "Set to limited to return only key fields, or shallow to exclude nested objects"
+              }
+            ]
+          },
+          "docs": "Retrieve a single requisition by its Coupa internal ID."
+        },
+        {
+          "info": {
+            "name": "Coupa Update a requisition",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://{instance}.coupahost.com/api/requisitions/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Coupa internal unique identifier"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update an existing requisition by its Coupa internal ID."
+        },
+        {
+          "info": {
+            "name": "Coupa Delete a requisition",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://{instance}.coupahost.com/api/requisitions/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Coupa internal unique identifier"
+              }
+            ]
+          },
+          "docs": "Delete an existing requisition by its Coupa internal ID. Only requisitions in draft status can be deleted."
+        },
+        {
+          "info": {
+            "name": "Coupa Submit a requisition for approval",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{instance}.coupahost.com/api/requisitions/submit_for_approval",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Submit a requisition for approval. The requisition must have at least one line item and valid accounting allocations."
+        },
+        {
+          "info": {
+            "name": "Coupa Update and submit a requisition for approval",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://{instance}.coupahost.com/api/requisitions/:id/update_and_submit_for_approval",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Coupa internal unique identifier"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update a requisition and submit it for approval in a single operation."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Suppliers",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Coupa List suppliers",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{instance}.coupahost.com/api/suppliers",
+            "params": [
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "Number of records to skip for pagination"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of records to return (max 50)"
+              },
+              {
+                "name": "return_object",
+                "value": "",
+                "type": "query",
+                "description": "Set to limited to return only key fields, or shallow to exclude nested objects"
+              },
+              {
+                "name": "dir",
+                "value": "",
+                "type": "query",
+                "description": "Sort direction (asc or desc)"
+              },
+              {
+                "name": "name",
+                "value": "",
+                "type": "query",
+                "description": "Filter by supplier name"
+              },
+              {
+                "name": "number",
+                "value": "",
+                "type": "query",
+                "description": "Filter by supplier number"
+              },
+              {
+                "name": "status",
+                "value": "",
+                "type": "query",
+                "description": "Filter by supplier status (active, inactive, draft)"
+              },
+              {
+                "name": "updated-at[gt]",
+                "value": "",
+                "type": "query",
+                "description": "Filter for records updated after this datetime"
+              }
+            ]
+          },
+          "docs": "Retrieve a list of suppliers. Use query parameters to filter results. Supports filtering by name, number, status, and date ranges."
+        },
+        {
+          "info": {
+            "name": "Coupa Create a supplier",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{instance}.coupahost.com/api/suppliers",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a new supplier record. The supplier name is required. Default status is draft if not specified. Default payment method is invoice."
+        },
+        {
+          "info": {
+            "name": "Coupa Get a supplier",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{instance}.coupahost.com/api/suppliers/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Coupa internal unique identifier"
+              },
+              {
+                "name": "return_object",
+                "value": "",
+                "type": "query",
+                "description": "Set to limited to return only key fields, or shallow to exclude nested objects"
+              }
+            ]
+          },
+          "docs": "Retrieve a single supplier by its Coupa internal ID."
+        },
+        {
+          "info": {
+            "name": "Coupa Update a supplier",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://{instance}.coupahost.com/api/suppliers/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Coupa internal unique identifier"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update an existing supplier by its Coupa internal ID. Cannot reassign address or contact IDs when updating primary address or contact."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}
