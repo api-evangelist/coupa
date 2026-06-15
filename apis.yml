@@ -73,6 +73,8 @@ apis:
         url: vocabulary/coupa-vocabulary.yml
       - type: Rules
         url: rules/coupa-core-api-rules.yml
+      - type: GraphQL
+        url: graphql/coupa-graphql.md
       - type: Capabilities
         url: capabilities/coupa-procure-to-pay-capabilities.yml
     features:
