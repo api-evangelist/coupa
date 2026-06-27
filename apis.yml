@@ -46,7 +46,7 @@ apis:
       - type: GettingStarted
         url: >-
           https://compass.coupa.com/en-us/products/product-documentation/integration-technical-documentation/the-coupa-core-api/get-started-with-the-api
-      - type: Errors
+      - type: ErrorCodes
         url: >-
           https://compass.coupa.com/en-us/products/product-documentation/integration-technical-documentation/the-coupa-core-api/get-started-with-the-api/exception-handling-and-error-codes
       - type: APIReturnFormats
@@ -424,7 +424,7 @@ apis:
 common:
   - type: GitHubOrganization
     url: https://github.com/coupa
-  - type: Developer Portal
+  - type: DeveloperPortal
     url: https://compass.coupa.com/en-us/products/product-documentation/integration-technical-documentation
   - type: Authentication
     url: >-
@@ -440,7 +440,7 @@ common:
       https://compass.coupa.com/en-us/products/product-documentation/integration-technical-documentation/the-coupa-core-api/get-started-with-the-api
   - type: RateLimits
     url: https://compass.coupa.com/en-us/products/product-documentation/integration-technical-documentation/api-rate-limits
-  - type: Errors
+  - type: ErrorCodes
     url: >-
       https://compass.coupa.com/en-us/products/product-documentation/integration-technical-documentation/the-coupa-core-api/get-started-with-the-api/exception-handling-and-error-codes
   - type: APIResources
