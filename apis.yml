@@ -422,6 +422,8 @@ apis:
         url: >-
           https://compass.coupa.com/en-us/products/product-documentation/integration-technical-documentation/the-coupa-core-api/resources/transactional-resources/pick-listsfulfillment-reservations-api-(pick-lists)/inventory-balance-api
 common:
+  - type: OAuthScopes
+    url: scopes/coupa-scopes.yml
   - type: GitHubOrganization
     url: https://github.com/coupa
   - type: DeveloperPortal

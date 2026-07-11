@@ -1,0 +1,60 @@
+generated: '2026-07-11'
+method: derived
+source: openapi/coupa-core-api-openapi.yml
+schemes:
+- name: oauth2
+  source: openapi/coupa-core-api-openapi.yml
+  flows:
+  - flow: clientCredentials
+    tokenUrl: https://{instance}.coupahost.com/oauth2/token
+  description: OAuth 2.0 authentication. Coupa supports the client_credentials grant type. Obtain
+    client credentials from Coupa instance setup.
+scopes:
+- scope: core.invoices.read
+  description: Read invoices
+  flows:
+  - clientCredentials
+  sources:
+  - openapi/coupa-core-api-openapi.yml
+- scope: core.invoices.write
+  description: Create and update invoices
+  flows:
+  - clientCredentials
+  sources:
+  - openapi/coupa-core-api-openapi.yml
+- scope: core.purchase_orders.read
+  description: Read purchase orders
+  flows:
+  - clientCredentials
+  sources:
+  - openapi/coupa-core-api-openapi.yml
+- scope: core.purchase_orders.write
+  description: Create and update purchase orders
+  flows:
+  - clientCredentials
+  sources:
+  - openapi/coupa-core-api-openapi.yml
+- scope: core.requisitions.read
+  description: Read requisitions
+  flows:
+  - clientCredentials
+  sources:
+  - openapi/coupa-core-api-openapi.yml
+- scope: core.requisitions.write
+  description: Create and update requisitions
+  flows:
+  - clientCredentials
+  sources:
+  - openapi/coupa-core-api-openapi.yml
+- scope: core.suppliers.read
+  description: Read suppliers
+  flows:
+  - clientCredentials
+  sources:
+  - openapi/coupa-core-api-openapi.yml
+- scope: core.suppliers.write
+  description: Create and update suppliers
+  flows:
+  - clientCredentials
+  sources:
+  - openapi/coupa-core-api-openapi.yml
