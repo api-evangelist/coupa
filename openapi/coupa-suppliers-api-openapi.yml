@@ -1,0 +1,726 @@
+openapi: 3.1.0
+info:
+  title: Coupa Core Invoices Suppliers API
+  description: The primary RESTful API for accessing and managing core Coupa Business Spend Management (BSM) resources including purchase orders, invoices, requisitions, and suppliers. Supports both JSON and XML response formats. All endpoints require OAuth 2.0 or API key authentication. Coupa recommends using query parameters to limit result sets for optimal performance.
+  version: 1.0.0
+  termsOfService: https://www.coupa.com/company/trust/agreements
+  contact:
+    name: Coupa Support
+    url: https://compass.coupa.com/en-us/support
+  license:
+    name: Proprietary
+    url: https://www.coupa.com/company/trust/agreements
+  x-logo:
+    url: https://www.coupa.com/wp-content/themes/coupa/images/coupa-logo.svg
+    altText: Coupa
+servers:
+- url: https://{instance}.coupahost.com/api
+  description: Coupa Production Instance
+  variables:
+    instance:
+      default: your-instance
+      description: Your Coupa instance subdomain
+security:
+- oauth2: []
+- apiKey: []
+tags:
+- name: Suppliers
+  description: Create, retrieve, update, and manage supplier records. Suppliers represent vendor organizations that provide goods or services.
+  externalDocs:
+    url: https://compass.coupa.com/en-us/products/product-documentation/integration-technical-documentation/the-coupa-core-api/resources/reference-data-resources/suppliers-api-(suppliers)
+paths:
+  /suppliers:
+    get:
+      operationId: listSuppliers
+      summary: Coupa List suppliers
+      description: Retrieve a list of suppliers. Use query parameters to filter results. Supports filtering by name, number, status, and date ranges.
+      tags:
+      - Suppliers
+      parameters:
+      - $ref: '#/components/parameters/offsetParam'
+      - $ref: '#/components/parameters/limitParam'
+      - $ref: '#/components/parameters/returnObjectParam'
+      - $ref: '#/components/parameters/dirParam'
+      - name: name
+        in: query
+        description: Filter by supplier name
+        schema:
+          type: string
+      - name: number
+        in: query
+        description: Filter by supplier number
+        schema:
+          type: string
+      - name: status
+        in: query
+        description: Filter by supplier status (active, inactive, draft)
+        schema:
+          type: string
+          enum:
+          - active
+          - inactive
+          - draft
+      - name: updated-at[gt]
+        in: query
+        description: Filter for records updated after this datetime
+        schema:
+          type: string
+          format: date-time
+      responses:
+        '200':
+          description: A list of suppliers
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Supplier'
+            application/xml:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Supplier'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+    post:
+      operationId: createSupplier
+      summary: Coupa Create a supplier
+      description: Create a new supplier record. The supplier name is required. Default status is draft if not specified. Default payment method is invoice.
+      tags:
+      - Suppliers
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SupplierCreate'
+          application/xml:
+            schema:
+              $ref: '#/components/schemas/SupplierCreate'
+      responses:
+        '201':
+          description: Supplier created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Supplier'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '422':
+          $ref: '#/components/responses/UnprocessableEntity'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+  /suppliers/{id}:
+    get:
+      operationId: getSupplier
+      summary: Coupa Get a supplier
+      description: Retrieve a single supplier by its Coupa internal ID.
+      tags:
+      - Suppliers
+      parameters:
+      - $ref: '#/components/parameters/idParam'
+      - $ref: '#/components/parameters/returnObjectParam'
+      responses:
+        '200':
+          description: A single supplier
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Supplier'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+    put:
+      operationId: updateSupplier
+      summary: Coupa Update a supplier
+      description: Update an existing supplier by its Coupa internal ID. Cannot reassign address or contact IDs when updating primary address or contact.
+      tags:
+      - Suppliers
+      parameters:
+      - $ref: '#/components/parameters/idParam'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SupplierUpdate'
+          application/xml:
+            schema:
+              $ref: '#/components/schemas/SupplierUpdate'
+      responses:
+        '200':
+          description: Supplier updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Supplier'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '422':
+          $ref: '#/components/responses/UnprocessableEntity'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+components:
+  parameters:
+    idParam:
+      name: id
+      in: path
+      required: true
+      description: Coupa internal unique identifier
+      schema:
+        type: integer
+    limitParam:
+      name: limit
+      in: query
+      description: Maximum number of records to return (max 50)
+      schema:
+        type: integer
+        default: 50
+        maximum: 50
+    offsetParam:
+      name: offset
+      in: query
+      description: Number of records to skip for pagination
+      schema:
+        type: integer
+        default: 0
+    dirParam:
+      name: dir
+      in: query
+      description: Sort direction (asc or desc)
+      schema:
+        type: string
+        enum:
+        - asc
+        - desc
+    returnObjectParam:
+      name: return_object
+      in: query
+      description: Set to limited to return only key fields, or shallow to exclude nested objects
+      schema:
+        type: string
+        enum:
+        - limited
+        - shallow
+  responses:
+    InternalServerError:
+      description: Internal server error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Unauthorized:
+      description: Unauthorized - invalid or missing authentication credentials
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    UnprocessableEntity:
+      description: Unprocessable entity - validation errors
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    BadRequest:
+      description: Bad request - invalid parameters or malformed request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    NotFound:
+      description: Resource not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+  schemas:
+    AddressReference:
+      type: object
+      description: Reference to an address
+      properties:
+        id:
+          type: integer
+          description: Coupa unique identifier for the address
+        name:
+          type: string
+          description: Address name
+        street1:
+          type: string
+          description: Street address line 1
+        street2:
+          type: string
+          description: Street address line 2
+        city:
+          type: string
+          description: City
+        state:
+          type: string
+          description: State or province
+        postal-code:
+          type: string
+          description: Postal or ZIP code
+        country:
+          type: object
+          properties:
+            id:
+              type: integer
+            code:
+              type: string
+              description: ISO 3166-1 alpha-2 country code
+    SupplierCreate:
+      type: object
+      description: Schema for creating a new supplier
+      required:
+      - name
+      properties:
+        name:
+          type: string
+          maxLength: 100
+        number:
+          type: string
+        display-name:
+          type: string
+        duns:
+          type: string
+        tax-id:
+          type: string
+        account-number:
+          type: string
+        corporate-url:
+          type: string
+        website:
+          type: string
+        commodity:
+          type: string
+        payment-method:
+          type: string
+          enum:
+          - invoice
+          - pcard
+          - invoice_only
+          - pcard_only
+          - virtual_card
+        payment-term:
+          $ref: '#/components/schemas/PaymentTermReference'
+        shipping-term:
+          $ref: '#/components/schemas/ShippingTermReference'
+        invoice-matching-level:
+          type: string
+          enum:
+          - 2-way
+          - 3-way
+          - 3-way-direct
+          - none
+        po-method:
+          type: string
+          enum:
+          - cxml
+          - xml
+          - email
+          - prompt
+          - mark_as_sent
+          - buy_online
+        po-email:
+          type: string
+        primary-contact:
+          type: string
+        primary-address:
+          $ref: '#/components/schemas/AddressReference'
+        default-locale:
+          type: string
+        strategic-supplier:
+          type: boolean
+        one-time-supplier:
+          type: boolean
+        allow-cxml-invoicing:
+          type: boolean
+        allow-inv-from-connect:
+          type: boolean
+        allow-inv-no-backing-doc-from-connect:
+          type: boolean
+    UserReference:
+      type: object
+      description: Reference to a Coupa user
+      properties:
+        id:
+          type: integer
+          description: Coupa unique identifier for the user
+        login:
+          type: string
+          description: User login name
+        email:
+          type: string
+          format: email
+          description: User email address
+    SupplierUpdate:
+      type: object
+      description: Schema for updating a supplier
+      properties:
+        name:
+          type: string
+          maxLength: 100
+        number:
+          type: string
+        display-name:
+          type: string
+        duns:
+          type: string
+        tax-id:
+          type: string
+        account-number:
+          type: string
+        corporate-url:
+          type: string
+        website:
+          type: string
+        status:
+          type: string
+          enum:
+          - active
+          - inactive
+        on-hold:
+          type: boolean
+        commodity:
+          type: string
+        payment-method:
+          type: string
+          enum:
+          - invoice
+          - pcard
+          - invoice_only
+          - pcard_only
+          - virtual_card
+        payment-term:
+          $ref: '#/components/schemas/PaymentTermReference'
+        shipping-term:
+          $ref: '#/components/schemas/ShippingTermReference'
+        invoice-matching-level:
+          type: string
+          enum:
+          - 2-way
+          - 3-way
+          - 3-way-direct
+          - none
+        po-method:
+          type: string
+          enum:
+          - cxml
+          - xml
+          - email
+          - prompt
+          - mark_as_sent
+          - buy_online
+        po-email:
+          type: string
+        primary-contact:
+          type: string
+        default-locale:
+          type: string
+        strategic-supplier:
+          type: boolean
+        allow-cxml-invoicing:
+          type: boolean
+        allow-inv-from-connect:
+          type: boolean
+        hold-invoices-for-ap-review:
+          type: boolean
+        send-invoices-to-approvals:
+          type: boolean
+    Supplier:
+      type: object
+      description: A supplier (vendor) organization that provides goods or services. Represents the full supplier record with all configuration settings.
+      properties:
+        id:
+          type: integer
+          description: Coupa internal unique identifier
+          readOnly: true
+        name:
+          type: string
+          description: Supplier name
+          maxLength: 100
+        number:
+          type: string
+          description: Supplier number
+        display-name:
+          type: string
+          description: Display name for the supplier
+        status:
+          type: string
+          description: Supplier status
+          enum:
+          - active
+          - inactive
+          - draft
+        supplier-status:
+          type: string
+          description: Supplier status (draft when first created)
+        duns:
+          type: string
+          description: Supplier DUNS number
+        tax-id:
+          type: string
+          description: Supplier tax identification number
+        account-number:
+          type: string
+          description: Account number
+        corporate-url:
+          type: string
+          description: Corporate website URL
+        website:
+          type: string
+          description: Supplier website
+        on-hold:
+          type: boolean
+          description: Whether the supplier is on hold
+        buyer-hold:
+          type: boolean
+          description: Whether all POs are held for buyer review
+        one-time-supplier:
+          type: boolean
+          description: Whether this is a one-time supplier
+        strategic-supplier:
+          type: boolean
+          description: Whether this is a strategic supplier
+        commodity:
+          type: string
+          description: Default commodity
+        payment-method:
+          type: string
+          description: Default payment method
+          enum:
+          - invoice
+          - pcard
+          - invoice_only
+          - pcard_only
+          - virtual_card
+        payment-term:
+          $ref: '#/components/schemas/PaymentTermReference'
+        shipping-term:
+          $ref: '#/components/schemas/ShippingTermReference'
+        invoice-matching-level:
+          type: string
+          description: Invoice matching level
+          enum:
+          - 2-way
+          - 3-way
+          - 3-way-direct
+          - none
+        order-confirmation-level:
+          type: integer
+          description: Order confirmation level (0=not_applicable, 1=header, 2=line)
+        confirm-by-hrs:
+          type: number
+          format: decimal
+          description: Confirmation deadline in hours
+        po-method:
+          type: string
+          description: Purchase order transmission method
+          enum:
+          - cxml
+          - xml
+          - email
+          - prompt
+          - mark_as_sent
+          - buy_online
+        po-email:
+          type: string
+          description: Email address for PO transmission
+        po-change-method:
+          type: string
+          description: Purchase order change transmission method
+        primary-contact:
+          type: string
+          description: Primary supplier contact email
+        primary-address:
+          $ref: '#/components/schemas/AddressReference'
+        contacts:
+          type: array
+          description: Supplier contact information
+          items:
+            type: object
+            properties:
+              id:
+                type: integer
+              name:
+                type: string
+              email:
+                type: string
+                format: email
+              phone:
+                type: string
+        remit-to-addresses:
+          type: array
+          description: Remit-to addresses for payments
+          items:
+            $ref: '#/components/schemas/AddressReference'
+        supplier-addresses:
+          type: array
+          description: List of supplier addresses
+          items:
+            $ref: '#/components/schemas/AddressReference'
+        default-locale:
+          type: string
+          description: Default locale for sending emails to this supplier
+        allow-cxml-invoicing:
+          type: boolean
+          description: Whether cXML invoicing is allowed
+        allow-inv-from-connect:
+          type: boolean
+          description: Whether the supplier can create invoices against POs or Contracts
+        allow-inv-no-backing-doc-from-connect:
+          type: boolean
+          description: Whether the supplier can create invoices without a backing PO
+        allow-inv-unbacked-lines-from-connect:
+          type: boolean
+          description: Whether the supplier can create unbacked invoice lines
+        allow-cn-no-backing-doc-from-connect:
+          type: boolean
+          description: Whether the supplier can create credit notes without a backing invoice
+        allow-csp-access-without-two-factor:
+          type: boolean
+          description: Whether CSP access is allowed without two-factor authentication
+        allow-change-requests:
+          type: boolean
+          description: Whether the supplier can initiate change requests via CSP
+        hold-invoices-for-ap-review:
+          type: boolean
+          description: Whether invoices from this supplier require AP review before approval
+        send-invoices-to-approvals:
+          type: boolean
+          description: Whether invoices are sent through approval workflows
+        invoice-emails:
+          type: string
+          description: Registered email addresses permitted to send invoices
+        savings-pct:
+          type: number
+          format: decimal
+          description: Savings percentage for using this supplier
+        cxml-domain:
+          type: string
+          description: cXML domain identifier
+        cxml-identity:
+          type: string
+          description: cXML identity
+        cxml-url:
+          type: string
+          description: URL where POs are sent for cXML transmission
+        cxml-protocol:
+          type: string
+          description: cXML transmission protocol
+        cxml-supplier-domain:
+          type: string
+          description: Supplier domain for cXML
+        cxml-supplier-identity:
+          type: string
+          description: Supplier identity for cXML
+        diversities:
+          type: array
+          description: Supplier diversity markers
+          items:
+            type: object
+            properties:
+              id:
+                type: integer
+              name:
+                type: string
+        tags:
+          type: array
+          description: Associated tags
+          items:
+            type: object
+            properties:
+              id:
+                type: integer
+              name:
+                type: string
+        scope-three-emissions:
+          type: boolean
+          description: Whether the supplier tracks Scope Three Emissions
+        do-not-accelerate:
+          type: boolean
+          description: Do not accelerate payment terms (Static Discounting)
+        created-at:
+          type: string
+          format: date-time
+          description: Timestamp when the supplier was created
+          readOnly: true
+        updated-at:
+          type: string
+          format: date-time
+          description: Timestamp when the supplier was last updated
+          readOnly: true
+        created-by:
+          $ref: '#/components/schemas/UserReference'
+        updated-by:
+          $ref: '#/components/schemas/UserReference'
+    ShippingTermReference:
+      type: object
+      description: Reference to a shipping term
+      properties:
+        id:
+          type: integer
+          description: Coupa unique identifier for the shipping term
+        code:
+          type: string
+          description: Shipping term code
+    Error:
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            type: object
+            properties:
+              message:
+                type: string
+                description: Human-readable error message
+              field:
+                type: string
+                description: Field that caused the error
+    PaymentTermReference:
+      type: object
+      description: Reference to a payment term
+      properties:
+        id:
+          type: integer
+          description: Coupa unique identifier for the payment term
+        code:
+          type: string
+          description: Payment term code
+  securitySchemes:
+    oauth2:
+      type: oauth2
+      description: OAuth 2.0 authentication. Coupa supports the client_credentials grant type. Obtain client credentials from Coupa instance setup.
+      flows:
+        clientCredentials:
+          tokenUrl: https://{instance}.coupahost.com/oauth2/token
+          scopes:
+            core.purchase_orders.read: Read purchase orders
+            core.purchase_orders.write: Create and update purchase orders
+            core.invoices.read: Read invoices
+            core.invoices.write: Create and update invoices
+            core.requisitions.read: Read requisitions
+            core.requisitions.write: Create and update requisitions
+            core.suppliers.read: Read suppliers
+            core.suppliers.write: Create and update suppliers
+    apiKey:
+      type: apiKey
+      in: header
+      name: X-COUPA-API-KEY
+      description: Legacy API key authentication. Coupa recommends migrating to OAuth 2.0. API keys are configured per Coupa instance.
+externalDocs:
+  description: Coupa Core API Documentation
+  url: https://compass.coupa.com/en-us/products/product-documentation/integration-technical-documentation/coupa-core-api
