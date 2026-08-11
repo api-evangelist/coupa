@@ -406,7 +406,7 @@ apis:
     url: >-
       https://compass.coupa.com/en-us/products/product-documentation/integration-technical-documentation/the-coupa-core-api/get-started-with-the-api/special-actions-and-api-notes
   - type: OpenAPISpec
-    url: openapi/coupa-core-api-openapi.yml
+    url: openapi/_original/coupa-core-api-openapi.yml
   - type: JSONSchema
     url: json-schema/coupa-purchase-order-schema.json
   - type: JSONSchema
@@ -419,8 +419,6 @@ apis:
     url: rules/coupa-core-api-rules.yml
   - type: GraphQL
     url: graphql/coupa-graphql.md
-  - type: Capabilities
-    url: capabilities/coupa-procure-to-pay-capabilities.yml
 - aid: coupa:coupa-purchase-orders-api
   name: Coupa Purchase Orders API
   description: >-
@@ -458,7 +456,7 @@ apis:
     url: >-
       https://compass.coupa.com/en-us/products/product-documentation/integration-technical-documentation/the-coupa-core-api/get-started-with-the-api/special-actions-and-api-notes
   - type: OpenAPISpec
-    url: openapi/coupa-core-api-openapi.yml
+    url: openapi/_original/coupa-core-api-openapi.yml
   - type: JSONSchema
     url: json-schema/coupa-purchase-order-schema.json
   - type: JSONSchema
@@ -471,8 +469,6 @@ apis:
     url: rules/coupa-core-api-rules.yml
   - type: GraphQL
     url: graphql/coupa-graphql.md
-  - type: Capabilities
-    url: capabilities/coupa-procure-to-pay-capabilities.yml
 - aid: coupa:coupa-requisitions-api
   name: Coupa Requisitions API
   description: >-
@@ -510,7 +506,7 @@ apis:
     url: >-
       https://compass.coupa.com/en-us/products/product-documentation/integration-technical-documentation/the-coupa-core-api/get-started-with-the-api/special-actions-and-api-notes
   - type: OpenAPISpec
-    url: openapi/coupa-core-api-openapi.yml
+    url: openapi/_original/coupa-core-api-openapi.yml
   - type: JSONSchema
     url: json-schema/coupa-purchase-order-schema.json
   - type: JSONSchema
@@ -523,8 +519,6 @@ apis:
     url: rules/coupa-core-api-rules.yml
   - type: GraphQL
     url: graphql/coupa-graphql.md
-  - type: Capabilities
-    url: capabilities/coupa-procure-to-pay-capabilities.yml
 - aid: coupa:coupa-suppliers-api
   name: Coupa Suppliers API
   description: >-
@@ -562,7 +556,7 @@ apis:
     url: >-
       https://compass.coupa.com/en-us/products/product-documentation/integration-technical-documentation/the-coupa-core-api/get-started-with-the-api/special-actions-and-api-notes
   - type: OpenAPISpec
-    url: openapi/coupa-core-api-openapi.yml
+    url: openapi/_original/coupa-core-api-openapi.yml
   - type: JSONSchema
     url: json-schema/coupa-purchase-order-schema.json
   - type: JSONSchema
@@ -575,8 +569,6 @@ apis:
     url: rules/coupa-core-api-rules.yml
   - type: GraphQL
     url: graphql/coupa-graphql.md
-  - type: Capabilities
-    url: capabilities/coupa-procure-to-pay-capabilities.yml
 common:
   - type: AgenticAccess
     url: agentic-access/coupa-agentic-access.yml
