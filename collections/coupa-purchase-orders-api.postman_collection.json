@@ -1,0 +1,3113 @@
+{
+  "item": [
+    {
+      "id": "54edd4a4-c6d4-46b3-a2ef-7f35e2461de1",
+      "name": "Purchase Orders",
+      "description": {
+        "content": "Create, retrieve, update, and manage purchase orders. Purchase orders represent commitments to buy goods or services from suppliers.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "f049401b-558a-4bc4-945e-37f1ac12ad44",
+          "name": "Coupa List purchase orders",
+          "request": {
+            "name": "Coupa List purchase orders",
+            "description": {
+              "content": "Retrieve a list of purchase orders. Use query parameters to filter results. Coupa recommends always limiting result sets with GET criteria for optimal performance.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "purchase_orders"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "offset",
+                  "value": "0",
+                  "description": "Number of records to skip for pagination"
+                },
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "50",
+                  "description": "Maximum number of records to return (max 50)"
+                },
+                {
+                  "disabled": false,
+                  "key": "return_object",
+                  "value": "<string>",
+                  "description": "Set to limited to return only key fields, or shallow to exclude nested objects"
+                },
+                {
+                  "disabled": false,
+                  "key": "dir",
+                  "value": "<string>",
+                  "description": "Sort direction (asc or desc)"
+                },
+                {
+                  "disabled": false,
+                  "key": "status",
+                  "value": "<string>",
+                  "description": "Filter by order status. Includes buyer_hold, cancelled, closed, currency_hold, draft, error, expensed, issued, supplier_hold, supplier_window_hold, and exported."
+                },
+                {
+                  "disabled": false,
+                  "key": "po-number",
+                  "value": "<string>",
+                  "description": "Filter by purchase order number"
+                },
+                {
+                  "disabled": false,
+                  "key": "supplier[name]",
+                  "value": "<string>",
+                  "description": "Filter by supplier name"
+                },
+                {
+                  "disabled": false,
+                  "key": "updated-at[gt]",
+                  "value": "<dateTime>",
+                  "description": "Filter for records updated after this datetime"
+                },
+                {
+                  "disabled": false,
+                  "key": "created-at[gt]",
+                  "value": "<dateTime>",
+                  "description": "Filter for records created after this datetime"
+                },
+                {
+                  "disabled": false,
+                  "key": "exported",
+                  "value": "<boolean>",
+                  "description": "Filter by export status"
+                }
+              ],
+              "variable": [
+                {
+                  "description": "Your Coupa instance subdomain",
+                  "type": "any",
+                  "value": "{{instance}}",
+                  "key": "instance"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "8fecc81c-96b3-45b3-9eba-9d7b9b670a83",
+              "name": "A list of purchase orders",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "purchase_orders"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "offset",
+                      "value": "0"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "50"
+                    },
+                    {
+                      "key": "return_object",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "dir",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "status",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "po-number",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "supplier[name]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "updated-at[gt]",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "created-at[gt]",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "exported",
+                      "value": "<boolean>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": "Your Coupa instance subdomain",
+                      "type": "any",
+                      "value": "{{instance}}",
+                      "key": "instance"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"id\": 3923,\n    \"po-number\": \"string\",\n    \"status\": \"supplier_hold\",\n    \"type\": \"string\",\n    \"version\": 7080,\n    \"internal-revision\": 8247,\n    \"change-type\": \"revision\",\n    \"confirmation_status\": \"rejected\",\n    \"acknowledged-flag\": true,\n    \"acknowledged-at\": \"1951-04-06T20:28:07.271Z\",\n    \"total\": 3630.7217693718985,\n    \"currency\": {\n      \"id\": 1795,\n      \"code\": \"USD\"\n    },\n    \"supplier\": {\n      \"id\": 9090,\n      \"name\": \"string\",\n      \"number\": \"string\"\n    },\n    \"supplier-site\": {\n      \"id\": 2016,\n      \"name\": \"string\"\n    },\n    \"requester\": {\n      \"id\": 5616,\n      \"login\": \"string\",\n      \"email\": \"LZzLSW8e@N.zy\"\n    },\n    \"ship-to-address\": {\n      \"id\": 2182,\n      \"name\": \"string\",\n      \"street1\": \"string\",\n      \"street2\": \"string\",\n      \"city\": \"string\",\n      \"state\": \"string\",\n      \"postal-code\": \"string\",\n      \"country\": {\n        \"id\": 1795,\n        \"code\": \"string\"\n      }\n    },\n    \"ship-to-attention\": \"string\",\n    \"ship-to-user\": {\n      \"id\": 3638,\n      \"login\": \"string\",\n      \"email\": \"hnvz@YmkGEJTSKqSihwQugSXcuoUBxTPgitlh.isb\"\n    },\n    \"payment-term\": {\n      \"id\": 7933,\n      \"code\": \"string\"\n    },\n    \"payment-method\": \"pcard\",\n    \"shipping-term\": {\n      \"id\": 7506,\n      \"code\": \"string\"\n    },\n    \"order-lines\": [\n      {\n        \"id\": 4347,\n        \"line-num\": 7959,\n        \"description\": \"string\",\n        \"quantity\": 468.4203098256934,\n        \"price\": 9289.278116350803,\n        \"total\": 4210.15869160709,\n        \"uom\": {\n          \"id\": 8417,\n          \"code\": \"string\"\n        },\n        \"need-by-date\": \"2019-09-14T00:58:02.260Z\",\n        \"source-part-num\": \"string\",\n        \"commodity\": {\n          \"id\": 9553,\n          \"name\": \"string\"\n        },\n        \"account\": {\n          \"id\": 5240,\n          \"code\": \"string\"\n        },\n        \"status\": \"string\",\n        \"currency\": {\n          \"id\": 732,\n          \"code\": \"USD\"\n        },\n        \"supplier-aux-part-num\": \"string\",\n        \"receiving-warehouse\": {\n          \"id\": 9617,\n          \"name\": \"string\"\n        },\n        \"created-at\": \"2007-12-05T01:28:22.361Z\",\n        \"updated-at\": \"1980-12-28T05:35:27.205Z\"\n      },\n      {\n        \"id\": 4904,\n        \"line-num\": 8863,\n        \"description\": \"string\",\n        \"quantity\": 2055.8269615717904,\n        \"price\": 3861.72468206693,\n        \"total\": 6574.2480669435645,\n        \"uom\": {\n          \"id\": 1108,\n          \"code\": \"string\"\n        },\n        \"need-by-date\": \"1993-06-22T10:36:06.769Z\",\n        \"source-part-num\": \"string\",\n        \"commodity\": {\n          \"id\": 7530,\n          \"name\": \"string\"\n        },\n        \"account\": {\n          \"id\": 5736,\n          \"code\": \"string\"\n        },\n        \"status\": \"string\",\n        \"currency\": {\n          \"id\": 9927,\n          \"code\": \"USD\"\n        },\n        \"supplier-aux-part-num\": \"string\",\n        \"receiving-warehouse\": {\n          \"id\": 4451,\n          \"name\": \"string\"\n        },\n        \"created-at\": \"1974-04-26T12:36:17.827Z\",\n        \"updated-at\": \"1983-04-10T20:03:53.091Z\"\n      }\n    ],\n    \"requisition-header\": {\n      \"id\": 5798\n    },\n    \"invoice-stop\": true,\n    \"exported\": false,\n    \"last-exported-at\": \"1956-09-27T09:59:40.884Z\",\n    \"hide-price\": false,\n    \"price-hidden\": false,\n    \"transmission-method-override\": \"cxml\",\n    \"transmission-status\": \"pending\",\n    \"transmission-emails\": \"string\",\n    \"coupa-accelerate-status\": \"string\",\n    \"classification\": \"msp\",\n    \"confirm-by-hrs\": 6144,\n    \"order-confirmation-level\": 4065,\n    \"created-at\": \"2025-03-19T13:23:51.518Z\",\n    \"updated-at\": \"1999-04-26T09:38:56.962Z\",\n    \"created-by\": {\n      \"id\": 9824,\n      \"login\": \"string\",\n      \"email\": \"MR8YwgWxKTfep@ZXrEczbSrCmWZwcDnuyLuJvfsLd.qzcl\"\n    },\n    \"updated-by\": {\n      \"id\": 6498,\n      \"login\": \"string\",\n      \"email\": \"t8la@LIyrmGzLvoavBTddXwgTNj.viub\"\n    }\n  },\n  {\n    \"id\": 8047,\n    \"po-number\": \"string\",\n    \"status\": \"buyer_hold\",\n    \"type\": \"string\",\n    \"version\": 3010,\n    \"internal-revision\": 8950,\n    \"change-type\": \"change\",\n    \"confirmation_status\": \"partially_confirmed\",\n    \"acknowledged-flag\": false,\n    \"acknowledged-at\": \"1978-02-02T07:01:54.694Z\",\n    \"total\": 5352.385938308187,\n    \"currency\": {\n      \"id\": 2226,\n      \"code\": \"USD\"\n    },\n    \"supplier\": {\n      \"id\": 4271,\n      \"name\": \"string\",\n      \"number\": \"string\"\n    },\n    \"supplier-site\": {\n      \"id\": 1893,\n      \"name\": \"string\"\n    },\n    \"requester\": {\n      \"id\": 2310,\n      \"login\": \"string\",\n      \"email\": \"zEOdm@kQBcMDvAQQMd.rfe\"\n    },\n    \"ship-to-address\": {\n      \"id\": 6728,\n      \"name\": \"string\",\n      \"street1\": \"string\",\n      \"street2\": \"string\",\n      \"city\": \"string\",\n      \"state\": \"string\",\n      \"postal-code\": \"string\",\n      \"country\": {\n        \"id\": 8220,\n        \"code\": \"string\"\n      }\n    },\n    \"ship-to-attention\": \"string\",\n    \"ship-to-user\": {\n      \"id\": 8287,\n      \"login\": \"string\",\n      \"email\": \"FLl@fZjAVdZfPcifV.sot\"\n    },\n    \"payment-term\": {\n      \"id\": 4972,\n      \"code\": \"string\"\n    },\n    \"payment-method\": \"virtual_card\",\n    \"shipping-term\": {\n      \"id\": 659,\n      \"code\": \"string\"\n    },\n    \"order-lines\": [\n      {\n        \"id\": 6624,\n        \"line-num\": 1407,\n        \"description\": \"string\",\n        \"quantity\": 9412.994250576245,\n        \"price\": 9144.326109607435,\n        \"total\": 7256.5288653737825,\n        \"uom\": {\n          \"id\": 8309,\n          \"code\": \"string\"\n        },\n        \"need-by-date\": \"1993-05-31T02:28:53.657Z\",\n        \"source-part-num\": \"string\",\n        \"commodity\": {\n          \"id\": 8448,\n          \"name\": \"string\"\n        },\n        \"account\": {\n          \"id\": 8365,\n          \"code\": \"string\"\n        },\n        \"status\": \"string\",\n        \"currency\": {\n          \"id\": 6472,\n          \"code\": \"USD\"\n        },\n        \"supplier-aux-part-num\": \"string\",\n        \"receiving-warehouse\": {\n          \"id\": 6702,\n          \"name\": \"string\"\n        },\n        \"created-at\": \"2017-03-04T12:04:19.019Z\",\n        \"updated-at\": \"1969-08-16T23:39:32.970Z\"\n      },\n      {\n        \"id\": 7056,\n        \"line-num\": 2980,\n        \"description\": \"string\",\n        \"quantity\": 6298.173888278923,\n        \"price\": 8812.580441921536,\n        \"total\": 6199.208285183168,\n        \"uom\": {\n          \"id\": 7374,\n          \"code\": \"string\"\n        },\n        \"need-by-date\": \"1998-11-22T13:34:56.556Z\",\n        \"source-part-num\": \"string\",\n        \"commodity\": {\n          \"id\": 825,\n          \"name\": \"string\"\n        },\n        \"account\": {\n          \"id\": 4051,\n          \"code\": \"string\"\n        },\n        \"status\": \"string\",\n        \"currency\": {\n          \"id\": 1584,\n          \"code\": \"USD\"\n        },\n        \"supplier-aux-part-num\": \"string\",\n        \"receiving-warehouse\": {\n          \"id\": 2875,\n          \"name\": \"string\"\n        },\n        \"created-at\": \"2009-03-16T00:34:38.431Z\",\n        \"updated-at\": \"1949-08-23T07:00:54.063Z\"\n      }\n    ],\n    \"requisition-header\": {\n      \"id\": 228\n    },\n    \"invoice-stop\": true,\n    \"exported\": true,\n    \"last-exported-at\": \"2016-01-08T07:17:38.116Z\",\n    \"hide-price\": true,\n    \"price-hidden\": true,\n    \"transmission-method-override\": \"cxml\",\n    \"transmission-status\": \"sent_via_email\",\n    \"transmission-emails\": \"string\",\n    \"coupa-accelerate-status\": \"string\",\n    \"classification\": \"msp\",\n    \"confirm-by-hrs\": 80,\n    \"order-confirmation-level\": 7953,\n    \"created-at\": \"2004-06-02T07:54:48.272Z\",\n    \"updated-at\": \"1973-06-30T16:06:00.175Z\",\n    \"created-by\": {\n      \"id\": 2465,\n      \"login\": \"string\",\n      \"email\": \"j5Qfv@UozfxZWOJrPmLLT.eh\"\n    },\n    \"updated-by\": {\n      \"id\": 3388,\n      \"login\": \"string\",\n      \"email\": \"QFWSD2zM83gz1Qb@ZvtahNnJmtChHLHKXsuiWaTVpvq.vku\"\n    }\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "57422c1b-4d9d-4bfa-809b-6cdaa280d17c",
+              "name": "Bad request - invalid parameters or malformed request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "purchase_orders"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "offset",
+                      "value": "0"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "50"
+                    },
+                    {
+                      "key": "return_object",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "dir",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "status",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "po-number",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "supplier[name]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "updated-at[gt]",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "created-at[gt]",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "exported",
+                      "value": "<boolean>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": "Your Coupa instance subdomain",
+                      "type": "any",
+                      "value": "{{instance}}",
+                      "key": "instance"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"message\": \"string\",\n      \"field\": \"string\"\n    },\n    {\n      \"message\": \"string\",\n      \"field\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "333b9e59-533a-406c-9976-b388c3325f58",
+              "name": "Unauthorized - invalid or missing authentication credentials",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "purchase_orders"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "offset",
+                      "value": "0"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "50"
+                    },
+                    {
+                      "key": "return_object",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "dir",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "status",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "po-number",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "supplier[name]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "updated-at[gt]",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "created-at[gt]",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "exported",
+                      "value": "<boolean>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": "Your Coupa instance subdomain",
+                      "type": "any",
+                      "value": "{{instance}}",
+                      "key": "instance"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"message\": \"string\",\n      \"field\": \"string\"\n    },\n    {\n      \"message\": \"string\",\n      \"field\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "0ec27aa0-2452-4702-9774-9417fb5404ff",
+              "name": "Resource not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "purchase_orders"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "offset",
+                      "value": "0"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "50"
+                    },
+                    {
+                      "key": "return_object",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "dir",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "status",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "po-number",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "supplier[name]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "updated-at[gt]",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "created-at[gt]",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "exported",
+                      "value": "<boolean>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": "Your Coupa instance subdomain",
+                      "type": "any",
+                      "value": "{{instance}}",
+                      "key": "instance"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"message\": \"string\",\n      \"field\": \"string\"\n    },\n    {\n      \"message\": \"string\",\n      \"field\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "7ffd5138-8330-4551-824f-d8e2fce74b0e",
+              "name": "Internal server error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "purchase_orders"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "offset",
+                      "value": "0"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "50"
+                    },
+                    {
+                      "key": "return_object",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "dir",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "status",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "po-number",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "supplier[name]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "updated-at[gt]",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "created-at[gt]",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "exported",
+                      "value": "<boolean>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": "Your Coupa instance subdomain",
+                      "type": "any",
+                      "value": "{{instance}}",
+                      "key": "instance"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"message\": \"string\",\n      \"field\": \"string\"\n    },\n    {\n      \"message\": \"string\",\n      \"field\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "4a87b219-674d-4cb5-8e34-871bb6580020",
+          "name": "Coupa Create a purchase order",
+          "request": {
+            "name": "Coupa Create a purchase order",
+            "description": {
+              "content": "Create a new external purchase order. The type must be set to ExternalOrderHeader. A supplier and at least one order line are required.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "purchase_orders"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "description": "Your Coupa instance subdomain",
+                  "type": "any",
+                  "value": "{{instance}}",
+                  "key": "instance"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"type\": \"<string>\",\n  \"supplier\": {\n    \"id\": \"<integer>\",\n    \"name\": \"<string>\",\n    \"number\": \"<string>\"\n  },\n  \"currency\": {\n    \"id\": \"<integer>\",\n    \"code\": \"<string>\"\n  },\n  \"order-lines\": [\n    {\n      \"line-num\": \"<integer>\",\n      \"description\": \"<string>\",\n      \"quantity\": \"<decimal>\",\n      \"price\": \"<decimal>\",\n      \"uom\": {\n        \"id\": \"<integer>\",\n        \"code\": \"<string>\"\n      },\n      \"need-by-date\": \"<dateTime>\",\n      \"source-part-num\": \"<string>\",\n      \"commodity\": {\n        \"id\": \"<integer>\",\n        \"name\": \"<string>\"\n      },\n      \"account\": {\n        \"id\": \"<integer>\",\n        \"code\": \"<string>\"\n      },\n      \"currency\": {\n        \"id\": \"<integer>\",\n        \"code\": \"<string>\"\n      },\n      \"supplier-aux-part-num\": \"<string>\",\n      \"receiving-warehouse\": {\n        \"id\": \"<integer>\",\n        \"name\": \"<string>\"\n      }\n    }\n  ],\n  \"po-number\": \"<string>\",\n  \"ship-to-address\": {\n    \"id\": \"<integer>\",\n    \"name\": \"<string>\",\n    \"street1\": \"<string>\",\n    \"street2\": \"<string>\",\n    \"city\": \"<string>\",\n    \"state\": \"<string>\",\n    \"postal-code\": \"<string>\",\n    \"country\": {\n      \"id\": \"<integer>\",\n      \"code\": \"<string>\"\n    }\n  },\n  \"ship-to-attention\": \"<string>\",\n  \"ship-to-user\": {\n    \"id\": \"<integer>\",\n    \"login\": \"<string>\",\n    \"email\": \"<email>\"\n  },\n  \"payment-term\": {\n    \"id\": \"<integer>\",\n    \"code\": \"<string>\"\n  },\n  \"payment-method\": \"<string>\",\n  \"shipping-term\": {\n    \"id\": \"<integer>\",\n    \"code\": \"<string>\"\n  },\n  \"hide-price\": \"<boolean>\",\n  \"transmission-method-override\": \"<string>\",\n  \"transmission-emails\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "7852b7b0-f3cc-40d1-a819-9b8c2bce6bc3",
+              "name": "Purchase order created successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "purchase_orders"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": "Your Coupa instance subdomain",
+                      "type": "any",
+                      "value": "{{instance}}",
+                      "key": "instance"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"type\": \"<string>\",\n  \"supplier\": {\n    \"id\": 9687,\n    \"name\": \"string\",\n    \"number\": \"string\"\n  },\n  \"currency\": {\n    \"id\": 9713,\n    \"code\": \"USD\"\n  },\n  \"order-lines\": [\n    {\n      \"line-num\": 6517,\n      \"description\": \"string\",\n      \"quantity\": 1206.8685385665945,\n      \"price\": 5441.647758810326,\n      \"uom\": {\n        \"id\": 8232,\n        \"code\": \"string\"\n      },\n      \"need-by-date\": \"2013-09-05T14:08:06.913Z\",\n      \"source-part-num\": \"string\",\n      \"commodity\": {\n        \"id\": 6510,\n        \"name\": \"string\"\n      },\n      \"account\": {\n        \"id\": 7393,\n        \"code\": \"string\"\n      },\n      \"currency\": {\n        \"id\": 4945,\n        \"code\": \"USD\"\n      },\n      \"supplier-aux-part-num\": \"string\",\n      \"receiving-warehouse\": {\n        \"id\": 9274,\n        \"name\": \"string\"\n      }\n    }\n  ],\n  \"po-number\": \"<string>\",\n  \"ship-to-address\": {\n    \"id\": 9796,\n    \"name\": \"string\",\n    \"street1\": \"string\",\n    \"street2\": \"string\",\n    \"city\": \"string\",\n    \"state\": \"string\",\n    \"postal-code\": \"string\",\n    \"country\": {\n      \"id\": 3803,\n      \"code\": \"string\"\n    }\n  },\n  \"ship-to-attention\": \"<string>\",\n  \"ship-to-user\": {\n    \"id\": 4523,\n    \"login\": \"string\",\n    \"email\": \"ED5KdK9@QXRhVsOEAkKHipLIJrWakasXNPRy.coxb\"\n  },\n  \"payment-term\": {\n    \"id\": 6832,\n    \"code\": \"string\"\n  },\n  \"payment-method\": \"<string>\",\n  \"shipping-term\": {\n    \"id\": 6485,\n    \"code\": \"string\"\n  },\n  \"hide-price\": \"<boolean>\",\n  \"transmission-method-override\": \"<string>\",\n  \"transmission-emails\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": 5621,\n  \"po-number\": \"string\",\n  \"status\": \"issued\",\n  \"type\": \"string\",\n  \"version\": 5401,\n  \"internal-revision\": 1295,\n  \"change-type\": \"revision\",\n  \"confirmation_status\": \"rejected\",\n  \"acknowledged-flag\": true,\n  \"acknowledged-at\": \"2012-09-09T03:34:47.074Z\",\n  \"total\": 7687.386305493487,\n  \"currency\": {\n    \"id\": 2700,\n    \"code\": \"USD\"\n  },\n  \"supplier\": {\n    \"id\": 6792,\n    \"name\": \"string\",\n    \"number\": \"string\"\n  },\n  \"supplier-site\": {\n    \"id\": 4057,\n    \"name\": \"string\"\n  },\n  \"requester\": {\n    \"id\": 8318,\n    \"login\": \"string\",\n    \"email\": \"KidYK0ATZdY2w0o@OvnKJsUAyIIeUwLBAwE.xq\"\n  },\n  \"ship-to-address\": {\n    \"id\": 6606,\n    \"name\": \"string\",\n    \"street1\": \"string\",\n    \"street2\": \"string\",\n    \"city\": \"string\",\n    \"state\": \"string\",\n    \"postal-code\": \"string\",\n    \"country\": {\n      \"id\": 8998,\n      \"code\": \"string\"\n    }\n  },\n  \"ship-to-attention\": \"string\",\n  \"ship-to-user\": {\n    \"id\": 3274,\n    \"login\": \"string\",\n    \"email\": \"FPx-Z4F2vNX@ngIiQIQxLYqByZvhJPcJSzKHwgbsC.aqu\"\n  },\n  \"payment-term\": {\n    \"id\": 4900,\n    \"code\": \"string\"\n  },\n  \"payment-method\": \"invoice_only\",\n  \"shipping-term\": {\n    \"id\": 3003,\n    \"code\": \"string\"\n  },\n  \"order-lines\": [\n    {\n      \"id\": 3021,\n      \"line-num\": 9876,\n      \"description\": \"string\",\n      \"quantity\": 6758.6631108145475,\n      \"price\": 3446.5573687476913,\n      \"total\": 686.3727550430432,\n      \"uom\": {\n        \"id\": 5108,\n        \"code\": \"string\"\n      },\n      \"need-by-date\": \"1964-07-26T13:02:16.868Z\",\n      \"source-part-num\": \"string\",\n      \"commodity\": {\n        \"id\": 9247,\n        \"name\": \"string\"\n      },\n      \"account\": {\n        \"id\": 2590,\n        \"code\": \"string\"\n      },\n      \"status\": \"string\",\n      \"currency\": {\n        \"id\": 4153,\n        \"code\": \"USD\"\n      },\n      \"supplier-aux-part-num\": \"string\",\n      \"receiving-warehouse\": {\n        \"id\": 2303,\n        \"name\": \"string\"\n      },\n      \"created-at\": \"1953-04-08T14:10:33.467Z\",\n      \"updated-at\": \"1954-04-01T03:02:42.219Z\"\n    },\n    {\n      \"id\": 6443,\n      \"line-num\": 2058,\n      \"description\": \"string\",\n      \"quantity\": 6549.887883590497,\n      \"price\": 8565.576608056144,\n      \"total\": 2335.3992287266324,\n      \"uom\": {\n        \"id\": 6739,\n        \"code\": \"string\"\n      },\n      \"need-by-date\": \"2006-11-24T19:44:11.525Z\",\n      \"source-part-num\": \"string\",\n      \"commodity\": {\n        \"id\": 9217,\n        \"name\": \"string\"\n      },\n      \"account\": {\n        \"id\": 7932,\n        \"code\": \"string\"\n      },\n      \"status\": \"string\",\n      \"currency\": {\n        \"id\": 9438,\n        \"code\": \"USD\"\n      },\n      \"supplier-aux-part-num\": \"string\",\n      \"receiving-warehouse\": {\n        \"id\": 4788,\n        \"name\": \"string\"\n      },\n      \"created-at\": \"2024-01-09T17:55:34.494Z\",\n      \"updated-at\": \"1962-10-11T13:22:43.032Z\"\n    }\n  ],\n  \"requisition-header\": {\n    \"id\": 4695\n  },\n  \"invoice-stop\": false,\n  \"exported\": true,\n  \"last-exported-at\": \"1978-12-16T12:08:44.807Z\",\n  \"hide-price\": true,\n  \"price-hidden\": false,\n  \"transmission-method-override\": \"do_not_transmit\",\n  \"transmission-status\": \"sent_via_cxml\",\n  \"transmission-emails\": \"string\",\n  \"coupa-accelerate-status\": \"string\",\n  \"classification\": \"vms\",\n  \"confirm-by-hrs\": 2616,\n  \"order-confirmation-level\": 2799,\n  \"created-at\": \"1968-03-29T12:41:39.515Z\",\n  \"updated-at\": \"1949-06-06T03:17:48.870Z\",\n  \"created-by\": {\n    \"id\": 9677,\n    \"login\": \"string\",\n    \"email\": \"PbUqKeZZe@bYKEjHHTVSDgJYB.uhe\"\n  },\n  \"updated-by\": {\n    \"id\": 9267,\n    \"login\": \"string\",\n    \"email\": \"nD4SojdjBoIcwG4@GcIMiMVYNYpkSuuTPuEhmodlEiUlK.fxi\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "c15cae04-daf9-4b74-bb79-34f4675e575f",
+              "name": "Bad request - invalid parameters or malformed request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "purchase_orders"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": "Your Coupa instance subdomain",
+                      "type": "any",
+                      "value": "{{instance}}",
+                      "key": "instance"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"type\": \"<string>\",\n  \"supplier\": {\n    \"id\": 9687,\n    \"name\": \"string\",\n    \"number\": \"string\"\n  },\n  \"currency\": {\n    \"id\": 9713,\n    \"code\": \"USD\"\n  },\n  \"order-lines\": [\n    {\n      \"line-num\": 6517,\n      \"description\": \"string\",\n      \"quantity\": 1206.8685385665945,\n      \"price\": 5441.647758810326,\n      \"uom\": {\n        \"id\": 8232,\n        \"code\": \"string\"\n      },\n      \"need-by-date\": \"2013-09-05T14:08:06.913Z\",\n      \"source-part-num\": \"string\",\n      \"commodity\": {\n        \"id\": 6510,\n        \"name\": \"string\"\n      },\n      \"account\": {\n        \"id\": 7393,\n        \"code\": \"string\"\n      },\n      \"currency\": {\n        \"id\": 4945,\n        \"code\": \"USD\"\n      },\n      \"supplier-aux-part-num\": \"string\",\n      \"receiving-warehouse\": {\n        \"id\": 9274,\n        \"name\": \"string\"\n      }\n    }\n  ],\n  \"po-number\": \"<string>\",\n  \"ship-to-address\": {\n    \"id\": 9796,\n    \"name\": \"string\",\n    \"street1\": \"string\",\n    \"street2\": \"string\",\n    \"city\": \"string\",\n    \"state\": \"string\",\n    \"postal-code\": \"string\",\n    \"country\": {\n      \"id\": 3803,\n      \"code\": \"string\"\n    }\n  },\n  \"ship-to-attention\": \"<string>\",\n  \"ship-to-user\": {\n    \"id\": 4523,\n    \"login\": \"string\",\n    \"email\": \"ED5KdK9@QXRhVsOEAkKHipLIJrWakasXNPRy.coxb\"\n  },\n  \"payment-term\": {\n    \"id\": 6832,\n    \"code\": \"string\"\n  },\n  \"payment-method\": \"<string>\",\n  \"shipping-term\": {\n    \"id\": 6485,\n    \"code\": \"string\"\n  },\n  \"hide-price\": \"<boolean>\",\n  \"transmission-method-override\": \"<string>\",\n  \"transmission-emails\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"message\": \"string\",\n      \"field\": \"string\"\n    },\n    {\n      \"message\": \"string\",\n      \"field\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "a2071108-01fe-4429-a0de-7e71e6f2a8d6",
+              "name": "Unauthorized - invalid or missing authentication credentials",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "purchase_orders"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": "Your Coupa instance subdomain",
+                      "type": "any",
+                      "value": "{{instance}}",
+                      "key": "instance"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"type\": \"<string>\",\n  \"supplier\": {\n    \"id\": 9687,\n    \"name\": \"string\",\n    \"number\": \"string\"\n  },\n  \"currency\": {\n    \"id\": 9713,\n    \"code\": \"USD\"\n  },\n  \"order-lines\": [\n    {\n      \"line-num\": 6517,\n      \"description\": \"string\",\n      \"quantity\": 1206.8685385665945,\n      \"price\": 5441.647758810326,\n      \"uom\": {\n        \"id\": 8232,\n        \"code\": \"string\"\n      },\n      \"need-by-date\": \"2013-09-05T14:08:06.913Z\",\n      \"source-part-num\": \"string\",\n      \"commodity\": {\n        \"id\": 6510,\n        \"name\": \"string\"\n      },\n      \"account\": {\n        \"id\": 7393,\n        \"code\": \"string\"\n      },\n      \"currency\": {\n        \"id\": 4945,\n        \"code\": \"USD\"\n      },\n      \"supplier-aux-part-num\": \"string\",\n      \"receiving-warehouse\": {\n        \"id\": 9274,\n        \"name\": \"string\"\n      }\n    }\n  ],\n  \"po-number\": \"<string>\",\n  \"ship-to-address\": {\n    \"id\": 9796,\n    \"name\": \"string\",\n    \"street1\": \"string\",\n    \"street2\": \"string\",\n    \"city\": \"string\",\n    \"state\": \"string\",\n    \"postal-code\": \"string\",\n    \"country\": {\n      \"id\": 3803,\n      \"code\": \"string\"\n    }\n  },\n  \"ship-to-attention\": \"<string>\",\n  \"ship-to-user\": {\n    \"id\": 4523,\n    \"login\": \"string\",\n    \"email\": \"ED5KdK9@QXRhVsOEAkKHipLIJrWakasXNPRy.coxb\"\n  },\n  \"payment-term\": {\n    \"id\": 6832,\n    \"code\": \"string\"\n  },\n  \"payment-method\": \"<string>\",\n  \"shipping-term\": {\n    \"id\": 6485,\n    \"code\": \"string\"\n  },\n  \"hide-price\": \"<boolean>\",\n  \"transmission-method-override\": \"<string>\",\n  \"transmission-emails\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"message\": \"string\",\n      \"field\": \"string\"\n    },\n    {\n      \"message\": \"string\",\n      \"field\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "89e11e2e-397f-4d9e-8308-81ae90cde62a",
+              "name": "Unprocessable entity - validation errors",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "purchase_orders"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": "Your Coupa instance subdomain",
+                      "type": "any",
+                      "value": "{{instance}}",
+                      "key": "instance"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"type\": \"<string>\",\n  \"supplier\": {\n    \"id\": 9687,\n    \"name\": \"string\",\n    \"number\": \"string\"\n  },\n  \"currency\": {\n    \"id\": 9713,\n    \"code\": \"USD\"\n  },\n  \"order-lines\": [\n    {\n      \"line-num\": 6517,\n      \"description\": \"string\",\n      \"quantity\": 1206.8685385665945,\n      \"price\": 5441.647758810326,\n      \"uom\": {\n        \"id\": 8232,\n        \"code\": \"string\"\n      },\n      \"need-by-date\": \"2013-09-05T14:08:06.913Z\",\n      \"source-part-num\": \"string\",\n      \"commodity\": {\n        \"id\": 6510,\n        \"name\": \"string\"\n      },\n      \"account\": {\n        \"id\": 7393,\n        \"code\": \"string\"\n      },\n      \"currency\": {\n        \"id\": 4945,\n        \"code\": \"USD\"\n      },\n      \"supplier-aux-part-num\": \"string\",\n      \"receiving-warehouse\": {\n        \"id\": 9274,\n        \"name\": \"string\"\n      }\n    }\n  ],\n  \"po-number\": \"<string>\",\n  \"ship-to-address\": {\n    \"id\": 9796,\n    \"name\": \"string\",\n    \"street1\": \"string\",\n    \"street2\": \"string\",\n    \"city\": \"string\",\n    \"state\": \"string\",\n    \"postal-code\": \"string\",\n    \"country\": {\n      \"id\": 3803,\n      \"code\": \"string\"\n    }\n  },\n  \"ship-to-attention\": \"<string>\",\n  \"ship-to-user\": {\n    \"id\": 4523,\n    \"login\": \"string\",\n    \"email\": \"ED5KdK9@QXRhVsOEAkKHipLIJrWakasXNPRy.coxb\"\n  },\n  \"payment-term\": {\n    \"id\": 6832,\n    \"code\": \"string\"\n  },\n  \"payment-method\": \"<string>\",\n  \"shipping-term\": {\n    \"id\": 6485,\n    \"code\": \"string\"\n  },\n  \"hide-price\": \"<boolean>\",\n  \"transmission-method-override\": \"<string>\",\n  \"transmission-emails\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"message\": \"string\",\n      \"field\": \"string\"\n    },\n    {\n      \"message\": \"string\",\n      \"field\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "a548fb67-b9dc-4f73-b702-4e6d7a463108",
+              "name": "Internal server error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "purchase_orders"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": "Your Coupa instance subdomain",
+                      "type": "any",
+                      "value": "{{instance}}",
+                      "key": "instance"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"type\": \"<string>\",\n  \"supplier\": {\n    \"id\": 9687,\n    \"name\": \"string\",\n    \"number\": \"string\"\n  },\n  \"currency\": {\n    \"id\": 9713,\n    \"code\": \"USD\"\n  },\n  \"order-lines\": [\n    {\n      \"line-num\": 6517,\n      \"description\": \"string\",\n      \"quantity\": 1206.8685385665945,\n      \"price\": 5441.647758810326,\n      \"uom\": {\n        \"id\": 8232,\n        \"code\": \"string\"\n      },\n      \"need-by-date\": \"2013-09-05T14:08:06.913Z\",\n      \"source-part-num\": \"string\",\n      \"commodity\": {\n        \"id\": 6510,\n        \"name\": \"string\"\n      },\n      \"account\": {\n        \"id\": 7393,\n        \"code\": \"string\"\n      },\n      \"currency\": {\n        \"id\": 4945,\n        \"code\": \"USD\"\n      },\n      \"supplier-aux-part-num\": \"string\",\n      \"receiving-warehouse\": {\n        \"id\": 9274,\n        \"name\": \"string\"\n      }\n    }\n  ],\n  \"po-number\": \"<string>\",\n  \"ship-to-address\": {\n    \"id\": 9796,\n    \"name\": \"string\",\n    \"street1\": \"string\",\n    \"street2\": \"string\",\n    \"city\": \"string\",\n    \"state\": \"string\",\n    \"postal-code\": \"string\",\n    \"country\": {\n      \"id\": 3803,\n      \"code\": \"string\"\n    }\n  },\n  \"ship-to-attention\": \"<string>\",\n  \"ship-to-user\": {\n    \"id\": 4523,\n    \"login\": \"string\",\n    \"email\": \"ED5KdK9@QXRhVsOEAkKHipLIJrWakasXNPRy.coxb\"\n  },\n  \"payment-term\": {\n    \"id\": 6832,\n    \"code\": \"string\"\n  },\n  \"payment-method\": \"<string>\",\n  \"shipping-term\": {\n    \"id\": 6485,\n    \"code\": \"string\"\n  },\n  \"hide-price\": \"<boolean>\",\n  \"transmission-method-override\": \"<string>\",\n  \"transmission-emails\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"message\": \"string\",\n      \"field\": \"string\"\n    },\n    {\n      \"message\": \"string\",\n      \"field\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "54adfbd1-45f0-4b91-8aab-b1331b74e0f4",
+          "name": "Coupa Get a purchase order",
+          "request": {
+            "name": "Coupa Get a purchase order",
+            "description": {
+              "content": "Retrieve a single purchase order by its Coupa internal ID.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "purchase_orders",
+                ":id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "return_object",
+                  "value": "<string>",
+                  "description": "Set to limited to return only key fields, or shallow to exclude nested objects"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "id",
+                  "description": "(Required) Coupa internal unique identifier"
+                },
+                {
+                  "description": "Your Coupa instance subdomain",
+                  "type": "any",
+                  "value": "{{instance}}",
+                  "key": "instance"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "dbcc105d-4104-45db-9ff2-fa5be0d91b0e",
+              "name": "A single purchase order",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "purchase_orders",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "return_object",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "id",
+                      "description": "(Required) Coupa internal unique identifier"
+                    },
+                    {
+                      "description": "Your Coupa instance subdomain",
+                      "type": "any",
+                      "value": "{{instance}}",
+                      "key": "instance"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": 5621,\n  \"po-number\": \"string\",\n  \"status\": \"issued\",\n  \"type\": \"string\",\n  \"version\": 5401,\n  \"internal-revision\": 1295,\n  \"change-type\": \"revision\",\n  \"confirmation_status\": \"rejected\",\n  \"acknowledged-flag\": true,\n  \"acknowledged-at\": \"2012-09-09T03:34:47.074Z\",\n  \"total\": 7687.386305493487,\n  \"currency\": {\n    \"id\": 2700,\n    \"code\": \"USD\"\n  },\n  \"supplier\": {\n    \"id\": 6792,\n    \"name\": \"string\",\n    \"number\": \"string\"\n  },\n  \"supplier-site\": {\n    \"id\": 4057,\n    \"name\": \"string\"\n  },\n  \"requester\": {\n    \"id\": 8318,\n    \"login\": \"string\",\n    \"email\": \"KidYK0ATZdY2w0o@OvnKJsUAyIIeUwLBAwE.xq\"\n  },\n  \"ship-to-address\": {\n    \"id\": 6606,\n    \"name\": \"string\",\n    \"street1\": \"string\",\n    \"street2\": \"string\",\n    \"city\": \"string\",\n    \"state\": \"string\",\n    \"postal-code\": \"string\",\n    \"country\": {\n      \"id\": 8998,\n      \"code\": \"string\"\n    }\n  },\n  \"ship-to-attention\": \"string\",\n  \"ship-to-user\": {\n    \"id\": 3274,\n    \"login\": \"string\",\n    \"email\": \"FPx-Z4F2vNX@ngIiQIQxLYqByZvhJPcJSzKHwgbsC.aqu\"\n  },\n  \"payment-term\": {\n    \"id\": 4900,\n    \"code\": \"string\"\n  },\n  \"payment-method\": \"invoice_only\",\n  \"shipping-term\": {\n    \"id\": 3003,\n    \"code\": \"string\"\n  },\n  \"order-lines\": [\n    {\n      \"id\": 3021,\n      \"line-num\": 9876,\n      \"description\": \"string\",\n      \"quantity\": 6758.6631108145475,\n      \"price\": 3446.5573687476913,\n      \"total\": 686.3727550430432,\n      \"uom\": {\n        \"id\": 5108,\n        \"code\": \"string\"\n      },\n      \"need-by-date\": \"1964-07-26T13:02:16.868Z\",\n      \"source-part-num\": \"string\",\n      \"commodity\": {\n        \"id\": 9247,\n        \"name\": \"string\"\n      },\n      \"account\": {\n        \"id\": 2590,\n        \"code\": \"string\"\n      },\n      \"status\": \"string\",\n      \"currency\": {\n        \"id\": 4153,\n        \"code\": \"USD\"\n      },\n      \"supplier-aux-part-num\": \"string\",\n      \"receiving-warehouse\": {\n        \"id\": 2303,\n        \"name\": \"string\"\n      },\n      \"created-at\": \"1953-04-08T14:10:33.467Z\",\n      \"updated-at\": \"1954-04-01T03:02:42.219Z\"\n    },\n    {\n      \"id\": 6443,\n      \"line-num\": 2058,\n      \"description\": \"string\",\n      \"quantity\": 6549.887883590497,\n      \"price\": 8565.576608056144,\n      \"total\": 2335.3992287266324,\n      \"uom\": {\n        \"id\": 6739,\n        \"code\": \"string\"\n      },\n      \"need-by-date\": \"2006-11-24T19:44:11.525Z\",\n      \"source-part-num\": \"string\",\n      \"commodity\": {\n        \"id\": 9217,\n        \"name\": \"string\"\n      },\n      \"account\": {\n        \"id\": 7932,\n        \"code\": \"string\"\n      },\n      \"status\": \"string\",\n      \"currency\": {\n        \"id\": 9438,\n        \"code\": \"USD\"\n      },\n      \"supplier-aux-part-num\": \"string\",\n      \"receiving-warehouse\": {\n        \"id\": 4788,\n        \"name\": \"string\"\n      },\n      \"created-at\": \"2024-01-09T17:55:34.494Z\",\n      \"updated-at\": \"1962-10-11T13:22:43.032Z\"\n    }\n  ],\n  \"requisition-header\": {\n    \"id\": 4695\n  },\n  \"invoice-stop\": false,\n  \"exported\": true,\n  \"last-exported-at\": \"1978-12-16T12:08:44.807Z\",\n  \"hide-price\": true,\n  \"price-hidden\": false,\n  \"transmission-method-override\": \"do_not_transmit\",\n  \"transmission-status\": \"sent_via_cxml\",\n  \"transmission-emails\": \"string\",\n  \"coupa-accelerate-status\": \"string\",\n  \"classification\": \"vms\",\n  \"confirm-by-hrs\": 2616,\n  \"order-confirmation-level\": 2799,\n  \"created-at\": \"1968-03-29T12:41:39.515Z\",\n  \"updated-at\": \"1949-06-06T03:17:48.870Z\",\n  \"created-by\": {\n    \"id\": 9677,\n    \"login\": \"string\",\n    \"email\": \"PbUqKeZZe@bYKEjHHTVSDgJYB.uhe\"\n  },\n  \"updated-by\": {\n    \"id\": 9267,\n    \"login\": \"string\",\n    \"email\": \"nD4SojdjBoIcwG4@GcIMiMVYNYpkSuuTPuEhmodlEiUlK.fxi\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "2f1b8a34-9f72-402e-8802-c81715f2448c",
+              "name": "Unauthorized - invalid or missing authentication credentials",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "purchase_orders",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "return_object",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "id",
+                      "description": "(Required) Coupa internal unique identifier"
+                    },
+                    {
+                      "description": "Your Coupa instance subdomain",
+                      "type": "any",
+                      "value": "{{instance}}",
+                      "key": "instance"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"message\": \"string\",\n      \"field\": \"string\"\n    },\n    {\n      \"message\": \"string\",\n      \"field\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "06f2378b-a965-40f3-b824-f3f646ee69a8",
+              "name": "Resource not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "purchase_orders",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "return_object",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "id",
+                      "description": "(Required) Coupa internal unique identifier"
+                    },
+                    {
+                      "description": "Your Coupa instance subdomain",
+                      "type": "any",
+                      "value": "{{instance}}",
+                      "key": "instance"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"message\": \"string\",\n      \"field\": \"string\"\n    },\n    {\n      \"message\": \"string\",\n      \"field\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "2656d79e-9f23-409e-abd6-adc72a54bec2",
+              "name": "Internal server error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "purchase_orders",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "return_object",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "id",
+                      "description": "(Required) Coupa internal unique identifier"
+                    },
+                    {
+                      "description": "Your Coupa instance subdomain",
+                      "type": "any",
+                      "value": "{{instance}}",
+                      "key": "instance"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"message\": \"string\",\n      \"field\": \"string\"\n    },\n    {\n      \"message\": \"string\",\n      \"field\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "86486fb7-152b-4b62-9b21-7c5bd3883128",
+          "name": "Coupa Update a purchase order",
+          "request": {
+            "name": "Coupa Update a purchase order",
+            "description": {
+              "content": "Update an existing purchase order by its Coupa internal ID.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "purchase_orders",
+                ":id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "id",
+                  "description": "(Required) Coupa internal unique identifier"
+                },
+                {
+                  "description": "Your Coupa instance subdomain",
+                  "type": "any",
+                  "value": "{{instance}}",
+                  "key": "instance"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"po-number\": \"<string>\",\n  \"ship-to-address\": {\n    \"id\": \"<integer>\",\n    \"name\": \"<string>\",\n    \"street1\": \"<string>\",\n    \"street2\": \"<string>\",\n    \"city\": \"<string>\",\n    \"state\": \"<string>\",\n    \"postal-code\": \"<string>\",\n    \"country\": {\n      \"id\": \"<integer>\",\n      \"code\": \"<string>\"\n    }\n  },\n  \"ship-to-attention\": \"<string>\",\n  \"ship-to-user\": {\n    \"id\": \"<integer>\",\n    \"login\": \"<string>\",\n    \"email\": \"<email>\"\n  },\n  \"payment-term\": {\n    \"id\": \"<integer>\",\n    \"code\": \"<string>\"\n  },\n  \"payment-method\": \"<string>\",\n  \"shipping-term\": {\n    \"id\": \"<integer>\",\n    \"code\": \"<string>\"\n  },\n  \"order-lines\": [\n    {\n      \"line-num\": \"<integer>\",\n      \"description\": \"<string>\",\n      \"quantity\": \"<decimal>\",\n      \"price\": \"<decimal>\",\n      \"uom\": {\n        \"id\": \"<integer>\",\n        \"code\": \"<string>\"\n      },\n      \"need-by-date\": \"<dateTime>\",\n      \"source-part-num\": \"<string>\",\n      \"commodity\": {\n        \"id\": \"<integer>\",\n        \"name\": \"<string>\"\n      },\n      \"account\": {\n        \"id\": \"<integer>\",\n        \"code\": \"<string>\"\n      },\n      \"currency\": {\n        \"id\": \"<integer>\",\n        \"code\": \"<string>\"\n      },\n      \"supplier-aux-part-num\": \"<string>\",\n      \"receiving-warehouse\": {\n        \"id\": \"<integer>\",\n        \"name\": \"<string>\"\n      }\n    },\n    {\n      \"line-num\": \"<integer>\",\n      \"description\": \"<string>\",\n      \"quantity\": \"<decimal>\",\n      \"price\": \"<decimal>\",\n      \"uom\": {\n        \"id\": \"<integer>\",\n        \"code\": \"<string>\"\n      },\n      \"need-by-date\": \"<dateTime>\",\n      \"source-part-num\": \"<string>\",\n      \"commodity\": {\n        \"id\": \"<integer>\",\n        \"name\": \"<string>\"\n      },\n      \"account\": {\n        \"id\": \"<integer>\",\n        \"code\": \"<string>\"\n      },\n      \"currency\": {\n        \"id\": \"<integer>\",\n        \"code\": \"<string>\"\n      },\n      \"supplier-aux-part-num\": \"<string>\",\n      \"receiving-warehouse\": {\n        \"id\": \"<integer>\",\n        \"name\": \"<string>\"\n      }\n    }\n  ],\n  \"hide-price\": \"<boolean>\",\n  \"transmission-method-override\": \"<string>\",\n  \"transmission-emails\": \"<string>\",\n  \"exported\": \"<boolean>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "f7b8b4c0-703f-4cd1-b883-e0e814b2a781",
+              "name": "Purchase order updated successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "purchase_orders",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "id",
+                      "description": "(Required) Coupa internal unique identifier"
+                    },
+                    {
+                      "description": "Your Coupa instance subdomain",
+                      "type": "any",
+                      "value": "{{instance}}",
+                      "key": "instance"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"po-number\": \"<string>\",\n  \"ship-to-address\": {\n    \"id\": 7308,\n    \"name\": \"string\",\n    \"street1\": \"string\",\n    \"street2\": \"string\",\n    \"city\": \"string\",\n    \"state\": \"string\",\n    \"postal-code\": \"string\",\n    \"country\": {\n      \"id\": 5112,\n      \"code\": \"string\"\n    }\n  },\n  \"ship-to-attention\": \"<string>\",\n  \"ship-to-user\": {\n    \"id\": 5073,\n    \"login\": \"string\",\n    \"email\": \"jxXSv@UWfI.awvs\"\n  },\n  \"payment-term\": {\n    \"id\": 1546,\n    \"code\": \"string\"\n  },\n  \"payment-method\": \"<string>\",\n  \"shipping-term\": {\n    \"id\": 8567,\n    \"code\": \"string\"\n  },\n  \"order-lines\": [\n    {\n      \"line-num\": 1332,\n      \"description\": \"string\",\n      \"quantity\": 4584.076808301669,\n      \"price\": 9662.585883777161,\n      \"uom\": {\n        \"id\": 4035,\n        \"code\": \"string\"\n      },\n      \"need-by-date\": \"2017-09-24T05:46:31.687Z\",\n      \"source-part-num\": \"string\",\n      \"commodity\": {\n        \"id\": 2251,\n        \"name\": \"string\"\n      },\n      \"account\": {\n        \"id\": 6937,\n        \"code\": \"string\"\n      },\n      \"currency\": {\n        \"id\": 1126,\n        \"code\": \"USD\"\n      },\n      \"supplier-aux-part-num\": \"string\",\n      \"receiving-warehouse\": {\n        \"id\": 4320,\n        \"name\": \"string\"\n      }\n    },\n    {\n      \"line-num\": 341,\n      \"description\": \"string\",\n      \"quantity\": 6560.202289580446,\n      \"price\": 4890.258760144474,\n      \"uom\": {\n        \"id\": 5683,\n        \"code\": \"string\"\n      },\n      \"need-by-date\": \"1966-09-18T12:37:59.793Z\",\n      \"source-part-num\": \"string\",\n      \"commodity\": {\n        \"id\": 3702,\n        \"name\": \"string\"\n      },\n      \"account\": {\n        \"id\": 7290,\n        \"code\": \"string\"\n      },\n      \"currency\": {\n        \"id\": 1548,\n        \"code\": \"USD\"\n      },\n      \"supplier-aux-part-num\": \"string\",\n      \"receiving-warehouse\": {\n        \"id\": 3744,\n        \"name\": \"string\"\n      }\n    }\n  ],\n  \"hide-price\": \"<boolean>\",\n  \"transmission-method-override\": \"<string>\",\n  \"transmission-emails\": \"<string>\",\n  \"exported\": \"<boolean>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": 5621,\n  \"po-number\": \"string\",\n  \"status\": \"issued\",\n  \"type\": \"string\",\n  \"version\": 5401,\n  \"internal-revision\": 1295,\n  \"change-type\": \"revision\",\n  \"confirmation_status\": \"rejected\",\n  \"acknowledged-flag\": true,\n  \"acknowledged-at\": \"2012-09-09T03:34:47.074Z\",\n  \"total\": 7687.386305493487,\n  \"currency\": {\n    \"id\": 2700,\n    \"code\": \"USD\"\n  },\n  \"supplier\": {\n    \"id\": 6792,\n    \"name\": \"string\",\n    \"number\": \"string\"\n  },\n  \"supplier-site\": {\n    \"id\": 4057,\n    \"name\": \"string\"\n  },\n  \"requester\": {\n    \"id\": 8318,\n    \"login\": \"string\",\n    \"email\": \"KidYK0ATZdY2w0o@OvnKJsUAyIIeUwLBAwE.xq\"\n  },\n  \"ship-to-address\": {\n    \"id\": 6606,\n    \"name\": \"string\",\n    \"street1\": \"string\",\n    \"street2\": \"string\",\n    \"city\": \"string\",\n    \"state\": \"string\",\n    \"postal-code\": \"string\",\n    \"country\": {\n      \"id\": 8998,\n      \"code\": \"string\"\n    }\n  },\n  \"ship-to-attention\": \"string\",\n  \"ship-to-user\": {\n    \"id\": 3274,\n    \"login\": \"string\",\n    \"email\": \"FPx-Z4F2vNX@ngIiQIQxLYqByZvhJPcJSzKHwgbsC.aqu\"\n  },\n  \"payment-term\": {\n    \"id\": 4900,\n    \"code\": \"string\"\n  },\n  \"payment-method\": \"invoice_only\",\n  \"shipping-term\": {\n    \"id\": 3003,\n    \"code\": \"string\"\n  },\n  \"order-lines\": [\n    {\n      \"id\": 3021,\n      \"line-num\": 9876,\n      \"description\": \"string\",\n      \"quantity\": 6758.6631108145475,\n      \"price\": 3446.5573687476913,\n      \"total\": 686.3727550430432,\n      \"uom\": {\n        \"id\": 5108,\n        \"code\": \"string\"\n      },\n      \"need-by-date\": \"1964-07-26T13:02:16.868Z\",\n      \"source-part-num\": \"string\",\n      \"commodity\": {\n        \"id\": 9247,\n        \"name\": \"string\"\n      },\n      \"account\": {\n        \"id\": 2590,\n        \"code\": \"string\"\n      },\n      \"status\": \"string\",\n      \"currency\": {\n        \"id\": 4153,\n        \"code\": \"USD\"\n      },\n      \"supplier-aux-part-num\": \"string\",\n      \"receiving-warehouse\": {\n        \"id\": 2303,\n        \"name\": \"string\"\n      },\n      \"created-at\": \"1953-04-08T14:10:33.467Z\",\n      \"updated-at\": \"1954-04-01T03:02:42.219Z\"\n    },\n    {\n      \"id\": 6443,\n      \"line-num\": 2058,\n      \"description\": \"string\",\n      \"quantity\": 6549.887883590497,\n      \"price\": 8565.576608056144,\n      \"total\": 2335.3992287266324,\n      \"uom\": {\n        \"id\": 6739,\n        \"code\": \"string\"\n      },\n      \"need-by-date\": \"2006-11-24T19:44:11.525Z\",\n      \"source-part-num\": \"string\",\n      \"commodity\": {\n        \"id\": 9217,\n        \"name\": \"string\"\n      },\n      \"account\": {\n        \"id\": 7932,\n        \"code\": \"string\"\n      },\n      \"status\": \"string\",\n      \"currency\": {\n        \"id\": 9438,\n        \"code\": \"USD\"\n      },\n      \"supplier-aux-part-num\": \"string\",\n      \"receiving-warehouse\": {\n        \"id\": 4788,\n        \"name\": \"string\"\n      },\n      \"created-at\": \"2024-01-09T17:55:34.494Z\",\n      \"updated-at\": \"1962-10-11T13:22:43.032Z\"\n    }\n  ],\n  \"requisition-header\": {\n    \"id\": 4695\n  },\n  \"invoice-stop\": false,\n  \"exported\": true,\n  \"last-exported-at\": \"1978-12-16T12:08:44.807Z\",\n  \"hide-price\": true,\n  \"price-hidden\": false,\n  \"transmission-method-override\": \"do_not_transmit\",\n  \"transmission-status\": \"sent_via_cxml\",\n  \"transmission-emails\": \"string\",\n  \"coupa-accelerate-status\": \"string\",\n  \"classification\": \"vms\",\n  \"confirm-by-hrs\": 2616,\n  \"order-confirmation-level\": 2799,\n  \"created-at\": \"1968-03-29T12:41:39.515Z\",\n  \"updated-at\": \"1949-06-06T03:17:48.870Z\",\n  \"created-by\": {\n    \"id\": 9677,\n    \"login\": \"string\",\n    \"email\": \"PbUqKeZZe@bYKEjHHTVSDgJYB.uhe\"\n  },\n  \"updated-by\": {\n    \"id\": 9267,\n    \"login\": \"string\",\n    \"email\": \"nD4SojdjBoIcwG4@GcIMiMVYNYpkSuuTPuEhmodlEiUlK.fxi\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d9ba4c41-f694-4204-a67b-f915b89e2720",
+              "name": "Bad request - invalid parameters or malformed request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "purchase_orders",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "id",
+                      "description": "(Required) Coupa internal unique identifier"
+                    },
+                    {
+                      "description": "Your Coupa instance subdomain",
+                      "type": "any",
+                      "value": "{{instance}}",
+                      "key": "instance"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"po-number\": \"<string>\",\n  \"ship-to-address\": {\n    \"id\": 7308,\n    \"name\": \"string\",\n    \"street1\": \"string\",\n    \"street2\": \"string\",\n    \"city\": \"string\",\n    \"state\": \"string\",\n    \"postal-code\": \"string\",\n    \"country\": {\n      \"id\": 5112,\n      \"code\": \"string\"\n    }\n  },\n  \"ship-to-attention\": \"<string>\",\n  \"ship-to-user\": {\n    \"id\": 5073,\n    \"login\": \"string\",\n    \"email\": \"jxXSv@UWfI.awvs\"\n  },\n  \"payment-term\": {\n    \"id\": 1546,\n    \"code\": \"string\"\n  },\n  \"payment-method\": \"<string>\",\n  \"shipping-term\": {\n    \"id\": 8567,\n    \"code\": \"string\"\n  },\n  \"order-lines\": [\n    {\n      \"line-num\": 1332,\n      \"description\": \"string\",\n      \"quantity\": 4584.076808301669,\n      \"price\": 9662.585883777161,\n      \"uom\": {\n        \"id\": 4035,\n        \"code\": \"string\"\n      },\n      \"need-by-date\": \"2017-09-24T05:46:31.687Z\",\n      \"source-part-num\": \"string\",\n      \"commodity\": {\n        \"id\": 2251,\n        \"name\": \"string\"\n      },\n      \"account\": {\n        \"id\": 6937,\n        \"code\": \"string\"\n      },\n      \"currency\": {\n        \"id\": 1126,\n        \"code\": \"USD\"\n      },\n      \"supplier-aux-part-num\": \"string\",\n      \"receiving-warehouse\": {\n        \"id\": 4320,\n        \"name\": \"string\"\n      }\n    },\n    {\n      \"line-num\": 341,\n      \"description\": \"string\",\n      \"quantity\": 6560.202289580446,\n      \"price\": 4890.258760144474,\n      \"uom\": {\n        \"id\": 5683,\n        \"code\": \"string\"\n      },\n      \"need-by-date\": \"1966-09-18T12:37:59.793Z\",\n      \"source-part-num\": \"string\",\n      \"commodity\": {\n        \"id\": 3702,\n        \"name\": \"string\"\n      },\n      \"account\": {\n        \"id\": 7290,\n        \"code\": \"string\"\n      },\n      \"currency\": {\n        \"id\": 1548,\n        \"code\": \"USD\"\n      },\n      \"supplier-aux-part-num\": \"string\",\n      \"receiving-warehouse\": {\n        \"id\": 3744,\n        \"name\": \"string\"\n      }\n    }\n  ],\n  \"hide-price\": \"<boolean>\",\n  \"transmission-method-override\": \"<string>\",\n  \"transmission-emails\": \"<string>\",\n  \"exported\": \"<boolean>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"message\": \"string\",\n      \"field\": \"string\"\n    },\n    {\n      \"message\": \"string\",\n      \"field\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f0078078-c860-400b-86da-a8fd394750f2",
+              "name": "Unauthorized - invalid or missing authentication credentials",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "purchase_orders",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "id",
+                      "description": "(Required) Coupa internal unique identifier"
+                    },
+                    {
+                      "description": "Your Coupa instance subdomain",
+                      "type": "any",
+                      "value": "{{instance}}",
+                      "key": "instance"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"po-number\": \"<string>\",\n  \"ship-to-address\": {\n    \"id\": 7308,\n    \"name\": \"string\",\n    \"street1\": \"string\",\n    \"street2\": \"string\",\n    \"city\": \"string\",\n    \"state\": \"string\",\n    \"postal-code\": \"string\",\n    \"country\": {\n      \"id\": 5112,\n      \"code\": \"string\"\n    }\n  },\n  \"ship-to-attention\": \"<string>\",\n  \"ship-to-user\": {\n    \"id\": 5073,\n    \"login\": \"string\",\n    \"email\": \"jxXSv@UWfI.awvs\"\n  },\n  \"payment-term\": {\n    \"id\": 1546,\n    \"code\": \"string\"\n  },\n  \"payment-method\": \"<string>\",\n  \"shipping-term\": {\n    \"id\": 8567,\n    \"code\": \"string\"\n  },\n  \"order-lines\": [\n    {\n      \"line-num\": 1332,\n      \"description\": \"string\",\n      \"quantity\": 4584.076808301669,\n      \"price\": 9662.585883777161,\n      \"uom\": {\n        \"id\": 4035,\n        \"code\": \"string\"\n      },\n      \"need-by-date\": \"2017-09-24T05:46:31.687Z\",\n      \"source-part-num\": \"string\",\n      \"commodity\": {\n        \"id\": 2251,\n        \"name\": \"string\"\n      },\n      \"account\": {\n        \"id\": 6937,\n        \"code\": \"string\"\n      },\n      \"currency\": {\n        \"id\": 1126,\n        \"code\": \"USD\"\n      },\n      \"supplier-aux-part-num\": \"string\",\n      \"receiving-warehouse\": {\n        \"id\": 4320,\n        \"name\": \"string\"\n      }\n    },\n    {\n      \"line-num\": 341,\n      \"description\": \"string\",\n      \"quantity\": 6560.202289580446,\n      \"price\": 4890.258760144474,\n      \"uom\": {\n        \"id\": 5683,\n        \"code\": \"string\"\n      },\n      \"need-by-date\": \"1966-09-18T12:37:59.793Z\",\n      \"source-part-num\": \"string\",\n      \"commodity\": {\n        \"id\": 3702,\n        \"name\": \"string\"\n      },\n      \"account\": {\n        \"id\": 7290,\n        \"code\": \"string\"\n      },\n      \"currency\": {\n        \"id\": 1548,\n        \"code\": \"USD\"\n      },\n      \"supplier-aux-part-num\": \"string\",\n      \"receiving-warehouse\": {\n        \"id\": 3744,\n        \"name\": \"string\"\n      }\n    }\n  ],\n  \"hide-price\": \"<boolean>\",\n  \"transmission-method-override\": \"<string>\",\n  \"transmission-emails\": \"<string>\",\n  \"exported\": \"<boolean>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"message\": \"string\",\n      \"field\": \"string\"\n    },\n    {\n      \"message\": \"string\",\n      \"field\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d0d49c80-4c7f-443e-b6d6-4ed6897ad6ef",
+              "name": "Resource not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "purchase_orders",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "id",
+                      "description": "(Required) Coupa internal unique identifier"
+                    },
+                    {
+                      "description": "Your Coupa instance subdomain",
+                      "type": "any",
+                      "value": "{{instance}}",
+                      "key": "instance"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"po-number\": \"<string>\",\n  \"ship-to-address\": {\n    \"id\": 7308,\n    \"name\": \"string\",\n    \"street1\": \"string\",\n    \"street2\": \"string\",\n    \"city\": \"string\",\n    \"state\": \"string\",\n    \"postal-code\": \"string\",\n    \"country\": {\n      \"id\": 5112,\n      \"code\": \"string\"\n    }\n  },\n  \"ship-to-attention\": \"<string>\",\n  \"ship-to-user\": {\n    \"id\": 5073,\n    \"login\": \"string\",\n    \"email\": \"jxXSv@UWfI.awvs\"\n  },\n  \"payment-term\": {\n    \"id\": 1546,\n    \"code\": \"string\"\n  },\n  \"payment-method\": \"<string>\",\n  \"shipping-term\": {\n    \"id\": 8567,\n    \"code\": \"string\"\n  },\n  \"order-lines\": [\n    {\n      \"line-num\": 1332,\n      \"description\": \"string\",\n      \"quantity\": 4584.076808301669,\n      \"price\": 9662.585883777161,\n      \"uom\": {\n        \"id\": 4035,\n        \"code\": \"string\"\n      },\n      \"need-by-date\": \"2017-09-24T05:46:31.687Z\",\n      \"source-part-num\": \"string\",\n      \"commodity\": {\n        \"id\": 2251,\n        \"name\": \"string\"\n      },\n      \"account\": {\n        \"id\": 6937,\n        \"code\": \"string\"\n      },\n      \"currency\": {\n        \"id\": 1126,\n        \"code\": \"USD\"\n      },\n      \"supplier-aux-part-num\": \"string\",\n      \"receiving-warehouse\": {\n        \"id\": 4320,\n        \"name\": \"string\"\n      }\n    },\n    {\n      \"line-num\": 341,\n      \"description\": \"string\",\n      \"quantity\": 6560.202289580446,\n      \"price\": 4890.258760144474,\n      \"uom\": {\n        \"id\": 5683,\n        \"code\": \"string\"\n      },\n      \"need-by-date\": \"1966-09-18T12:37:59.793Z\",\n      \"source-part-num\": \"string\",\n      \"commodity\": {\n        \"id\": 3702,\n        \"name\": \"string\"\n      },\n      \"account\": {\n        \"id\": 7290,\n        \"code\": \"string\"\n      },\n      \"currency\": {\n        \"id\": 1548,\n        \"code\": \"USD\"\n      },\n      \"supplier-aux-part-num\": \"string\",\n      \"receiving-warehouse\": {\n        \"id\": 3744,\n        \"name\": \"string\"\n      }\n    }\n  ],\n  \"hide-price\": \"<boolean>\",\n  \"transmission-method-override\": \"<string>\",\n  \"transmission-emails\": \"<string>\",\n  \"exported\": \"<boolean>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"message\": \"string\",\n      \"field\": \"string\"\n    },\n    {\n      \"message\": \"string\",\n      \"field\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "6ac9e946-8c22-464b-969b-71a78dda1ac3",
+              "name": "Unprocessable entity - validation errors",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "purchase_orders",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "id",
+                      "description": "(Required) Coupa internal unique identifier"
+                    },
+                    {
+                      "description": "Your Coupa instance subdomain",
+                      "type": "any",
+                      "value": "{{instance}}",
+                      "key": "instance"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"po-number\": \"<string>\",\n  \"ship-to-address\": {\n    \"id\": 7308,\n    \"name\": \"string\",\n    \"street1\": \"string\",\n    \"street2\": \"string\",\n    \"city\": \"string\",\n    \"state\": \"string\",\n    \"postal-code\": \"string\",\n    \"country\": {\n      \"id\": 5112,\n      \"code\": \"string\"\n    }\n  },\n  \"ship-to-attention\": \"<string>\",\n  \"ship-to-user\": {\n    \"id\": 5073,\n    \"login\": \"string\",\n    \"email\": \"jxXSv@UWfI.awvs\"\n  },\n  \"payment-term\": {\n    \"id\": 1546,\n    \"code\": \"string\"\n  },\n  \"payment-method\": \"<string>\",\n  \"shipping-term\": {\n    \"id\": 8567,\n    \"code\": \"string\"\n  },\n  \"order-lines\": [\n    {\n      \"line-num\": 1332,\n      \"description\": \"string\",\n      \"quantity\": 4584.076808301669,\n      \"price\": 9662.585883777161,\n      \"uom\": {\n        \"id\": 4035,\n        \"code\": \"string\"\n      },\n      \"need-by-date\": \"2017-09-24T05:46:31.687Z\",\n      \"source-part-num\": \"string\",\n      \"commodity\": {\n        \"id\": 2251,\n        \"name\": \"string\"\n      },\n      \"account\": {\n        \"id\": 6937,\n        \"code\": \"string\"\n      },\n      \"currency\": {\n        \"id\": 1126,\n        \"code\": \"USD\"\n      },\n      \"supplier-aux-part-num\": \"string\",\n      \"receiving-warehouse\": {\n        \"id\": 4320,\n        \"name\": \"string\"\n      }\n    },\n    {\n      \"line-num\": 341,\n      \"description\": \"string\",\n      \"quantity\": 6560.202289580446,\n      \"price\": 4890.258760144474,\n      \"uom\": {\n        \"id\": 5683,\n        \"code\": \"string\"\n      },\n      \"need-by-date\": \"1966-09-18T12:37:59.793Z\",\n      \"source-part-num\": \"string\",\n      \"commodity\": {\n        \"id\": 3702,\n        \"name\": \"string\"\n      },\n      \"account\": {\n        \"id\": 7290,\n        \"code\": \"string\"\n      },\n      \"currency\": {\n        \"id\": 1548,\n        \"code\": \"USD\"\n      },\n      \"supplier-aux-part-num\": \"string\",\n      \"receiving-warehouse\": {\n        \"id\": 3744,\n        \"name\": \"string\"\n      }\n    }\n  ],\n  \"hide-price\": \"<boolean>\",\n  \"transmission-method-override\": \"<string>\",\n  \"transmission-emails\": \"<string>\",\n  \"exported\": \"<boolean>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"message\": \"string\",\n      \"field\": \"string\"\n    },\n    {\n      \"message\": \"string\",\n      \"field\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "a527074d-7c1d-4b13-b132-5f201aba24f9",
+              "name": "Internal server error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "purchase_orders",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "id",
+                      "description": "(Required) Coupa internal unique identifier"
+                    },
+                    {
+                      "description": "Your Coupa instance subdomain",
+                      "type": "any",
+                      "value": "{{instance}}",
+                      "key": "instance"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"po-number\": \"<string>\",\n  \"ship-to-address\": {\n    \"id\": 7308,\n    \"name\": \"string\",\n    \"street1\": \"string\",\n    \"street2\": \"string\",\n    \"city\": \"string\",\n    \"state\": \"string\",\n    \"postal-code\": \"string\",\n    \"country\": {\n      \"id\": 5112,\n      \"code\": \"string\"\n    }\n  },\n  \"ship-to-attention\": \"<string>\",\n  \"ship-to-user\": {\n    \"id\": 5073,\n    \"login\": \"string\",\n    \"email\": \"jxXSv@UWfI.awvs\"\n  },\n  \"payment-term\": {\n    \"id\": 1546,\n    \"code\": \"string\"\n  },\n  \"payment-method\": \"<string>\",\n  \"shipping-term\": {\n    \"id\": 8567,\n    \"code\": \"string\"\n  },\n  \"order-lines\": [\n    {\n      \"line-num\": 1332,\n      \"description\": \"string\",\n      \"quantity\": 4584.076808301669,\n      \"price\": 9662.585883777161,\n      \"uom\": {\n        \"id\": 4035,\n        \"code\": \"string\"\n      },\n      \"need-by-date\": \"2017-09-24T05:46:31.687Z\",\n      \"source-part-num\": \"string\",\n      \"commodity\": {\n        \"id\": 2251,\n        \"name\": \"string\"\n      },\n      \"account\": {\n        \"id\": 6937,\n        \"code\": \"string\"\n      },\n      \"currency\": {\n        \"id\": 1126,\n        \"code\": \"USD\"\n      },\n      \"supplier-aux-part-num\": \"string\",\n      \"receiving-warehouse\": {\n        \"id\": 4320,\n        \"name\": \"string\"\n      }\n    },\n    {\n      \"line-num\": 341,\n      \"description\": \"string\",\n      \"quantity\": 6560.202289580446,\n      \"price\": 4890.258760144474,\n      \"uom\": {\n        \"id\": 5683,\n        \"code\": \"string\"\n      },\n      \"need-by-date\": \"1966-09-18T12:37:59.793Z\",\n      \"source-part-num\": \"string\",\n      \"commodity\": {\n        \"id\": 3702,\n        \"name\": \"string\"\n      },\n      \"account\": {\n        \"id\": 7290,\n        \"code\": \"string\"\n      },\n      \"currency\": {\n        \"id\": 1548,\n        \"code\": \"USD\"\n      },\n      \"supplier-aux-part-num\": \"string\",\n      \"receiving-warehouse\": {\n        \"id\": 3744,\n        \"name\": \"string\"\n      }\n    }\n  ],\n  \"hide-price\": \"<boolean>\",\n  \"transmission-method-override\": \"<string>\",\n  \"transmission-emails\": \"<string>\",\n  \"exported\": \"<boolean>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"message\": \"string\",\n      \"field\": \"string\"\n    },\n    {\n      \"message\": \"string\",\n      \"field\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "935c0f47-8161-4936-8567-5bf5da2f301f",
+          "name": "Coupa Cancel a purchase order",
+          "request": {
+            "name": "Coupa Cancel a purchase order",
+            "description": {
+              "content": "Cancel an existing purchase order.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "purchase_orders",
+                ":id",
+                "cancel"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "id",
+                  "description": "(Required) Coupa internal unique identifier"
+                },
+                {
+                  "description": "Your Coupa instance subdomain",
+                  "type": "any",
+                  "value": "{{instance}}",
+                  "key": "instance"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "93866691-fa46-43c5-a972-2172fb6089fa",
+              "name": "Purchase order cancelled successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "purchase_orders",
+                    ":id",
+                    "cancel"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "id",
+                      "description": "(Required) Coupa internal unique identifier"
+                    },
+                    {
+                      "description": "Your Coupa instance subdomain",
+                      "type": "any",
+                      "value": "{{instance}}",
+                      "key": "instance"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": 5621,\n  \"po-number\": \"string\",\n  \"status\": \"issued\",\n  \"type\": \"string\",\n  \"version\": 5401,\n  \"internal-revision\": 1295,\n  \"change-type\": \"revision\",\n  \"confirmation_status\": \"rejected\",\n  \"acknowledged-flag\": true,\n  \"acknowledged-at\": \"2012-09-09T03:34:47.074Z\",\n  \"total\": 7687.386305493487,\n  \"currency\": {\n    \"id\": 2700,\n    \"code\": \"USD\"\n  },\n  \"supplier\": {\n    \"id\": 6792,\n    \"name\": \"string\",\n    \"number\": \"string\"\n  },\n  \"supplier-site\": {\n    \"id\": 4057,\n    \"name\": \"string\"\n  },\n  \"requester\": {\n    \"id\": 8318,\n    \"login\": \"string\",\n    \"email\": \"KidYK0ATZdY2w0o@OvnKJsUAyIIeUwLBAwE.xq\"\n  },\n  \"ship-to-address\": {\n    \"id\": 6606,\n    \"name\": \"string\",\n    \"street1\": \"string\",\n    \"street2\": \"string\",\n    \"city\": \"string\",\n    \"state\": \"string\",\n    \"postal-code\": \"string\",\n    \"country\": {\n      \"id\": 8998,\n      \"code\": \"string\"\n    }\n  },\n  \"ship-to-attention\": \"string\",\n  \"ship-to-user\": {\n    \"id\": 3274,\n    \"login\": \"string\",\n    \"email\": \"FPx-Z4F2vNX@ngIiQIQxLYqByZvhJPcJSzKHwgbsC.aqu\"\n  },\n  \"payment-term\": {\n    \"id\": 4900,\n    \"code\": \"string\"\n  },\n  \"payment-method\": \"invoice_only\",\n  \"shipping-term\": {\n    \"id\": 3003,\n    \"code\": \"string\"\n  },\n  \"order-lines\": [\n    {\n      \"id\": 3021,\n      \"line-num\": 9876,\n      \"description\": \"string\",\n      \"quantity\": 6758.6631108145475,\n      \"price\": 3446.5573687476913,\n      \"total\": 686.3727550430432,\n      \"uom\": {\n        \"id\": 5108,\n        \"code\": \"string\"\n      },\n      \"need-by-date\": \"1964-07-26T13:02:16.868Z\",\n      \"source-part-num\": \"string\",\n      \"commodity\": {\n        \"id\": 9247,\n        \"name\": \"string\"\n      },\n      \"account\": {\n        \"id\": 2590,\n        \"code\": \"string\"\n      },\n      \"status\": \"string\",\n      \"currency\": {\n        \"id\": 4153,\n        \"code\": \"USD\"\n      },\n      \"supplier-aux-part-num\": \"string\",\n      \"receiving-warehouse\": {\n        \"id\": 2303,\n        \"name\": \"string\"\n      },\n      \"created-at\": \"1953-04-08T14:10:33.467Z\",\n      \"updated-at\": \"1954-04-01T03:02:42.219Z\"\n    },\n    {\n      \"id\": 6443,\n      \"line-num\": 2058,\n      \"description\": \"string\",\n      \"quantity\": 6549.887883590497,\n      \"price\": 8565.576608056144,\n      \"total\": 2335.3992287266324,\n      \"uom\": {\n        \"id\": 6739,\n        \"code\": \"string\"\n      },\n      \"need-by-date\": \"2006-11-24T19:44:11.525Z\",\n      \"source-part-num\": \"string\",\n      \"commodity\": {\n        \"id\": 9217,\n        \"name\": \"string\"\n      },\n      \"account\": {\n        \"id\": 7932,\n        \"code\": \"string\"\n      },\n      \"status\": \"string\",\n      \"currency\": {\n        \"id\": 9438,\n        \"code\": \"USD\"\n      },\n      \"supplier-aux-part-num\": \"string\",\n      \"receiving-warehouse\": {\n        \"id\": 4788,\n        \"name\": \"string\"\n      },\n      \"created-at\": \"2024-01-09T17:55:34.494Z\",\n      \"updated-at\": \"1962-10-11T13:22:43.032Z\"\n    }\n  ],\n  \"requisition-header\": {\n    \"id\": 4695\n  },\n  \"invoice-stop\": false,\n  \"exported\": true,\n  \"last-exported-at\": \"1978-12-16T12:08:44.807Z\",\n  \"hide-price\": true,\n  \"price-hidden\": false,\n  \"transmission-method-override\": \"do_not_transmit\",\n  \"transmission-status\": \"sent_via_cxml\",\n  \"transmission-emails\": \"string\",\n  \"coupa-accelerate-status\": \"string\",\n  \"classification\": \"vms\",\n  \"confirm-by-hrs\": 2616,\n  \"order-confirmation-level\": 2799,\n  \"created-at\": \"1968-03-29T12:41:39.515Z\",\n  \"updated-at\": \"1949-06-06T03:17:48.870Z\",\n  \"created-by\": {\n    \"id\": 9677,\n    \"login\": \"string\",\n    \"email\": \"PbUqKeZZe@bYKEjHHTVSDgJYB.uhe\"\n  },\n  \"updated-by\": {\n    \"id\": 9267,\n    \"login\": \"string\",\n    \"email\": \"nD4SojdjBoIcwG4@GcIMiMVYNYpkSuuTPuEhmodlEiUlK.fxi\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "c462ba26-61e2-4864-8330-32d14b043f88",
+              "name": "Unauthorized - invalid or missing authentication credentials",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "purchase_orders",
+                    ":id",
+                    "cancel"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "id",
+                      "description": "(Required) Coupa internal unique identifier"
+                    },
+                    {
+                      "description": "Your Coupa instance subdomain",
+                      "type": "any",
+                      "value": "{{instance}}",
+                      "key": "instance"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"message\": \"string\",\n      \"field\": \"string\"\n    },\n    {\n      \"message\": \"string\",\n      \"field\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "7d3fa230-c21d-45f7-a90e-77e2d179ae90",
+              "name": "Resource not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "purchase_orders",
+                    ":id",
+                    "cancel"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "id",
+                      "description": "(Required) Coupa internal unique identifier"
+                    },
+                    {
+                      "description": "Your Coupa instance subdomain",
+                      "type": "any",
+                      "value": "{{instance}}",
+                      "key": "instance"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"message\": \"string\",\n      \"field\": \"string\"\n    },\n    {\n      \"message\": \"string\",\n      \"field\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "6b58fa46-3d65-49de-9d49-87aae238c968",
+              "name": "Unprocessable entity - validation errors",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "purchase_orders",
+                    ":id",
+                    "cancel"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "id",
+                      "description": "(Required) Coupa internal unique identifier"
+                    },
+                    {
+                      "description": "Your Coupa instance subdomain",
+                      "type": "any",
+                      "value": "{{instance}}",
+                      "key": "instance"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {}
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"message\": \"string\",\n      \"field\": \"string\"\n    },\n    {\n      \"message\": \"string\",\n      \"field\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "df31cf63-0078-4e40-9354-6080d55cfdbb",
+              "name": "Internal server error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "purchase_orders",
+                    ":id",
+                    "cancel"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "id",
+                      "description": "(Required) Coupa internal unique identifier"
+                    },
+                    {
+                      "description": "Your Coupa instance subdomain",
+                      "type": "any",
+                      "value": "{{instance}}",
+                      "key": "instance"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"message\": \"string\",\n      \"field\": \"string\"\n    },\n    {\n      \"message\": \"string\",\n      \"field\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "e9414265-19b6-4e9f-88f2-2d74bcf843ee",
+          "name": "Coupa Close a purchase order",
+          "request": {
+            "name": "Coupa Close a purchase order",
+            "description": {
+              "content": "Close an existing purchase order.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "purchase_orders",
+                ":id",
+                "close"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "id",
+                  "description": "(Required) Coupa internal unique identifier"
+                },
+                {
+                  "description": "Your Coupa instance subdomain",
+                  "type": "any",
+                  "value": "{{instance}}",
+                  "key": "instance"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "3fc7e74f-5dfe-4b59-9dc4-35de42d2990e",
+              "name": "Purchase order closed successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "purchase_orders",
+                    ":id",
+                    "close"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "id",
+                      "description": "(Required) Coupa internal unique identifier"
+                    },
+                    {
+                      "description": "Your Coupa instance subdomain",
+                      "type": "any",
+                      "value": "{{instance}}",
+                      "key": "instance"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": 5621,\n  \"po-number\": \"string\",\n  \"status\": \"issued\",\n  \"type\": \"string\",\n  \"version\": 5401,\n  \"internal-revision\": 1295,\n  \"change-type\": \"revision\",\n  \"confirmation_status\": \"rejected\",\n  \"acknowledged-flag\": true,\n  \"acknowledged-at\": \"2012-09-09T03:34:47.074Z\",\n  \"total\": 7687.386305493487,\n  \"currency\": {\n    \"id\": 2700,\n    \"code\": \"USD\"\n  },\n  \"supplier\": {\n    \"id\": 6792,\n    \"name\": \"string\",\n    \"number\": \"string\"\n  },\n  \"supplier-site\": {\n    \"id\": 4057,\n    \"name\": \"string\"\n  },\n  \"requester\": {\n    \"id\": 8318,\n    \"login\": \"string\",\n    \"email\": \"KidYK0ATZdY2w0o@OvnKJsUAyIIeUwLBAwE.xq\"\n  },\n  \"ship-to-address\": {\n    \"id\": 6606,\n    \"name\": \"string\",\n    \"street1\": \"string\",\n    \"street2\": \"string\",\n    \"city\": \"string\",\n    \"state\": \"string\",\n    \"postal-code\": \"string\",\n    \"country\": {\n      \"id\": 8998,\n      \"code\": \"string\"\n    }\n  },\n  \"ship-to-attention\": \"string\",\n  \"ship-to-user\": {\n    \"id\": 3274,\n    \"login\": \"string\",\n    \"email\": \"FPx-Z4F2vNX@ngIiQIQxLYqByZvhJPcJSzKHwgbsC.aqu\"\n  },\n  \"payment-term\": {\n    \"id\": 4900,\n    \"code\": \"string\"\n  },\n  \"payment-method\": \"invoice_only\",\n  \"shipping-term\": {\n    \"id\": 3003,\n    \"code\": \"string\"\n  },\n  \"order-lines\": [\n    {\n      \"id\": 3021,\n      \"line-num\": 9876,\n      \"description\": \"string\",\n      \"quantity\": 6758.6631108145475,\n      \"price\": 3446.5573687476913,\n      \"total\": 686.3727550430432,\n      \"uom\": {\n        \"id\": 5108,\n        \"code\": \"string\"\n      },\n      \"need-by-date\": \"1964-07-26T13:02:16.868Z\",\n      \"source-part-num\": \"string\",\n      \"commodity\": {\n        \"id\": 9247,\n        \"name\": \"string\"\n      },\n      \"account\": {\n        \"id\": 2590,\n        \"code\": \"string\"\n      },\n      \"status\": \"string\",\n      \"currency\": {\n        \"id\": 4153,\n        \"code\": \"USD\"\n      },\n      \"supplier-aux-part-num\": \"string\",\n      \"receiving-warehouse\": {\n        \"id\": 2303,\n        \"name\": \"string\"\n      },\n      \"created-at\": \"1953-04-08T14:10:33.467Z\",\n      \"updated-at\": \"1954-04-01T03:02:42.219Z\"\n    },\n    {\n      \"id\": 6443,\n      \"line-num\": 2058,\n      \"description\": \"string\",\n      \"quantity\": 6549.887883590497,\n      \"price\": 8565.576608056144,\n      \"total\": 2335.3992287266324,\n      \"uom\": {\n        \"id\": 6739,\n        \"code\": \"string\"\n      },\n      \"need-by-date\": \"2006-11-24T19:44:11.525Z\",\n      \"source-part-num\": \"string\",\n      \"commodity\": {\n        \"id\": 9217,\n        \"name\": \"string\"\n      },\n      \"account\": {\n        \"id\": 7932,\n        \"code\": \"string\"\n      },\n      \"status\": \"string\",\n      \"currency\": {\n        \"id\": 9438,\n        \"code\": \"USD\"\n      },\n      \"supplier-aux-part-num\": \"string\",\n      \"receiving-warehouse\": {\n        \"id\": 4788,\n        \"name\": \"string\"\n      },\n      \"created-at\": \"2024-01-09T17:55:34.494Z\",\n      \"updated-at\": \"1962-10-11T13:22:43.032Z\"\n    }\n  ],\n  \"requisition-header\": {\n    \"id\": 4695\n  },\n  \"invoice-stop\": false,\n  \"exported\": true,\n  \"last-exported-at\": \"1978-12-16T12:08:44.807Z\",\n  \"hide-price\": true,\n  \"price-hidden\": false,\n  \"transmission-method-override\": \"do_not_transmit\",\n  \"transmission-status\": \"sent_via_cxml\",\n  \"transmission-emails\": \"string\",\n  \"coupa-accelerate-status\": \"string\",\n  \"classification\": \"vms\",\n  \"confirm-by-hrs\": 2616,\n  \"order-confirmation-level\": 2799,\n  \"created-at\": \"1968-03-29T12:41:39.515Z\",\n  \"updated-at\": \"1949-06-06T03:17:48.870Z\",\n  \"created-by\": {\n    \"id\": 9677,\n    \"login\": \"string\",\n    \"email\": \"PbUqKeZZe@bYKEjHHTVSDgJYB.uhe\"\n  },\n  \"updated-by\": {\n    \"id\": 9267,\n    \"login\": \"string\",\n    \"email\": \"nD4SojdjBoIcwG4@GcIMiMVYNYpkSuuTPuEhmodlEiUlK.fxi\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "47c1d257-ebb8-49ed-b98f-83585844c9a6",
+              "name": "Unauthorized - invalid or missing authentication credentials",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "purchase_orders",
+                    ":id",
+                    "close"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "id",
+                      "description": "(Required) Coupa internal unique identifier"
+                    },
+                    {
+                      "description": "Your Coupa instance subdomain",
+                      "type": "any",
+                      "value": "{{instance}}",
+                      "key": "instance"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"message\": \"string\",\n      \"field\": \"string\"\n    },\n    {\n      \"message\": \"string\",\n      \"field\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "418f4d52-144b-4d4e-b8c1-fa2cfdb316f8",
+              "name": "Resource not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "purchase_orders",
+                    ":id",
+                    "close"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "id",
+                      "description": "(Required) Coupa internal unique identifier"
+                    },
+                    {
+                      "description": "Your Coupa instance subdomain",
+                      "type": "any",
+                      "value": "{{instance}}",
+                      "key": "instance"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"message\": \"string\",\n      \"field\": \"string\"\n    },\n    {\n      \"message\": \"string\",\n      \"field\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "6558f2f7-5433-47e6-810c-b8f655b10cb3",
+              "name": "Unprocessable entity - validation errors",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "purchase_orders",
+                    ":id",
+                    "close"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "id",
+                      "description": "(Required) Coupa internal unique identifier"
+                    },
+                    {
+                      "description": "Your Coupa instance subdomain",
+                      "type": "any",
+                      "value": "{{instance}}",
+                      "key": "instance"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {}
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"message\": \"string\",\n      \"field\": \"string\"\n    },\n    {\n      \"message\": \"string\",\n      \"field\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "690e33d2-f871-4594-b342-2c1588fc5b56",
+              "name": "Internal server error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "purchase_orders",
+                    ":id",
+                    "close"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "id",
+                      "description": "(Required) Coupa internal unique identifier"
+                    },
+                    {
+                      "description": "Your Coupa instance subdomain",
+                      "type": "any",
+                      "value": "{{instance}}",
+                      "key": "instance"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"message\": \"string\",\n      \"field\": \"string\"\n    },\n    {\n      \"message\": \"string\",\n      \"field\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "0205ac34-3a4f-45f3-b108-440b81845d8b",
+          "name": "Coupa Issue a purchase order",
+          "request": {
+            "name": "Coupa Issue a purchase order",
+            "description": {
+              "content": "Issue and send the purchase order to the supplier.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "purchase_orders",
+                ":id",
+                "issue"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "id",
+                  "description": "(Required) Coupa internal unique identifier"
+                },
+                {
+                  "description": "Your Coupa instance subdomain",
+                  "type": "any",
+                  "value": "{{instance}}",
+                  "key": "instance"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "04d922e0-0440-45d6-9626-6555533f4d23",
+              "name": "Purchase order issued successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "purchase_orders",
+                    ":id",
+                    "issue"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "id",
+                      "description": "(Required) Coupa internal unique identifier"
+                    },
+                    {
+                      "description": "Your Coupa instance subdomain",
+                      "type": "any",
+                      "value": "{{instance}}",
+                      "key": "instance"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": 5621,\n  \"po-number\": \"string\",\n  \"status\": \"issued\",\n  \"type\": \"string\",\n  \"version\": 5401,\n  \"internal-revision\": 1295,\n  \"change-type\": \"revision\",\n  \"confirmation_status\": \"rejected\",\n  \"acknowledged-flag\": true,\n  \"acknowledged-at\": \"2012-09-09T03:34:47.074Z\",\n  \"total\": 7687.386305493487,\n  \"currency\": {\n    \"id\": 2700,\n    \"code\": \"USD\"\n  },\n  \"supplier\": {\n    \"id\": 6792,\n    \"name\": \"string\",\n    \"number\": \"string\"\n  },\n  \"supplier-site\": {\n    \"id\": 4057,\n    \"name\": \"string\"\n  },\n  \"requester\": {\n    \"id\": 8318,\n    \"login\": \"string\",\n    \"email\": \"KidYK0ATZdY2w0o@OvnKJsUAyIIeUwLBAwE.xq\"\n  },\n  \"ship-to-address\": {\n    \"id\": 6606,\n    \"name\": \"string\",\n    \"street1\": \"string\",\n    \"street2\": \"string\",\n    \"city\": \"string\",\n    \"state\": \"string\",\n    \"postal-code\": \"string\",\n    \"country\": {\n      \"id\": 8998,\n      \"code\": \"string\"\n    }\n  },\n  \"ship-to-attention\": \"string\",\n  \"ship-to-user\": {\n    \"id\": 3274,\n    \"login\": \"string\",\n    \"email\": \"FPx-Z4F2vNX@ngIiQIQxLYqByZvhJPcJSzKHwgbsC.aqu\"\n  },\n  \"payment-term\": {\n    \"id\": 4900,\n    \"code\": \"string\"\n  },\n  \"payment-method\": \"invoice_only\",\n  \"shipping-term\": {\n    \"id\": 3003,\n    \"code\": \"string\"\n  },\n  \"order-lines\": [\n    {\n      \"id\": 3021,\n      \"line-num\": 9876,\n      \"description\": \"string\",\n      \"quantity\": 6758.6631108145475,\n      \"price\": 3446.5573687476913,\n      \"total\": 686.3727550430432,\n      \"uom\": {\n        \"id\": 5108,\n        \"code\": \"string\"\n      },\n      \"need-by-date\": \"1964-07-26T13:02:16.868Z\",\n      \"source-part-num\": \"string\",\n      \"commodity\": {\n        \"id\": 9247,\n        \"name\": \"string\"\n      },\n      \"account\": {\n        \"id\": 2590,\n        \"code\": \"string\"\n      },\n      \"status\": \"string\",\n      \"currency\": {\n        \"id\": 4153,\n        \"code\": \"USD\"\n      },\n      \"supplier-aux-part-num\": \"string\",\n      \"receiving-warehouse\": {\n        \"id\": 2303,\n        \"name\": \"string\"\n      },\n      \"created-at\": \"1953-04-08T14:10:33.467Z\",\n      \"updated-at\": \"1954-04-01T03:02:42.219Z\"\n    },\n    {\n      \"id\": 6443,\n      \"line-num\": 2058,\n      \"description\": \"string\",\n      \"quantity\": 6549.887883590497,\n      \"price\": 8565.576608056144,\n      \"total\": 2335.3992287266324,\n      \"uom\": {\n        \"id\": 6739,\n        \"code\": \"string\"\n      },\n      \"need-by-date\": \"2006-11-24T19:44:11.525Z\",\n      \"source-part-num\": \"string\",\n      \"commodity\": {\n        \"id\": 9217,\n        \"name\": \"string\"\n      },\n      \"account\": {\n        \"id\": 7932,\n        \"code\": \"string\"\n      },\n      \"status\": \"string\",\n      \"currency\": {\n        \"id\": 9438,\n        \"code\": \"USD\"\n      },\n      \"supplier-aux-part-num\": \"string\",\n      \"receiving-warehouse\": {\n        \"id\": 4788,\n        \"name\": \"string\"\n      },\n      \"created-at\": \"2024-01-09T17:55:34.494Z\",\n      \"updated-at\": \"1962-10-11T13:22:43.032Z\"\n    }\n  ],\n  \"requisition-header\": {\n    \"id\": 4695\n  },\n  \"invoice-stop\": false,\n  \"exported\": true,\n  \"last-exported-at\": \"1978-12-16T12:08:44.807Z\",\n  \"hide-price\": true,\n  \"price-hidden\": false,\n  \"transmission-method-override\": \"do_not_transmit\",\n  \"transmission-status\": \"sent_via_cxml\",\n  \"transmission-emails\": \"string\",\n  \"coupa-accelerate-status\": \"string\",\n  \"classification\": \"vms\",\n  \"confirm-by-hrs\": 2616,\n  \"order-confirmation-level\": 2799,\n  \"created-at\": \"1968-03-29T12:41:39.515Z\",\n  \"updated-at\": \"1949-06-06T03:17:48.870Z\",\n  \"created-by\": {\n    \"id\": 9677,\n    \"login\": \"string\",\n    \"email\": \"PbUqKeZZe@bYKEjHHTVSDgJYB.uhe\"\n  },\n  \"updated-by\": {\n    \"id\": 9267,\n    \"login\": \"string\",\n    \"email\": \"nD4SojdjBoIcwG4@GcIMiMVYNYpkSuuTPuEhmodlEiUlK.fxi\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "4ac9b743-7ab7-4459-89e0-c462e08109e3",
+              "name": "Unauthorized - invalid or missing authentication credentials",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "purchase_orders",
+                    ":id",
+                    "issue"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "id",
+                      "description": "(Required) Coupa internal unique identifier"
+                    },
+                    {
+                      "description": "Your Coupa instance subdomain",
+                      "type": "any",
+                      "value": "{{instance}}",
+                      "key": "instance"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"message\": \"string\",\n      \"field\": \"string\"\n    },\n    {\n      \"message\": \"string\",\n      \"field\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "6d702352-0a17-41d3-a8c8-033a218855c1",
+              "name": "Resource not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "purchase_orders",
+                    ":id",
+                    "issue"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "id",
+                      "description": "(Required) Coupa internal unique identifier"
+                    },
+                    {
+                      "description": "Your Coupa instance subdomain",
+                      "type": "any",
+                      "value": "{{instance}}",
+                      "key": "instance"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"message\": \"string\",\n      \"field\": \"string\"\n    },\n    {\n      \"message\": \"string\",\n      \"field\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "627ddd24-7624-492e-b75d-0797e329c594",
+              "name": "Unprocessable entity - validation errors",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "purchase_orders",
+                    ":id",
+                    "issue"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "id",
+                      "description": "(Required) Coupa internal unique identifier"
+                    },
+                    {
+                      "description": "Your Coupa instance subdomain",
+                      "type": "any",
+                      "value": "{{instance}}",
+                      "key": "instance"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {}
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"message\": \"string\",\n      \"field\": \"string\"\n    },\n    {\n      \"message\": \"string\",\n      \"field\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d7a4181f-d1e8-4ad7-af10-82f81ea5232b",
+              "name": "Internal server error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "purchase_orders",
+                    ":id",
+                    "issue"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "id",
+                      "description": "(Required) Coupa internal unique identifier"
+                    },
+                    {
+                      "description": "Your Coupa instance subdomain",
+                      "type": "any",
+                      "value": "{{instance}}",
+                      "key": "instance"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"message\": \"string\",\n      \"field\": \"string\"\n    },\n    {\n      \"message\": \"string\",\n      \"field\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "bfcb9550-36fd-4e86-a0d6-5ec8cb1dd31b",
+          "name": "Coupa Reopen a purchase order",
+          "request": {
+            "name": "Coupa Reopen a purchase order",
+            "description": {
+              "content": "Reopen a soft-closed purchase order.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "purchase_orders",
+                ":id",
+                "reopen"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "id",
+                  "description": "(Required) Coupa internal unique identifier"
+                },
+                {
+                  "description": "Your Coupa instance subdomain",
+                  "type": "any",
+                  "value": "{{instance}}",
+                  "key": "instance"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "faca592c-c7d2-4047-a198-0ce3716981c9",
+              "name": "Purchase order reopened successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "purchase_orders",
+                    ":id",
+                    "reopen"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "id",
+                      "description": "(Required) Coupa internal unique identifier"
+                    },
+                    {
+                      "description": "Your Coupa instance subdomain",
+                      "type": "any",
+                      "value": "{{instance}}",
+                      "key": "instance"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": 5621,\n  \"po-number\": \"string\",\n  \"status\": \"issued\",\n  \"type\": \"string\",\n  \"version\": 5401,\n  \"internal-revision\": 1295,\n  \"change-type\": \"revision\",\n  \"confirmation_status\": \"rejected\",\n  \"acknowledged-flag\": true,\n  \"acknowledged-at\": \"2012-09-09T03:34:47.074Z\",\n  \"total\": 7687.386305493487,\n  \"currency\": {\n    \"id\": 2700,\n    \"code\": \"USD\"\n  },\n  \"supplier\": {\n    \"id\": 6792,\n    \"name\": \"string\",\n    \"number\": \"string\"\n  },\n  \"supplier-site\": {\n    \"id\": 4057,\n    \"name\": \"string\"\n  },\n  \"requester\": {\n    \"id\": 8318,\n    \"login\": \"string\",\n    \"email\": \"KidYK0ATZdY2w0o@OvnKJsUAyIIeUwLBAwE.xq\"\n  },\n  \"ship-to-address\": {\n    \"id\": 6606,\n    \"name\": \"string\",\n    \"street1\": \"string\",\n    \"street2\": \"string\",\n    \"city\": \"string\",\n    \"state\": \"string\",\n    \"postal-code\": \"string\",\n    \"country\": {\n      \"id\": 8998,\n      \"code\": \"string\"\n    }\n  },\n  \"ship-to-attention\": \"string\",\n  \"ship-to-user\": {\n    \"id\": 3274,\n    \"login\": \"string\",\n    \"email\": \"FPx-Z4F2vNX@ngIiQIQxLYqByZvhJPcJSzKHwgbsC.aqu\"\n  },\n  \"payment-term\": {\n    \"id\": 4900,\n    \"code\": \"string\"\n  },\n  \"payment-method\": \"invoice_only\",\n  \"shipping-term\": {\n    \"id\": 3003,\n    \"code\": \"string\"\n  },\n  \"order-lines\": [\n    {\n      \"id\": 3021,\n      \"line-num\": 9876,\n      \"description\": \"string\",\n      \"quantity\": 6758.6631108145475,\n      \"price\": 3446.5573687476913,\n      \"total\": 686.3727550430432,\n      \"uom\": {\n        \"id\": 5108,\n        \"code\": \"string\"\n      },\n      \"need-by-date\": \"1964-07-26T13:02:16.868Z\",\n      \"source-part-num\": \"string\",\n      \"commodity\": {\n        \"id\": 9247,\n        \"name\": \"string\"\n      },\n      \"account\": {\n        \"id\": 2590,\n        \"code\": \"string\"\n      },\n      \"status\": \"string\",\n      \"currency\": {\n        \"id\": 4153,\n        \"code\": \"USD\"\n      },\n      \"supplier-aux-part-num\": \"string\",\n      \"receiving-warehouse\": {\n        \"id\": 2303,\n        \"name\": \"string\"\n      },\n      \"created-at\": \"1953-04-08T14:10:33.467Z\",\n      \"updated-at\": \"1954-04-01T03:02:42.219Z\"\n    },\n    {\n      \"id\": 6443,\n      \"line-num\": 2058,\n      \"description\": \"string\",\n      \"quantity\": 6549.887883590497,\n      \"price\": 8565.576608056144,\n      \"total\": 2335.3992287266324,\n      \"uom\": {\n        \"id\": 6739,\n        \"code\": \"string\"\n      },\n      \"need-by-date\": \"2006-11-24T19:44:11.525Z\",\n      \"source-part-num\": \"string\",\n      \"commodity\": {\n        \"id\": 9217,\n        \"name\": \"string\"\n      },\n      \"account\": {\n        \"id\": 7932,\n        \"code\": \"string\"\n      },\n      \"status\": \"string\",\n      \"currency\": {\n        \"id\": 9438,\n        \"code\": \"USD\"\n      },\n      \"supplier-aux-part-num\": \"string\",\n      \"receiving-warehouse\": {\n        \"id\": 4788,\n        \"name\": \"string\"\n      },\n      \"created-at\": \"2024-01-09T17:55:34.494Z\",\n      \"updated-at\": \"1962-10-11T13:22:43.032Z\"\n    }\n  ],\n  \"requisition-header\": {\n    \"id\": 4695\n  },\n  \"invoice-stop\": false,\n  \"exported\": true,\n  \"last-exported-at\": \"1978-12-16T12:08:44.807Z\",\n  \"hide-price\": true,\n  \"price-hidden\": false,\n  \"transmission-method-override\": \"do_not_transmit\",\n  \"transmission-status\": \"sent_via_cxml\",\n  \"transmission-emails\": \"string\",\n  \"coupa-accelerate-status\": \"string\",\n  \"classification\": \"vms\",\n  \"confirm-by-hrs\": 2616,\n  \"order-confirmation-level\": 2799,\n  \"created-at\": \"1968-03-29T12:41:39.515Z\",\n  \"updated-at\": \"1949-06-06T03:17:48.870Z\",\n  \"created-by\": {\n    \"id\": 9677,\n    \"login\": \"string\",\n    \"email\": \"PbUqKeZZe@bYKEjHHTVSDgJYB.uhe\"\n  },\n  \"updated-by\": {\n    \"id\": 9267,\n    \"login\": \"string\",\n    \"email\": \"nD4SojdjBoIcwG4@GcIMiMVYNYpkSuuTPuEhmodlEiUlK.fxi\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f800c944-c342-4f42-bbe4-3c45b4c2e0d8",
+              "name": "Unauthorized - invalid or missing authentication credentials",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "purchase_orders",
+                    ":id",
+                    "reopen"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "id",
+                      "description": "(Required) Coupa internal unique identifier"
+                    },
+                    {
+                      "description": "Your Coupa instance subdomain",
+                      "type": "any",
+                      "value": "{{instance}}",
+                      "key": "instance"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"message\": \"string\",\n      \"field\": \"string\"\n    },\n    {\n      \"message\": \"string\",\n      \"field\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d65b1d09-0144-40c9-b5f4-33c626586c5f",
+              "name": "Resource not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "purchase_orders",
+                    ":id",
+                    "reopen"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "id",
+                      "description": "(Required) Coupa internal unique identifier"
+                    },
+                    {
+                      "description": "Your Coupa instance subdomain",
+                      "type": "any",
+                      "value": "{{instance}}",
+                      "key": "instance"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"message\": \"string\",\n      \"field\": \"string\"\n    },\n    {\n      \"message\": \"string\",\n      \"field\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "fb5eab45-c3c3-41b5-8500-a7f329ba4613",
+              "name": "Unprocessable entity - validation errors",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "purchase_orders",
+                    ":id",
+                    "reopen"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "id",
+                      "description": "(Required) Coupa internal unique identifier"
+                    },
+                    {
+                      "description": "Your Coupa instance subdomain",
+                      "type": "any",
+                      "value": "{{instance}}",
+                      "key": "instance"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {}
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"message\": \"string\",\n      \"field\": \"string\"\n    },\n    {\n      \"message\": \"string\",\n      \"field\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f8ab2168-5371-4b40-96ef-084ec22444cf",
+              "name": "Internal server error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "purchase_orders",
+                    ":id",
+                    "reopen"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "id",
+                      "description": "(Required) Coupa internal unique identifier"
+                    },
+                    {
+                      "description": "Your Coupa instance subdomain",
+                      "type": "any",
+                      "value": "{{instance}}",
+                      "key": "instance"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"message\": \"string\",\n      \"field\": \"string\"\n    },\n    {\n      \"message\": \"string\",\n      \"field\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "description": {
+        "content": "Your Coupa instance subdomain",
+        "type": "text/plain"
+      },
+      "type": "any",
+      "value": "your-instance",
+      "key": "instance"
+    },
+    {
+      "type": "string",
+      "value": "https://{{instance}}.coupahost.com/api",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "oauth2",
+    "oauth2": [
+      {
+        "key": "scope",
+        "value": "core.purchase_orders.read core.purchase_orders.write core.invoices.read core.invoices.write core.requisitions.read core.requisitions.write core.suppliers.read core.suppliers.write"
+      },
+      {
+        "key": "accessTokenUrl",
+        "value": "https://{instance}.coupahost.com/oauth2/token"
+      },
+      {
+        "key": "grant_type",
+        "value": "client_credentials"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "777c8eb0-c169-4cec-aad7-2c5cf5324137",
+    "name": "Coupa Core Invoices Purchase Orders API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The primary RESTful API for accessing and managing core Coupa Business Spend Management (BSM) resources including purchase orders, invoices, requisitions, and suppliers. Supports both JSON and XML response formats. All endpoints require OAuth 2.0 or API key authentication. Coupa recommends using query parameters to limit result sets for optimal performance.\n\nContact Support:\n Name: Coupa Support",
+      "type": "text/plain"
+    }
+  }
+}
