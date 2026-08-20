@@ -45,6 +45,11 @@ apis:
   - Enterprise
   - ERP
   - Integration
+  - Webhook
+  tags_raw:
+  - Enterprise
+  - ERP
+  - Integration
   - Webhooks
   properties:
   - type: Documentation
@@ -202,6 +207,13 @@ apis:
     https://compass.coupa.com/en-us/products/product-documentation/supplier-resources/for-suppliers/integration-resources/open-buy-api-reference
   baseURL: https://instance.coupahost.com
   tags:
+  - Catalog
+  - E-Commerce
+  - Open Buy
+  - REST
+  - Search
+  - Suppliers
+  tags_raw:
   - Catalog
   - eCommerce
   - Open Buy
