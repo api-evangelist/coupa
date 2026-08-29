@@ -1,0 +1,50 @@
+slug: coupa
+provider: Coupa
+generated_by: planning/capability-mapping/scripts/classify_capabilities.py
+model: claude-opus-5
+frame:
+- Transportation & Logistics
+min_confidence: 0.7
+capability_model:
+  source: https://github.com/vincentmakes/turbo-ea-capabilities
+  license: CC-BY-4.0
+  attribution: Turbo EA Capabilities by Vincent Verdet — Turbo EA, https://github.com/vincentmakes/turbo-ea-capabilities,
+    CC BY 4.0
+  notice: NOTICE
+edge_count: 4
+edges:
+- tag: Purchase Orders
+  spec_file: coupa-purchase-orders-api-openapi.yml
+  capability_id: BC-500.30
+  capability_id_l1: BC-500
+  capability_name: Purchase Order Management
+  confidence: 0.95
+  evidence: issuePurchaseOrder  Coupa Issue a purchase order ... closePurchaseOrder
+  reason: Create, issue, cancel, close purchase orders is plainly Purchase Order Management.
+- tag: Invoices
+  spec_file: coupa-invoices-api-openapi.yml
+  capability_id: BC-200.20
+  capability_id_l1: BC-200
+  capability_name: Accounts Payable Management
+  confidence: 0.9
+  evidence: submitInvoice  Coupa Submit a draft invoice for approval ... disputeInvoice  Coupa Dispute
+    an invoice
+  reason: Supplier invoice creation, approval, voiding and dispute on a procurement spend platform is
+    Accounts Payable invoice processing.
+- tag: Requisitions
+  spec_file: coupa-requisitions-api-openapi.yml
+  capability_id: BC-500.40
+  capability_id_l1: BC-500
+  capability_name: Procure-to-Pay Operations Management
+  confidence: 0.85
+  evidence: submitRequisitionForApproval  Coupa Submit a requisition for approval
+  reason: Requisition creation and approval submission is core procure-to-pay operations (requisitions).
+- tag: Suppliers
+  spec_file: coupa-suppliers-api-openapi.yml
+  capability_id: BC-510.10
+  capability_id_l1: BC-510
+  capability_name: Supplier Onboarding Management
+  confidence: 0.7
+  evidence: createSupplier  Coupa Create a supplier ... updateSupplier
+  reason: Supplier record creation/maintenance on a BSM platform; supplier onboarding/registration is
+    the closest L2, though it could equally be supplier master data — hence moderate confidence.

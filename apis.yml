@@ -595,6 +595,9 @@ apis:
   - type: GraphQL
     url: graphql/coupa-graphql.md
 common:
+  - type: CapabilityMap
+    url: capabilities/coupa-capability-edges.yml
+    name: Coupa Business Capability Map
   - type: AgenticAccess
     url: agentic-access/coupa-agentic-access.yml
   - type: VulnerabilityDisclosure
