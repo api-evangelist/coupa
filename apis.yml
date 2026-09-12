@@ -595,6 +595,8 @@ apis:
   - type: GraphQL
     url: graphql/coupa-graphql.md
 common:
+  - type: Website
+    url: https://coupa.com/
   - type: CapabilityMap
     url: capabilities/coupa-capability-edges.yml
     name: Coupa Business Capability Map
