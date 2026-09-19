@@ -87,6 +87,10 @@ apis:
   humanURL: https://compass.coupa.com/en-us/products/supplier-portal
   baseURL: https://instance.coupahost.com/api/suppliers
   tags:
+  - Catalog
+  - Suppliers
+  - Vendor Management
+  tags_raw:
   - Catalogs
   - Suppliers
   - Vendor Management
