@@ -1,6 +1,6 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
-  title: Coupa Core Invoices Requisitions API
+  title: Coupa Core Requisitions API
   description: The primary RESTful API for accessing and managing core Coupa Business Spend Management (BSM) resources including purchase orders, invoices, requisitions, and suppliers. Supports both JSON and XML response formats. All endpoints require OAuth 2.0 or API key authentication. Coupa recommends using query parameters to limit result sets for optimal performance.
   version: 1.0.0
   termsOfService: https://www.coupa.com/company/trust/agreements
@@ -265,6 +265,173 @@ paths:
           $ref: '#/components/responses/InternalServerError'
 components:
   schemas:
+    SupplierReference:
+      type: object
+      description: Reference to a supplier
+      properties:
+        id:
+          type: integer
+          description: Coupa unique identifier for the supplier
+        name:
+          type: string
+          description: Supplier name
+        number:
+          type: string
+          description: Supplier number
+    RequisitionUpdate:
+      type: object
+      description: Schema for updating a requisition
+      properties:
+        req_title:
+          type: string
+          maxLength: 50
+        currency:
+          $ref: '#/components/schemas/CurrencyReference'
+        department:
+          $ref: '#/components/schemas/DepartmentReference'
+        ship-to-address:
+          $ref: '#/components/schemas/AddressReference'
+        ship-to-attention:
+          type: string
+          maxLength: 255
+        need-by-date:
+          type: string
+          format: date-time
+        justification:
+          type: string
+        buyer-note:
+          type: string
+        external-po-reference:
+          type: string
+          maxLength: 255
+        hide-price:
+          type: boolean
+        requisition-lines:
+          type: array
+          items:
+            $ref: '#/components/schemas/RequisitionLine'
+        exported:
+          type: boolean
+    AddressReference:
+      type: object
+      description: Reference to an address
+      properties:
+        id:
+          type: integer
+          description: Coupa unique identifier for the address
+        name:
+          type: string
+          description: Address name
+        street1:
+          type: string
+          description: Street address line 1
+        street2:
+          type: string
+          description: Street address line 2
+        city:
+          type: string
+          description: City
+        state:
+          type: string
+          description: State or province
+        postal-code:
+          type: string
+          description: Postal or ZIP code
+        country:
+          type: object
+          properties:
+            id:
+              type: integer
+            code:
+              type: string
+              description: ISO 3166-1 alpha-2 country code
+    RequisitionLine:
+      type: object
+      description: A line item on a requisition
+      properties:
+        id:
+          type: integer
+          description: Coupa unique identifier
+          readOnly: true
+        line-num:
+          type: integer
+          description: Line number (must increment by one)
+        description:
+          type: string
+          description: Item description
+          maxLength: 255
+        quantity:
+          type: number
+          format: decimal
+          description: Quantity requested
+        unit-price:
+          type: number
+          format: decimal
+          description: Unit price (overrides preferred supplier pricing if item ID provided)
+        total:
+          type: number
+          format: decimal
+          description: Line total
+          readOnly: true
+        uom:
+          type: object
+          description: Unit of measure
+          properties:
+            id:
+              type: integer
+            code:
+              type: string
+        need-by-date:
+          type: string
+          format: date-time
+          description: Date the item is needed by
+        source-part-num:
+          type: string
+          description: Supplier part number
+        supplier:
+          $ref: '#/components/schemas/SupplierReference'
+        commodity:
+          type: object
+          description: Commodity classification
+          properties:
+            id:
+              type: integer
+            name:
+              type: string
+        account:
+          type: object
+          description: Chart of accounts reference
+          properties:
+            id:
+              type: integer
+            code:
+              type: string
+        currency:
+          $ref: '#/components/schemas/CurrencyReference'
+        item:
+          type: object
+          description: Catalog item reference
+          properties:
+            id:
+              type: integer
+            name:
+              type: string
+        contract:
+          type: object
+          description: Contract reference for this line
+          properties:
+            id:
+              type: integer
+            name:
+              type: string
+        created-at:
+          type: string
+          format: date-time
+          readOnly: true
+        updated-at:
+          type: string
+          format: date-time
+          readOnly: true
     ApprovalReference:
       type: object
       description: Reference to an approval record
@@ -275,6 +442,16 @@ components:
         status:
           type: string
           description: Approval status
+    DepartmentReference:
+      type: object
+      description: Reference to a department
+      properties:
+        id:
+          type: integer
+          description: Coupa unique identifier for the department
+        name:
+          type: string
+          description: Department name
     UserReference:
       type: object
       description: Reference to a Coupa user
@@ -289,19 +466,6 @@ components:
           type: string
           format: email
           description: User email address
-    SupplierReference:
-      type: object
-      description: Reference to a supplier
-      properties:
-        id:
-          type: integer
-          description: Coupa unique identifier for the supplier
-        name:
-          type: string
-          description: Supplier name
-        number:
-          type: string
-          description: Supplier number
     CurrencyReference:
       type: object
       description: Reference to a currency
@@ -313,6 +477,20 @@ components:
           type: string
           description: ISO 4217 currency code
           example: USD
+    Error:
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            type: object
+            properties:
+              message:
+                type: string
+                description: Human-readable error message
+              field:
+                type: string
+                description: Field that caused the error
     Requisition:
       type: object
       description: A requisition representing an internal request to purchase goods or services, subject to approval workflows.
@@ -458,150 +636,6 @@ components:
           $ref: '#/components/schemas/UserReference'
         updated-by:
           $ref: '#/components/schemas/UserReference'
-    RequisitionLine:
-      type: object
-      description: A line item on a requisition
-      properties:
-        id:
-          type: integer
-          description: Coupa unique identifier
-          readOnly: true
-        line-num:
-          type: integer
-          description: Line number (must increment by one)
-        description:
-          type: string
-          description: Item description
-          maxLength: 255
-        quantity:
-          type: number
-          format: decimal
-          description: Quantity requested
-        unit-price:
-          type: number
-          format: decimal
-          description: Unit price (overrides preferred supplier pricing if item ID provided)
-        total:
-          type: number
-          format: decimal
-          description: Line total
-          readOnly: true
-        uom:
-          type: object
-          description: Unit of measure
-          properties:
-            id:
-              type: integer
-            code:
-              type: string
-        need-by-date:
-          type: string
-          format: date-time
-          description: Date the item is needed by
-        source-part-num:
-          type: string
-          description: Supplier part number
-        supplier:
-          $ref: '#/components/schemas/SupplierReference'
-        commodity:
-          type: object
-          description: Commodity classification
-          properties:
-            id:
-              type: integer
-            name:
-              type: string
-        account:
-          type: object
-          description: Chart of accounts reference
-          properties:
-            id:
-              type: integer
-            code:
-              type: string
-        currency:
-          $ref: '#/components/schemas/CurrencyReference'
-        item:
-          type: object
-          description: Catalog item reference
-          properties:
-            id:
-              type: integer
-            name:
-              type: string
-        contract:
-          type: object
-          description: Contract reference for this line
-          properties:
-            id:
-              type: integer
-            name:
-              type: string
-        created-at:
-          type: string
-          format: date-time
-          readOnly: true
-        updated-at:
-          type: string
-          format: date-time
-          readOnly: true
-    Error:
-      type: object
-      properties:
-        errors:
-          type: array
-          items:
-            type: object
-            properties:
-              message:
-                type: string
-                description: Human-readable error message
-              field:
-                type: string
-                description: Field that caused the error
-    AddressReference:
-      type: object
-      description: Reference to an address
-      properties:
-        id:
-          type: integer
-          description: Coupa unique identifier for the address
-        name:
-          type: string
-          description: Address name
-        street1:
-          type: string
-          description: Street address line 1
-        street2:
-          type: string
-          description: Street address line 2
-        city:
-          type: string
-          description: City
-        state:
-          type: string
-          description: State or province
-        postal-code:
-          type: string
-          description: Postal or ZIP code
-        country:
-          type: object
-          properties:
-            id:
-              type: integer
-            code:
-              type: string
-              description: ISO 3166-1 alpha-2 country code
-    DepartmentReference:
-      type: object
-      description: Reference to a department
-      properties:
-        id:
-          type: integer
-          description: Coupa unique identifier for the department
-        name:
-          type: string
-          description: Department name
     RequisitionCreate:
       type: object
       description: Schema for creating a new requisition
@@ -646,41 +680,13 @@ components:
           minItems: 1
           items:
             $ref: '#/components/schemas/RequisitionLine'
-    RequisitionUpdate:
-      type: object
-      description: Schema for updating a requisition
-      properties:
-        req_title:
-          type: string
-          maxLength: 50
-        currency:
-          $ref: '#/components/schemas/CurrencyReference'
-        department:
-          $ref: '#/components/schemas/DepartmentReference'
-        ship-to-address:
-          $ref: '#/components/schemas/AddressReference'
-        ship-to-attention:
-          type: string
-          maxLength: 255
-        need-by-date:
-          type: string
-          format: date-time
-        justification:
-          type: string
-        buyer-note:
-          type: string
-        external-po-reference:
-          type: string
-          maxLength: 255
-        hide-price:
-          type: boolean
-        requisition-lines:
-          type: array
-          items:
-            $ref: '#/components/schemas/RequisitionLine'
-        exported:
-          type: boolean
   responses:
+    Unauthorized:
+      description: Unauthorized - invalid or missing authentication credentials
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
     UnprocessableEntity:
       description: Unprocessable entity - validation errors
       content:
@@ -693,20 +699,14 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
-    Unauthorized:
-      description: Unauthorized - invalid or missing authentication credentials
+    InternalServerError:
+      description: Internal server error
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
     BadRequest:
       description: Bad request - invalid parameters or malformed request
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    InternalServerError:
-      description: Internal server error
       content:
         application/json:
           schema:
@@ -720,13 +720,6 @@ components:
         type: integer
         default: 50
         maximum: 50
-    idParam:
-      name: id
-      in: path
-      required: true
-      description: Coupa internal unique identifier
-      schema:
-        type: integer
     offsetParam:
       name: offset
       in: query
@@ -752,6 +745,13 @@ components:
         enum:
         - limited
         - shallow
+    idParam:
+      name: id
+      in: path
+      required: true
+      description: Coupa internal unique identifier
+      schema:
+        type: integer
   securitySchemes:
     oauth2:
       type: oauth2
