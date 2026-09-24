@@ -446,8 +446,6 @@ apis:
     url: vocabulary/coupa-vocabulary.yml
   - type: Rules
     url: rules/coupa-core-api-rules.yml
-  - type: GraphQL
-    url: graphql/coupa-graphql.md
 - aid: coupa:coupa-purchase-orders-api
   name: Coupa Purchase Orders API
   description: >-
@@ -496,8 +494,6 @@ apis:
     url: vocabulary/coupa-vocabulary.yml
   - type: Rules
     url: rules/coupa-core-api-rules.yml
-  - type: GraphQL
-    url: graphql/coupa-graphql.md
 - aid: coupa:coupa-requisitions-api
   name: Coupa Requisitions API
   description: >-
@@ -546,8 +542,6 @@ apis:
     url: vocabulary/coupa-vocabulary.yml
   - type: Rules
     url: rules/coupa-core-api-rules.yml
-  - type: GraphQL
-    url: graphql/coupa-graphql.md
 - aid: coupa:coupa-suppliers-api
   name: Coupa Suppliers API
   description: >-
@@ -596,8 +590,6 @@ apis:
     url: vocabulary/coupa-vocabulary.yml
   - type: Rules
     url: rules/coupa-core-api-rules.yml
-  - type: GraphQL
-    url: graphql/coupa-graphql.md
 common:
   - type: Website
     url: https://coupa.com/
