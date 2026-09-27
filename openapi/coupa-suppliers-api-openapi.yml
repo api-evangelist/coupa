@@ -175,80 +175,6 @@ paths:
           $ref: '#/components/responses/InternalServerError'
 components:
   schemas:
-    SupplierUpdate:
-      type: object
-      description: Schema for updating a supplier
-      properties:
-        name:
-          type: string
-          maxLength: 100
-        number:
-          type: string
-        display-name:
-          type: string
-        duns:
-          type: string
-        tax-id:
-          type: string
-        account-number:
-          type: string
-        corporate-url:
-          type: string
-        website:
-          type: string
-        status:
-          type: string
-          enum:
-          - active
-          - inactive
-        on-hold:
-          type: boolean
-        commodity:
-          type: string
-        payment-method:
-          type: string
-          enum:
-          - invoice
-          - pcard
-          - invoice_only
-          - pcard_only
-          - virtual_card
-        payment-term:
-          $ref: '#/components/schemas/PaymentTermReference'
-        shipping-term:
-          $ref: '#/components/schemas/ShippingTermReference'
-        invoice-matching-level:
-          type: string
-          enum:
-          - 2-way
-          - 3-way
-          - 3-way-direct
-          - none
-        po-method:
-          type: string
-          enum:
-          - cxml
-          - xml
-          - email
-          - prompt
-          - mark_as_sent
-          - buy_online
-        po-email:
-          type: string
-        primary-contact:
-          type: string
-        default-locale:
-          type: string
-        strategic-supplier:
-          type: boolean
-        allow-cxml-invoicing:
-          type: boolean
-        allow-inv-from-connect:
-          type: boolean
-        hold-invoices-for-ap-review:
-          type: boolean
-        send-invoices-to-approvals:
-          type: boolean
     PaymentTermReference:
       type: object
       description: Reference to a payment term
@@ -273,91 +199,6 @@ components:
           type: string
           format: email
           description: User email address
-    Error:
-      type: object
-      properties:
-        errors:
-          type: array
-          items:
-            type: object
-            properties:
-              message:
-                type: string
-                description: Human-readable error message
-              field:
-                type: string
-                description: Field that caused the error
-    SupplierCreate:
-      type: object
-      description: Schema for creating a new supplier
-      required:
-      - name
-      properties:
-        name:
-          type: string
-          maxLength: 100
-        number:
-          type: string
-        display-name:
-          type: string
-        duns:
-          type: string
-        tax-id:
-          type: string
-        account-number:
-          type: string
-        corporate-url:
-          type: string
-        website:
-          type: string
-        commodity:
-          type: string
-        payment-method:
-          type: string
-          enum:
-          - invoice
-          - pcard
-          - invoice_only
-          - pcard_only
-          - virtual_card
-        payment-term:
-          $ref: '#/components/schemas/PaymentTermReference'
-        shipping-term:
-          $ref: '#/components/schemas/ShippingTermReference'
-        invoice-matching-level:
-          type: string
-          enum:
-          - 2-way
-          - 3-way
-          - 3-way-direct
-          - none
-        po-method:
-          type: string
-          enum:
-          - cxml
-          - xml
-          - email
-          - prompt
-          - mark_as_sent
-          - buy_online
-        po-email:
-          type: string
-        primary-contact:
-          type: string
-        primary-address:
-          $ref: '#/components/schemas/AddressReference'
-        default-locale:
-          type: string
-        strategic-supplier:
-          type: boolean
-        one-time-supplier:
-          type: boolean
-        allow-cxml-invoicing:
-          type: boolean
-        allow-inv-from-connect:
-          type: boolean
-        allow-inv-no-backing-doc-from-connect:
-          type: boolean
     AddressReference:
       type: object
       description: Reference to an address
@@ -628,7 +469,204 @@ components:
           $ref: '#/components/schemas/UserReference'
         updated-by:
           $ref: '#/components/schemas/UserReference'
+    SupplierUpdate:
+      type: object
+      description: Schema for updating a supplier
+      properties:
+        name:
+          type: string
+          maxLength: 100
+        number:
+          type: string
+        display-name:
+          type: string
+        duns:
+          type: string
+        tax-id:
+          type: string
+        account-number:
+          type: string
+        corporate-url:
+          type: string
+        website:
+          type: string
+        status:
+          type: string
+          enum:
+          - active
+          - inactive
+        on-hold:
+          type: boolean
+        commodity:
+          type: string
+        payment-method:
+          type: string
+          enum:
+          - invoice
+          - pcard
+          - invoice_only
+          - pcard_only
+          - virtual_card
+        payment-term:
+          $ref: '#/components/schemas/PaymentTermReference'
+        shipping-term:
+          $ref: '#/components/schemas/ShippingTermReference'
+        invoice-matching-level:
+          type: string
+          enum:
+          - 2-way
+          - 3-way
+          - 3-way-direct
+          - none
+        po-method:
+          type: string
+          enum:
+          - cxml
+          - xml
+          - email
+          - prompt
+          - mark_as_sent
+          - buy_online
+        po-email:
+          type: string
+        primary-contact:
+          type: string
+        default-locale:
+          type: string
+        strategic-supplier:
+          type: boolean
+        allow-cxml-invoicing:
+          type: boolean
+        allow-inv-from-connect:
+          type: boolean
+        hold-invoices-for-ap-review:
+          type: boolean
+        send-invoices-to-approvals:
+          type: boolean
+    SupplierCreate:
+      type: object
+      description: Schema for creating a new supplier
+      required:
+      - name
+      properties:
+        name:
+          type: string
+          maxLength: 100
+        number:
+          type: string
+        display-name:
+          type: string
+        duns:
+          type: string
+        tax-id:
+          type: string
+        account-number:
+          type: string
+        corporate-url:
+          type: string
+        website:
+          type: string
+        commodity:
+          type: string
+        payment-method:
+          type: string
+          enum:
+          - invoice
+          - pcard
+          - invoice_only
+          - pcard_only
+          - virtual_card
+        payment-term:
+          $ref: '#/components/schemas/PaymentTermReference'
+        shipping-term:
+          $ref: '#/components/schemas/ShippingTermReference'
+        invoice-matching-level:
+          type: string
+          enum:
+          - 2-way
+          - 3-way
+          - 3-way-direct
+          - none
+        po-method:
+          type: string
+          enum:
+          - cxml
+          - xml
+          - email
+          - prompt
+          - mark_as_sent
+          - buy_online
+        po-email:
+          type: string
+        primary-contact:
+          type: string
+        primary-address:
+          $ref: '#/components/schemas/AddressReference'
+        default-locale:
+          type: string
+        strategic-supplier:
+          type: boolean
+        one-time-supplier:
+          type: boolean
+        allow-cxml-invoicing:
+          type: boolean
+        allow-inv-from-connect:
+          type: boolean
+        allow-inv-no-backing-doc-from-connect:
+          type: boolean
+    Error:
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            type: object
+            properties:
+              message:
+                type: string
+                description: Human-readable error message
+              field:
+                type: string
+                description: Field that caused the error
+  responses:
+    NotFound:
+      description: Resource not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    InternalServerError:
+      description: Internal server error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    UnprocessableEntity:
+      description: Unprocessable entity - validation errors
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Unauthorized:
+      description: Unauthorized - invalid or missing authentication credentials
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    BadRequest:
+      description: Bad request - invalid parameters or malformed request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
   parameters:
+    offsetParam:
+      name: offset
+      in: query
+      description: Number of records to skip for pagination
+      schema:
+        type: integer
+        default: 0
     returnObjectParam:
       name: return_object
       in: query
@@ -638,22 +676,6 @@ components:
         enum:
         - limited
         - shallow
-    dirParam:
-      name: dir
-      in: query
-      description: Sort direction (asc or desc)
-      schema:
-        type: string
-        enum:
-        - asc
-        - desc
-    offsetParam:
-      name: offset
-      in: query
-      description: Number of records to skip for pagination
-      schema:
-        type: integer
-        default: 0
     idParam:
       name: id
       in: path
@@ -669,37 +691,15 @@ components:
         type: integer
         default: 50
         maximum: 50
-  responses:
-    BadRequest:
-      description: Bad request - invalid parameters or malformed request
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    Unauthorized:
-      description: Unauthorized - invalid or missing authentication credentials
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    UnprocessableEntity:
-      description: Unprocessable entity - validation errors
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    NotFound:
-      description: Resource not found
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    InternalServerError:
-      description: Internal server error
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
+    dirParam:
+      name: dir
+      in: query
+      description: Sort direction (asc or desc)
+      schema:
+        type: string
+        enum:
+        - asc
+        - desc
   securitySchemes:
     oauth2:
       type: oauth2
