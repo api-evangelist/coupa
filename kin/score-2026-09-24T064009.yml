@@ -1,25 +1,23 @@
-# Kin Score artifact — coupa — 2026-08-25T154045
+# Kin Score artifact — coupa — 2026-09-24T064009
 # The API Evangelist rating (https://github.com/api-evangelist/kin-score). Generated; do not edit.
 ---
 kin_score:
   slug: coupa
-  schema_version: 0.14.0
-  scored_at: '2026-08-25'
-  run_ts: 2026-08-25T154045
-  composite: 49.1
+  schema_version: 0.22.0
+  scored_at: '2026-09-24'
+  run_ts: 2026-09-24T064009
+  composite: 51.8
   band: developing
   facets:
-    discoverability: 68.5
-    contract_quality: 74.1
-    governance: 54.5
-    operational_transparency: 23.7
-    developer_ergonomics: 28.6
-    commercial_clarity: 42.1
-    contract_governance: 54.5
+    discoverability: 63.0
+    contract_quality: 72.5
+    contract_governance: 69.7
+    operational_transparency: 31.6
+    developer_ergonomics: 35.7
     access_clarity: 42.1
   agent_readiness:
-    score: 27.3
-    band: agent-aware
+    score: 31.6
+    band: agent-ready
     dimensions:
       spec_presence: true
       agentic_access: derived
@@ -30,7 +28,7 @@ kin_score:
       error_semantics: documented
       openapi_examples: false
       rate_limit_signal: documented
-      event_surface_described: false
+      event_surface_described: true
       agent_skills: false
       well_known_catalog: false
       consent_identity: false
