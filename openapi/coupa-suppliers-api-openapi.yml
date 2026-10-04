@@ -174,17 +174,112 @@ paths:
         '500':
           $ref: '#/components/responses/InternalServerError'
 components:
+  responses:
+    InternalServerError:
+      description: Internal server error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    BadRequest:
+      description: Bad request - invalid parameters or malformed request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    NotFound:
+      description: Resource not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    UnprocessableEntity:
+      description: Unprocessable entity - validation errors
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Unauthorized:
+      description: Unauthorized - invalid or missing authentication credentials
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
   schemas:
-    PaymentTermReference:
+    SupplierUpdate:
       type: object
-      description: Reference to a payment term
+      description: Schema for updating a supplier
       properties:
-        id:
-          type: integer
-          description: Coupa unique identifier for the payment term
-        code:
+        name:
           type: string
-          description: Payment term code
+          maxLength: 100
+        number:
+          type: string
+        display-name:
+          type: string
+        duns:
+          type: string
+        tax-id:
+          type: string
+        account-number:
+          type: string
+        corporate-url:
+          type: string
+        website:
+          type: string
+        status:
+          type: string
+          enum:
+          - active
+          - inactive
+        on-hold:
+          type: boolean
+        commodity:
+          type: string
+        payment-method:
+          type: string
+          enum:
+          - invoice
+          - pcard
+          - invoice_only
+          - pcard_only
+          - virtual_card
+        payment-term:
+          $ref: '#/components/schemas/PaymentTermReference'
+        shipping-term:
+          $ref: '#/components/schemas/ShippingTermReference'
+        invoice-matching-level:
+          type: string
+          enum:
+          - 2-way
+          - 3-way
+          - 3-way-direct
+          - none
+        po-method:
+          type: string
+          enum:
+          - cxml
+          - xml
+          - email
+          - prompt
+          - mark_as_sent
+          - buy_online
+        po-email:
+          type: string
+        primary-contact:
+          type: string
+        default-locale:
+          type: string
+        strategic-supplier:
+          type: boolean
+        allow-cxml-invoicing:
+          type: boolean
+        allow-inv-from-connect:
+          type: boolean
+        hold-invoices-for-ap-review:
+          type: boolean
+        send-invoices-to-approvals:
+          type: boolean
     UserReference:
       type: object
       description: Reference to a Coupa user
@@ -199,6 +294,63 @@ components:
           type: string
           format: email
           description: User email address
+    PaymentTermReference:
+      type: object
+      description: Reference to a payment term
+      properties:
+        id:
+          type: integer
+          description: Coupa unique identifier for the payment term
+        code:
+          type: string
+          description: Payment term code
+    Error:
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            type: object
+            properties:
+              message:
+                type: string
+                description: Human-readable error message
+              field:
+                type: string
+                description: Field that caused the error
+    AddressReference:
+      type: object
+      description: Reference to an address
+      properties:
+        id:
+          type: integer
+          description: Coupa unique identifier for the address
+        name:
+          type: string
+          description: Address name
+        street1:
+          type: string
+          description: Street address line 1
+        street2:
+          type: string
+          description: Street address line 2
+        city:
+          type: string
+          description: City
+        state:
+          type: string
+          description: State or province
+        postal-code:
+          type: string
+          description: Postal or ZIP code
+        country:
+          type: object
+          properties:
+            id:
+              type: integer
+            code:
+              type: string
+              description: ISO 3166-1 alpha-2 country code
     SupplierCreate:
       type: object
       description: Schema for creating a new supplier
@@ -270,20 +422,16 @@ components:
           type: boolean
         allow-inv-no-backing-doc-from-connect:
           type: boolean
-    Error:
+    ShippingTermReference:
       type: object
+      description: Reference to a shipping term
       properties:
-        errors:
-          type: array
-          items:
-            type: object
-            properties:
-              message:
-                type: string
-                description: Human-readable error message
-              field:
-                type: string
-                description: Field that caused the error
+        id:
+          type: integer
+          description: Coupa unique identifier for the shipping term
+        code:
+          type: string
+          description: Shipping term code
     Supplier:
       type: object
       description: A supplier (vendor) organization that provides goods or services. Represents the full supplier record with all configuration settings.
@@ -511,123 +659,6 @@ components:
           $ref: '#/components/schemas/UserReference'
         updated-by:
           $ref: '#/components/schemas/UserReference'
-    AddressReference:
-      type: object
-      description: Reference to an address
-      properties:
-        id:
-          type: integer
-          description: Coupa unique identifier for the address
-        name:
-          type: string
-          description: Address name
-        street1:
-          type: string
-          description: Street address line 1
-        street2:
-          type: string
-          description: Street address line 2
-        city:
-          type: string
-          description: City
-        state:
-          type: string
-          description: State or province
-        postal-code:
-          type: string
-          description: Postal or ZIP code
-        country:
-          type: object
-          properties:
-            id:
-              type: integer
-            code:
-              type: string
-              description: ISO 3166-1 alpha-2 country code
-    SupplierUpdate:
-      type: object
-      description: Schema for updating a supplier
-      properties:
-        name:
-          type: string
-          maxLength: 100
-        number:
-          type: string
-        display-name:
-          type: string
-        duns:
-          type: string
-        tax-id:
-          type: string
-        account-number:
-          type: string
-        corporate-url:
-          type: string
-        website:
-          type: string
-        status:
-          type: string
-          enum:
-          - active
-          - inactive
-        on-hold:
-          type: boolean
-        commodity:
-          type: string
-        payment-method:
-          type: string
-          enum:
-          - invoice
-          - pcard
-          - invoice_only
-          - pcard_only
-          - virtual_card
-        payment-term:
-          $ref: '#/components/schemas/PaymentTermReference'
-        shipping-term:
-          $ref: '#/components/schemas/ShippingTermReference'
-        invoice-matching-level:
-          type: string
-          enum:
-          - 2-way
-          - 3-way
-          - 3-way-direct
-          - none
-        po-method:
-          type: string
-          enum:
-          - cxml
-          - xml
-          - email
-          - prompt
-          - mark_as_sent
-          - buy_online
-        po-email:
-          type: string
-        primary-contact:
-          type: string
-        default-locale:
-          type: string
-        strategic-supplier:
-          type: boolean
-        allow-cxml-invoicing:
-          type: boolean
-        allow-inv-from-connect:
-          type: boolean
-        hold-invoices-for-ap-review:
-          type: boolean
-        send-invoices-to-approvals:
-          type: boolean
-    ShippingTermReference:
-      type: object
-      description: Reference to a shipping term
-      properties:
-        id:
-          type: integer
-          description: Coupa unique identifier for the shipping term
-        code:
-          type: string
-          description: Shipping term code
   parameters:
     idParam:
       name: id
@@ -669,37 +700,6 @@ components:
       schema:
         type: integer
         default: 0
-  responses:
-    Unauthorized:
-      description: Unauthorized - invalid or missing authentication credentials
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    BadRequest:
-      description: Bad request - invalid parameters or malformed request
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    InternalServerError:
-      description: Internal server error
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    NotFound:
-      description: Resource not found
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    UnprocessableEntity:
-      description: Unprocessable entity - validation errors
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
   securitySchemes:
     oauth2:
       type: oauth2

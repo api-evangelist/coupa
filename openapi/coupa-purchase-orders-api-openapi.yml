@@ -291,47 +291,37 @@ paths:
         '500':
           $ref: '#/components/responses/InternalServerError'
 components:
-  parameters:
-    dirParam:
-      name: dir
-      in: query
-      description: Sort direction (asc or desc)
-      schema:
-        type: string
-        enum:
-        - asc
-        - desc
-    limitParam:
-      name: limit
-      in: query
-      description: Maximum number of records to return (max 50)
-      schema:
-        type: integer
-        default: 50
-        maximum: 50
-    offsetParam:
-      name: offset
-      in: query
-      description: Number of records to skip for pagination
-      schema:
-        type: integer
-        default: 0
-    returnObjectParam:
-      name: return_object
-      in: query
-      description: Set to limited to return only key fields, or shallow to exclude nested objects
-      schema:
-        type: string
-        enum:
-        - limited
-        - shallow
-    idParam:
-      name: id
-      in: path
-      required: true
-      description: Coupa internal unique identifier
-      schema:
-        type: integer
+  responses:
+    InternalServerError:
+      description: Internal server error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    BadRequest:
+      description: Bad request - invalid parameters or malformed request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    UnprocessableEntity:
+      description: Unprocessable entity - validation errors
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    NotFound:
+      description: Resource not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Unauthorized:
+      description: Unauthorized - invalid or missing authentication credentials
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
   schemas:
     PurchaseOrderCreate:
       type: object
@@ -390,20 +380,16 @@ components:
           - do_not_transmit
         transmission-emails:
           type: string
-    Error:
+    PaymentTermReference:
       type: object
+      description: Reference to a payment term
       properties:
-        errors:
-          type: array
-          items:
-            type: object
-            properties:
-              message:
-                type: string
-                description: Human-readable error message
-              field:
-                type: string
-                description: Field that caused the error
+        id:
+          type: integer
+          description: Coupa unique identifier for the payment term
+        code:
+          type: string
+          description: Payment term code
     ShippingTermReference:
       type: object
       description: Reference to a shipping term
@@ -414,136 +400,6 @@ components:
         code:
           type: string
           description: Shipping term code
-    PurchaseOrderUpdate:
-      type: object
-      description: Schema for updating a purchase order
-      properties:
-        po-number:
-          type: string
-          maxLength: 20
-        ship-to-address:
-          $ref: '#/components/schemas/AddressReference'
-        ship-to-attention:
-          type: string
-          maxLength: 255
-        ship-to-user:
-          $ref: '#/components/schemas/UserReference'
-        payment-term:
-          $ref: '#/components/schemas/PaymentTermReference'
-        payment-method:
-          type: string
-          enum:
-          - invoice
-          - pcard
-          - invoice_only
-          - pcard_only
-          - virtual_card
-        shipping-term:
-          $ref: '#/components/schemas/ShippingTermReference'
-        order-lines:
-          type: array
-          items:
-            $ref: '#/components/schemas/OrderLine'
-        hide-price:
-          type: boolean
-        transmission-method-override:
-          type: string
-          enum:
-          - email
-          - cxml
-          - xml
-          - do_not_transmit
-        transmission-emails:
-          type: string
-        exported:
-          type: boolean
-    OrderLine:
-      type: object
-      description: A line item on a purchase order
-      properties:
-        id:
-          type: integer
-          description: Coupa unique identifier
-          readOnly: true
-        line-num:
-          type: integer
-          description: Line number
-        description:
-          type: string
-          description: Item description
-          maxLength: 255
-        quantity:
-          type: number
-          format: decimal
-          description: Quantity ordered
-        price:
-          type: number
-          format: decimal
-          description: Unit price
-        total:
-          type: number
-          format: decimal
-          description: Line total (quantity x price)
-          readOnly: true
-        uom:
-          type: object
-          description: Unit of measure
-          properties:
-            id:
-              type: integer
-            code:
-              type: string
-        need-by-date:
-          type: string
-          format: date-time
-          description: Date the item is needed by
-        source-part-num:
-          type: string
-          description: Supplier part number
-          maxLength: 255
-        commodity:
-          type: object
-          description: Commodity classification
-          properties:
-            id:
-              type: integer
-            name:
-              type: string
-        account:
-          type: object
-          description: Chart of accounts reference
-          properties:
-            id:
-              type: integer
-            code:
-              type: string
-        status:
-          type: string
-          description: Line status
-          readOnly: true
-        currency:
-          $ref: '#/components/schemas/CurrencyReference'
-        supplier-aux-part-num:
-          type: string
-          description: Supplier auxiliary part number
-        receiving-warehouse:
-          type: object
-          description: Receiving warehouse reference
-          properties:
-            id:
-              type: integer
-            name:
-              type: string
-        created-at:
-          type: string
-          format: date-time
-          description: Timestamp when the line was created
-          readOnly: true
-        updated-at:
-          type: string
-          format: date-time
-          description: Timestamp when the line was last updated
-          readOnly: true
     PurchaseOrder:
       type: object
       description: A purchase order representing a commitment to purchase goods or services from a supplier.
@@ -720,27 +576,20 @@ components:
           $ref: '#/components/schemas/UserReference'
         updated-by:
           $ref: '#/components/schemas/UserReference'
-    PaymentTermReference:
+    UserReference:
       type: object
-      description: Reference to a payment term
+      description: Reference to a Coupa user
       properties:
         id:
           type: integer
-          description: Coupa unique identifier for the payment term
-        code:
+          description: Coupa unique identifier for the user
+        login:
           type: string
-          description: Payment term code
-    CurrencyReference:
-      type: object
-      description: Reference to a currency
-      properties:
-        id:
-          type: integer
-          description: Coupa unique identifier for the currency
-        code:
+          description: User login name
+        email:
           type: string
-          description: ISO 4217 currency code
-          example: USD
+          format: email
+          description: User email address
     AddressReference:
       type: object
       description: Reference to an address
@@ -774,20 +623,17 @@ components:
             code:
               type: string
               description: ISO 3166-1 alpha-2 country code
-    UserReference:
+    CurrencyReference:
       type: object
-      description: Reference to a Coupa user
+      description: Reference to a currency
       properties:
         id:
           type: integer
-          description: Coupa unique identifier for the user
-        login:
+          description: Coupa unique identifier for the currency
+        code:
           type: string
-          description: User login name
-        email:
-          type: string
-          format: email
-          description: User email address
+          description: ISO 4217 currency code
+          example: USD
     SupplierReference:
       type: object
       description: Reference to a supplier
@@ -801,37 +647,191 @@ components:
         number:
           type: string
           description: Supplier number
-  responses:
-    BadRequest:
-      description: Bad request - invalid parameters or malformed request
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    Unauthorized:
-      description: Unauthorized - invalid or missing authentication credentials
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    InternalServerError:
-      description: Internal server error
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    UnprocessableEntity:
-      description: Unprocessable entity - validation errors
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    NotFound:
-      description: Resource not found
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
+    PurchaseOrderUpdate:
+      type: object
+      description: Schema for updating a purchase order
+      properties:
+        po-number:
+          type: string
+          maxLength: 20
+        ship-to-address:
+          $ref: '#/components/schemas/AddressReference'
+        ship-to-attention:
+          type: string
+          maxLength: 255
+        ship-to-user:
+          $ref: '#/components/schemas/UserReference'
+        payment-term:
+          $ref: '#/components/schemas/PaymentTermReference'
+        payment-method:
+          type: string
+          enum:
+          - invoice
+          - pcard
+          - invoice_only
+          - pcard_only
+          - virtual_card
+        shipping-term:
+          $ref: '#/components/schemas/ShippingTermReference'
+        order-lines:
+          type: array
+          items:
+            $ref: '#/components/schemas/OrderLine'
+        hide-price:
+          type: boolean
+        transmission-method-override:
+          type: string
+          enum:
+          - email
+          - cxml
+          - xml
+          - do_not_transmit
+        transmission-emails:
+          type: string
+        exported:
+          type: boolean
+    Error:
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            type: object
+            properties:
+              message:
+                type: string
+                description: Human-readable error message
+              field:
+                type: string
+                description: Field that caused the error
+    OrderLine:
+      type: object
+      description: A line item on a purchase order
+      properties:
+        id:
+          type: integer
+          description: Coupa unique identifier
+          readOnly: true
+        line-num:
+          type: integer
+          description: Line number
+        description:
+          type: string
+          description: Item description
+          maxLength: 255
+        quantity:
+          type: number
+          format: decimal
+          description: Quantity ordered
+        price:
+          type: number
+          format: decimal
+          description: Unit price
+        total:
+          type: number
+          format: decimal
+          description: Line total (quantity x price)
+          readOnly: true
+        uom:
+          type: object
+          description: Unit of measure
+          properties:
+            id:
+              type: integer
+            code:
+              type: string
+        need-by-date:
+          type: string
+          format: date-time
+          description: Date the item is needed by
+        source-part-num:
+          type: string
+          description: Supplier part number
+          maxLength: 255
+        commodity:
+          type: object
+          description: Commodity classification
+          properties:
+            id:
+              type: integer
+            name:
+              type: string
+        account:
+          type: object
+          description: Chart of accounts reference
+          properties:
+            id:
+              type: integer
+            code:
+              type: string
+        status:
+          type: string
+          description: Line status
+          readOnly: true
+        currency:
+          $ref: '#/components/schemas/CurrencyReference'
+        supplier-aux-part-num:
+          type: string
+          description: Supplier auxiliary part number
+        receiving-warehouse:
+          type: object
+          description: Receiving warehouse reference
+          properties:
+            id:
+              type: integer
+            name:
+              type: string
+        created-at:
+          type: string
+          format: date-time
+          description: Timestamp when the line was created
+          readOnly: true
+        updated-at:
+          type: string
+          format: date-time
+          description: Timestamp when the line was last updated
+          readOnly: true
+  parameters:
+    limitParam:
+      name: limit
+      in: query
+      description: Maximum number of records to return (max 50)
+      schema:
+        type: integer
+        default: 50
+        maximum: 50
+    returnObjectParam:
+      name: return_object
+      in: query
+      description: Set to limited to return only key fields, or shallow to exclude nested objects
+      schema:
+        type: string
+        enum:
+        - limited
+        - shallow
+    dirParam:
+      name: dir
+      in: query
+      description: Sort direction (asc or desc)
+      schema:
+        type: string
+        enum:
+        - asc
+        - desc
+    idParam:
+      name: id
+      in: path
+      required: true
+      description: Coupa internal unique identifier
+      schema:
+        type: integer
+    offsetParam:
+      name: offset
+      in: query
+      description: Number of records to skip for pagination
+      schema:
+        type: integer
+        default: 0
   securitySchemes:
     oauth2:
       type: oauth2

@@ -297,147 +297,38 @@ paths:
         '500':
           $ref: '#/components/responses/InternalServerError'
 components:
-  parameters:
-    dirParam:
-      name: dir
-      in: query
-      description: Sort direction (asc or desc)
-      schema:
-        type: string
-        enum:
-        - asc
-        - desc
-    limitParam:
-      name: limit
-      in: query
-      description: Maximum number of records to return (max 50)
-      schema:
-        type: integer
-        default: 50
-        maximum: 50
-    offsetParam:
-      name: offset
-      in: query
-      description: Number of records to skip for pagination
-      schema:
-        type: integer
-        default: 0
-    returnObjectParam:
-      name: return_object
-      in: query
-      description: Set to limited to return only key fields, or shallow to exclude nested objects
-      schema:
-        type: string
-        enum:
-        - limited
-        - shallow
-    idParam:
-      name: id
-      in: path
-      required: true
-      description: Coupa internal unique identifier
-      schema:
-        type: integer
+  responses:
+    InternalServerError:
+      description: Internal server error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    BadRequest:
+      description: Bad request - invalid parameters or malformed request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    UnprocessableEntity:
+      description: Unprocessable entity - validation errors
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    NotFound:
+      description: Resource not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Unauthorized:
+      description: Unauthorized - invalid or missing authentication credentials
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
   schemas:
-    Error:
-      type: object
-      properties:
-        errors:
-          type: array
-          items:
-            type: object
-            properties:
-              message:
-                type: string
-                description: Human-readable error message
-              field:
-                type: string
-                description: Field that caused the error
-    ApprovalReference:
-      type: object
-      description: Reference to an approval record
-      properties:
-        id:
-          type: integer
-          description: Coupa unique identifier for the approval
-        status:
-          type: string
-          description: Approval status
-    InvoiceCreate:
-      type: object
-      description: Schema for creating a new invoice
-      required:
-      - invoice-number
-      - invoice-date
-      - supplier
-      - currency
-      - invoice-lines
-      properties:
-        invoice-number:
-          type: string
-          maxLength: 40
-        invoice-date:
-          type: string
-          format: date-time
-        document-type:
-          type: string
-          enum:
-          - Invoice
-          - Credit Note
-        supplier:
-          $ref: '#/components/schemas/SupplierReference'
-        currency:
-          $ref: '#/components/schemas/CurrencyReference'
-        payment-term:
-          $ref: '#/components/schemas/PaymentTermReference'
-        bill-to-address:
-          $ref: '#/components/schemas/AddressReference'
-        ship-to-address:
-          $ref: '#/components/schemas/AddressReference'
-        supplier-remit-to:
-          type: object
-          properties:
-            id:
-              type: integer
-        invoice-from-address:
-          type: object
-          properties:
-            id:
-              type: integer
-        tax-amount:
-          type: number
-          format: decimal
-        discount-amount:
-          type: number
-          format: decimal
-        shipping-amount:
-          type: number
-          format: decimal
-        handling-amount:
-          type: number
-          format: decimal
-        line-level-taxation:
-          type: boolean
-        tax-code:
-          type: string
-        tax-rate:
-          type: number
-          format: float
-        invoice-lines:
-          type: array
-          minItems: 1
-          items:
-            $ref: '#/components/schemas/InvoiceLine'
-        is-credit-note:
-          type: boolean
-        original-invoice-number:
-          type: string
-          maxLength: 40
-        original-invoice-date:
-          type: string
-          format: date-time
-        credit-reason:
-          type: string
     PaymentTermReference:
       type: object
       description: Reference to a payment term
@@ -448,6 +339,30 @@ components:
         code:
           type: string
           description: Payment term code
+    ApprovalReference:
+      type: object
+      description: Reference to an approval record
+      properties:
+        id:
+          type: integer
+          description: Coupa unique identifier for the approval
+        status:
+          type: string
+          description: Approval status
+    UserReference:
+      type: object
+      description: Reference to a Coupa user
+      properties:
+        id:
+          type: integer
+          description: Coupa unique identifier for the user
+        login:
+          type: string
+          description: User login name
+        email:
+          type: string
+          format: email
+          description: User email address
     InvoiceUpdate:
       type: object
       description: Schema for updating an invoice
@@ -481,6 +396,63 @@ components:
             $ref: '#/components/schemas/InvoiceLine'
         exported:
           type: boolean
+    AddressReference:
+      type: object
+      description: Reference to an address
+      properties:
+        id:
+          type: integer
+          description: Coupa unique identifier for the address
+        name:
+          type: string
+          description: Address name
+        street1:
+          type: string
+          description: Street address line 1
+        street2:
+          type: string
+          description: Street address line 2
+        city:
+          type: string
+          description: City
+        state:
+          type: string
+          description: State or province
+        postal-code:
+          type: string
+          description: Postal or ZIP code
+        country:
+          type: object
+          properties:
+            id:
+              type: integer
+            code:
+              type: string
+              description: ISO 3166-1 alpha-2 country code
+    CurrencyReference:
+      type: object
+      description: Reference to a currency
+      properties:
+        id:
+          type: integer
+          description: Coupa unique identifier for the currency
+        code:
+          type: string
+          description: ISO 4217 currency code
+          example: USD
+    SupplierReference:
+      type: object
+      description: Reference to a supplier
+      properties:
+        id:
+          type: integer
+          description: Coupa unique identifier for the supplier
+        name:
+          type: string
+          description: Supplier name
+        number:
+          type: string
+          description: Supplier number
     InvoiceLine:
       type: object
       description: A line item on an invoice
@@ -557,50 +529,81 @@ components:
           type: string
           format: date-time
           readOnly: true
-    CurrencyReference:
+    InvoiceCreate:
       type: object
-      description: Reference to a currency
+      description: Schema for creating a new invoice
+      required:
+      - invoice-number
+      - invoice-date
+      - supplier
+      - currency
+      - invoice-lines
       properties:
-        id:
-          type: integer
-          description: Coupa unique identifier for the currency
-        code:
+        invoice-number:
           type: string
-          description: ISO 4217 currency code
-          example: USD
-    AddressReference:
-      type: object
-      description: Reference to an address
-      properties:
-        id:
-          type: integer
-          description: Coupa unique identifier for the address
-        name:
+          maxLength: 40
+        invoice-date:
           type: string
-          description: Address name
-        street1:
+          format: date-time
+        document-type:
           type: string
-          description: Street address line 1
-        street2:
-          type: string
-          description: Street address line 2
-        city:
-          type: string
-          description: City
-        state:
-          type: string
-          description: State or province
-        postal-code:
-          type: string
-          description: Postal or ZIP code
-        country:
+          enum:
+          - Invoice
+          - Credit Note
+        supplier:
+          $ref: '#/components/schemas/SupplierReference'
+        currency:
+          $ref: '#/components/schemas/CurrencyReference'
+        payment-term:
+          $ref: '#/components/schemas/PaymentTermReference'
+        bill-to-address:
+          $ref: '#/components/schemas/AddressReference'
+        ship-to-address:
+          $ref: '#/components/schemas/AddressReference'
+        supplier-remit-to:
           type: object
           properties:
             id:
               type: integer
-            code:
-              type: string
-              description: ISO 3166-1 alpha-2 country code
+        invoice-from-address:
+          type: object
+          properties:
+            id:
+              type: integer
+        tax-amount:
+          type: number
+          format: decimal
+        discount-amount:
+          type: number
+          format: decimal
+        shipping-amount:
+          type: number
+          format: decimal
+        handling-amount:
+          type: number
+          format: decimal
+        line-level-taxation:
+          type: boolean
+        tax-code:
+          type: string
+        tax-rate:
+          type: number
+          format: float
+        invoice-lines:
+          type: array
+          minItems: 1
+          items:
+            $ref: '#/components/schemas/InvoiceLine'
+        is-credit-note:
+          type: boolean
+        original-invoice-number:
+          type: string
+          maxLength: 40
+        original-invoice-date:
+          type: string
+          format: date-time
+        credit-reason:
+          type: string
     Invoice:
       type: object
       description: An invoice representing a billing document from a supplier for goods or services delivered.
@@ -840,64 +843,61 @@ components:
           $ref: '#/components/schemas/UserReference'
         updated-by:
           $ref: '#/components/schemas/UserReference'
-    UserReference:
+    Error:
       type: object
-      description: Reference to a Coupa user
       properties:
-        id:
-          type: integer
-          description: Coupa unique identifier for the user
-        login:
-          type: string
-          description: User login name
-        email:
-          type: string
-          format: email
-          description: User email address
-    SupplierReference:
-      type: object
-      description: Reference to a supplier
-      properties:
-        id:
-          type: integer
-          description: Coupa unique identifier for the supplier
-        name:
-          type: string
-          description: Supplier name
-        number:
-          type: string
-          description: Supplier number
-  responses:
-    BadRequest:
-      description: Bad request - invalid parameters or malformed request
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    Unauthorized:
-      description: Unauthorized - invalid or missing authentication credentials
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    InternalServerError:
-      description: Internal server error
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    UnprocessableEntity:
-      description: Unprocessable entity - validation errors
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    NotFound:
-      description: Resource not found
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
+        errors:
+          type: array
+          items:
+            type: object
+            properties:
+              message:
+                type: string
+                description: Human-readable error message
+              field:
+                type: string
+                description: Field that caused the error
+  parameters:
+    limitParam:
+      name: limit
+      in: query
+      description: Maximum number of records to return (max 50)
+      schema:
+        type: integer
+        default: 50
+        maximum: 50
+    returnObjectParam:
+      name: return_object
+      in: query
+      description: Set to limited to return only key fields, or shallow to exclude nested objects
+      schema:
+        type: string
+        enum:
+        - limited
+        - shallow
+    dirParam:
+      name: dir
+      in: query
+      description: Sort direction (asc or desc)
+      schema:
+        type: string
+        enum:
+        - asc
+        - desc
+    idParam:
+      name: id
+      in: path
+      required: true
+      description: Coupa internal unique identifier
+      schema:
+        type: integer
+    offsetParam:
+      name: offset
+      in: query
+      description: Number of records to skip for pagination
+      schema:
+        type: integer
+        default: 0
   securitySchemes:
     oauth2:
       type: oauth2
