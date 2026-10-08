@@ -591,6 +591,10 @@ apis:
   - type: Rules
     url: rules/coupa-core-api-rules.yml
 common:
+  - type: Plans
+    url: plans/coupa-plans-pricing.yml
+  - type: FinOps
+    url: finops/coupa-finops.yml
   - type: Website
     url: https://coupa.com/
   - type: CapabilityMap
