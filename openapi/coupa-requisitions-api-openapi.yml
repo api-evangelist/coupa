@@ -265,175 +265,15 @@ paths:
           $ref: '#/components/responses/InternalServerError'
 components:
   schemas:
-    RequisitionLine:
+    RequisitionUpdate:
       type: object
-      description: A line item on a requisition
-      properties:
-        id:
-          type: integer
-          description: Coupa unique identifier
-          readOnly: true
-        line-num:
-          type: integer
-          description: Line number (must increment by one)
-        description:
-          type: string
-          description: Item description
-          maxLength: 255
-        quantity:
-          type: number
-          format: decimal
-          description: Quantity requested
-        unit-price:
-          type: number
-          format: decimal
-          description: Unit price (overrides preferred supplier pricing if item ID provided)
-        total:
-          type: number
-          format: decimal
-          description: Line total
-          readOnly: true
-        uom:
-          type: object
-          description: Unit of measure
-          properties:
-            id:
-              type: integer
-            code:
-              type: string
-        need-by-date:
-          type: string
-          format: date-time
-          description: Date the item is needed by
-        source-part-num:
-          type: string
-          description: Supplier part number
-        supplier:
-          $ref: '#/components/schemas/SupplierReference'
-        commodity:
-          type: object
-          description: Commodity classification
-          properties:
-            id:
-              type: integer
-            name:
-              type: string
-        account:
-          type: object
-          description: Chart of accounts reference
-          properties:
-            id:
-              type: integer
-            code:
-              type: string
-        currency:
-          $ref: '#/components/schemas/CurrencyReference'
-        item:
-          type: object
-          description: Catalog item reference
-          properties:
-            id:
-              type: integer
-            name:
-              type: string
-        contract:
-          type: object
-          description: Contract reference for this line
-          properties:
-            id:
-              type: integer
-            name:
-              type: string
-        created-at:
-          type: string
-          format: date-time
-          readOnly: true
-        updated-at:
-          type: string
-          format: date-time
-          readOnly: true
-    ApprovalReference:
-      type: object
-      description: Reference to an approval record
-      properties:
-        id:
-          type: integer
-          description: Coupa unique identifier for the approval
-        status:
-          type: string
-          description: Approval status
-    DepartmentReference:
-      type: object
-      description: Reference to a department
-      properties:
-        id:
-          type: integer
-          description: Coupa unique identifier for the department
-        name:
-          type: string
-          description: Department name
-    UserReference:
-      type: object
-      description: Reference to a Coupa user
-      properties:
-        id:
-          type: integer
-          description: Coupa unique identifier for the user
-        login:
-          type: string
-          description: User login name
-        email:
-          type: string
-          format: email
-          description: User email address
-    AddressReference:
-      type: object
-      description: Reference to an address
-      properties:
-        id:
-          type: integer
-          description: Coupa unique identifier for the address
-        name:
-          type: string
-          description: Address name
-        street1:
-          type: string
-          description: Street address line 1
-        street2:
-          type: string
-          description: Street address line 2
-        city:
-          type: string
-          description: City
-        state:
-          type: string
-          description: State or province
-        postal-code:
-          type: string
-          description: Postal or ZIP code
-        country:
-          type: object
-          properties:
-            id:
-              type: integer
-            code:
-              type: string
-              description: ISO 3166-1 alpha-2 country code
-    RequisitionCreate:
-      type: object
-      description: Schema for creating a new requisition
-      required:
-      - requisition-lines
+      description: Schema for updating a requisition
       properties:
         req_title:
           type: string
           maxLength: 50
         currency:
           $ref: '#/components/schemas/CurrencyReference'
-        requester:
-          $ref: '#/components/schemas/UserReference'
-        requested-by:
-          $ref: '#/components/schemas/UserReference'
         department:
           $ref: '#/components/schemas/DepartmentReference'
         ship-to-address:
@@ -453,16 +293,12 @@ components:
           maxLength: 255
         hide-price:
           type: boolean
-        pcard:
-          type: object
-          properties:
-            id:
-              type: integer
         requisition-lines:
           type: array
-          minItems: 1
           items:
             $ref: '#/components/schemas/RequisitionLine'
+        exported:
+          type: boolean
     CurrencyReference:
       type: object
       description: Reference to a currency
@@ -474,19 +310,6 @@ components:
           type: string
           description: ISO 4217 currency code
           example: USD
-    SupplierReference:
-      type: object
-      description: Reference to a supplier
-      properties:
-        id:
-          type: integer
-          description: Coupa unique identifier for the supplier
-        name:
-          type: string
-          description: Supplier name
-        number:
-          type: string
-          description: Supplier number
     Requisition:
       type: object
       description: A requisition representing an internal request to purchase goods or services, subject to approval workflows.
@@ -632,6 +455,29 @@ components:
           $ref: '#/components/schemas/UserReference'
         updated-by:
           $ref: '#/components/schemas/UserReference'
+    SupplierReference:
+      type: object
+      description: Reference to a supplier
+      properties:
+        id:
+          type: integer
+          description: Coupa unique identifier for the supplier
+        name:
+          type: string
+          description: Supplier name
+        number:
+          type: string
+          description: Supplier number
+    DepartmentReference:
+      type: object
+      description: Reference to a department
+      properties:
+        id:
+          type: integer
+          description: Coupa unique identifier for the department
+        name:
+          type: string
+          description: Department name
     Error:
       type: object
       properties:
@@ -646,15 +492,165 @@ components:
               field:
                 type: string
                 description: Field that caused the error
-    RequisitionUpdate:
+    ApprovalReference:
       type: object
-      description: Schema for updating a requisition
+      description: Reference to an approval record
+      properties:
+        id:
+          type: integer
+          description: Coupa unique identifier for the approval
+        status:
+          type: string
+          description: Approval status
+    UserReference:
+      type: object
+      description: Reference to a Coupa user
+      properties:
+        id:
+          type: integer
+          description: Coupa unique identifier for the user
+        login:
+          type: string
+          description: User login name
+        email:
+          type: string
+          format: email
+          description: User email address
+    AddressReference:
+      type: object
+      description: Reference to an address
+      properties:
+        id:
+          type: integer
+          description: Coupa unique identifier for the address
+        name:
+          type: string
+          description: Address name
+        street1:
+          type: string
+          description: Street address line 1
+        street2:
+          type: string
+          description: Street address line 2
+        city:
+          type: string
+          description: City
+        state:
+          type: string
+          description: State or province
+        postal-code:
+          type: string
+          description: Postal or ZIP code
+        country:
+          type: object
+          properties:
+            id:
+              type: integer
+            code:
+              type: string
+              description: ISO 3166-1 alpha-2 country code
+    RequisitionLine:
+      type: object
+      description: A line item on a requisition
+      properties:
+        id:
+          type: integer
+          description: Coupa unique identifier
+          readOnly: true
+        line-num:
+          type: integer
+          description: Line number (must increment by one)
+        description:
+          type: string
+          description: Item description
+          maxLength: 255
+        quantity:
+          type: number
+          format: decimal
+          description: Quantity requested
+        unit-price:
+          type: number
+          format: decimal
+          description: Unit price (overrides preferred supplier pricing if item ID provided)
+        total:
+          type: number
+          format: decimal
+          description: Line total
+          readOnly: true
+        uom:
+          type: object
+          description: Unit of measure
+          properties:
+            id:
+              type: integer
+            code:
+              type: string
+        need-by-date:
+          type: string
+          format: date-time
+          description: Date the item is needed by
+        source-part-num:
+          type: string
+          description: Supplier part number
+        supplier:
+          $ref: '#/components/schemas/SupplierReference'
+        commodity:
+          type: object
+          description: Commodity classification
+          properties:
+            id:
+              type: integer
+            name:
+              type: string
+        account:
+          type: object
+          description: Chart of accounts reference
+          properties:
+            id:
+              type: integer
+            code:
+              type: string
+        currency:
+          $ref: '#/components/schemas/CurrencyReference'
+        item:
+          type: object
+          description: Catalog item reference
+          properties:
+            id:
+              type: integer
+            name:
+              type: string
+        contract:
+          type: object
+          description: Contract reference for this line
+          properties:
+            id:
+              type: integer
+            name:
+              type: string
+        created-at:
+          type: string
+          format: date-time
+          readOnly: true
+        updated-at:
+          type: string
+          format: date-time
+          readOnly: true
+    RequisitionCreate:
+      type: object
+      description: Schema for creating a new requisition
+      required:
+      - requisition-lines
       properties:
         req_title:
           type: string
           maxLength: 50
         currency:
           $ref: '#/components/schemas/CurrencyReference'
+        requester:
+          $ref: '#/components/schemas/UserReference'
+        requested-by:
+          $ref: '#/components/schemas/UserReference'
         department:
           $ref: '#/components/schemas/DepartmentReference'
         ship-to-address:
@@ -674,43 +670,16 @@ components:
           maxLength: 255
         hide-price:
           type: boolean
+        pcard:
+          type: object
+          properties:
+            id:
+              type: integer
         requisition-lines:
           type: array
+          minItems: 1
           items:
             $ref: '#/components/schemas/RequisitionLine'
-        exported:
-          type: boolean
-  responses:
-    InternalServerError:
-      description: Internal server error
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    BadRequest:
-      description: Bad request - invalid parameters or malformed request
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    UnprocessableEntity:
-      description: Unprocessable entity - validation errors
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    NotFound:
-      description: Resource not found
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    Unauthorized:
-      description: Unauthorized - invalid or missing authentication credentials
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
   parameters:
     limitParam:
       name: limit
@@ -729,6 +698,13 @@ components:
         enum:
         - limited
         - shallow
+    offsetParam:
+      name: offset
+      in: query
+      description: Number of records to skip for pagination
+      schema:
+        type: integer
+        default: 0
     dirParam:
       name: dir
       in: query
@@ -745,13 +721,37 @@ components:
       description: Coupa internal unique identifier
       schema:
         type: integer
-    offsetParam:
-      name: offset
-      in: query
-      description: Number of records to skip for pagination
-      schema:
-        type: integer
-        default: 0
+  responses:
+    Unauthorized:
+      description: Unauthorized - invalid or missing authentication credentials
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    NotFound:
+      description: Resource not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    InternalServerError:
+      description: Internal server error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    UnprocessableEntity:
+      description: Unprocessable entity - validation errors
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    BadRequest:
+      description: Bad request - invalid parameters or malformed request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
   securitySchemes:
     oauth2:
       type: oauth2
