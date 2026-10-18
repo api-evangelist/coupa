@@ -78,7 +78,7 @@
     - connectors/applications/coupa
     vendor_link: https://www.coupa.com/
     builder: Fivetran
-  status: pending-generation
+  status: not-a-workflow
   arazzo: null
 - slug: coupa-microsoft-teams-own
   label: Microsoft Teams (own)
