@@ -136,3 +136,690 @@
     detected: '2026-10-20'
   status: not-a-workflow
   arazzo: null
+- slug: coupa-apptio
+  label: Apptio
+  partner: apptio
+  partner_name: Apptio
+  category: Coupa app
+  type: marketplace
+  marketplace: own
+  channel: partner-built
+  evidence: https://marketplace.coupa.com/apps/352656/apptio-governance-for-technology-spend
+  source: edge
+  relationship: platform-app
+  contract_reference:
+    register: Coupa App Marketplace (marketplace.coupa.com AppDirect listing + products JSON)
+    spec_file: null
+    role: coupa-app
+    registered_name: Apptio
+    matched_domain: apptio.com
+    matched_by: domain+name-among-holders
+    listings: 1
+    sample_apps:
+    - Apptio Governance for Technology Spend
+    signal_note: one edge per (builder, platform); listings are context, never read
+    detected_by: sweep-procurement.py
+    detected: '2026-10-20'
+  status: not-a-workflow
+  arazzo: null
+- slug: coupa-auditoria-ai
+  label: Auditoria.AI®
+  partner: auditoria
+  partner_name: Auditoria.AI®
+  category: Coupa app
+  type: marketplace
+  marketplace: own
+  channel: partner-built
+  evidence: https://marketplace.coupa.com/apps/421765/auditoriaai-smartvendor-ap-invoices
+  source: edge
+  relationship: platform-app
+  contract_reference:
+    register: Coupa App Marketplace (marketplace.coupa.com AppDirect listing + products JSON)
+    spec_file: null
+    role: coupa-app
+    registered_name: Auditoria.AI®
+    matched_domain: null
+    matched_by: register-name
+    listings: 1
+    sample_apps:
+    - Auditoria.AI SmartVendor AP Invoices
+    signal_note: one edge per (builder, platform); listings are context, never read
+    detected_by: sweep-procurement.py
+    detected: '2026-10-20'
+    identity_source: register-name
+    identity_note: register gave only the name; exact normalised match to the repo's apis.yml name, one repo, Wikidata
+      P856 not contradicting (Kin 2026-10-20 decision 2)
+  status: not-a-workflow
+  arazzo: null
+- slug: coupa-avalara
+  label: Avalara
+  partner: avalara
+  partner_name: Avalara
+  category: Coupa app
+  type: marketplace
+  marketplace: own
+  channel: partner-built
+  evidence: https://marketplace.coupa.com/apps/352707/avalara-tax-automation
+  source: edge
+  relationship: platform-app
+  contract_reference:
+    register: Coupa App Marketplace (marketplace.coupa.com AppDirect listing + products JSON)
+    spec_file: null
+    role: coupa-app
+    registered_name: Avalara
+    matched_domain: avalara.com
+    matched_by: domain
+    listings: 1
+    sample_apps:
+    - Avalara Tax Automation
+    signal_note: one edge per (builder, platform); listings are context, never read
+    detected_by: sweep-procurement.py
+    detected: '2026-10-20'
+  status: not-a-workflow
+  arazzo: null
+- slug: coupa-avetta
+  label: Avetta
+  partner: avetta
+  partner_name: Avetta
+  category: Coupa app
+  type: marketplace
+  marketplace: own
+  channel: partner-built
+  evidence: https://marketplace.coupa.com/apps/363369/avetta-supplier-compliance-check
+  source: edge
+  relationship: platform-app
+  contract_reference:
+    register: Coupa App Marketplace (marketplace.coupa.com AppDirect listing + products JSON)
+    spec_file: null
+    role: coupa-app
+    registered_name: Avetta
+    matched_domain: null
+    matched_by: register-name
+    listings: 1
+    sample_apps:
+    - Avetta™ Supplier Compliance Check
+    signal_note: one edge per (builder, platform); listings are context, never read
+    detected_by: sweep-procurement.py
+    detected: '2026-10-20'
+    identity_source: register-name
+    identity_note: register gave only the name; exact normalised match to the repo's apis.yml name, one repo, Wikidata
+      P856 not contradicting (Kin 2026-10-20 decision 2)
+  status: not-a-workflow
+  arazzo: null
+- slug: coupa-bitsight
+  label: Bitsight
+  partner: bitsight
+  partner_name: Bitsight
+  category: Coupa app
+  type: marketplace
+  marketplace: own
+  channel: partner-built
+  evidence: https://marketplace.coupa.com/apps/836159/bitsight-third-party-cyber-risk
+  source: edge
+  relationship: platform-app
+  contract_reference:
+    register: Coupa App Marketplace (marketplace.coupa.com AppDirect listing + products JSON)
+    spec_file: null
+    role: coupa-app
+    registered_name: Bitsight
+    matched_domain: null
+    matched_by: register-name
+    listings: 1
+    sample_apps:
+    - Bitsight Third Party Cyber Risk
+    signal_note: one edge per (builder, platform); listings are context, never read
+    detected_by: sweep-procurement.py
+    detected: '2026-10-20'
+    identity_source: register-name
+    identity_note: register gave only the name; exact normalised match to the repo's apis.yml name, one repo, Wikidata
+      P856 not contradicting (Kin 2026-10-20 decision 2)
+  status: not-a-workflow
+  arazzo: null
+- slug: coupa-celonis
+  label: Celonis
+  partner: celonis
+  partner_name: Celonis
+  category: Coupa app
+  type: marketplace
+  marketplace: own
+  channel: partner-built
+  evidence: https://marketplace.coupa.com/apps/809281/celonis-context-layer-for-p2p-ap
+  source: edge
+  relationship: platform-app
+  contract_reference:
+    register: Coupa App Marketplace (marketplace.coupa.com AppDirect listing + products JSON)
+    spec_file: null
+    role: coupa-app
+    registered_name: Celonis
+    matched_domain: celonis.com
+    matched_by: domain
+    listings: 1
+    sample_apps:
+    - Celonis Context Layer for P2P & AP
+    signal_note: one edge per (builder, platform); listings are context, never read
+    detected_by: sweep-procurement.py
+    detected: '2026-10-20'
+  status: not-a-workflow
+  arazzo: null
+- slug: coupa-docusign
+  label: Docusign
+  partner: docusign
+  partner_name: Docusign
+  category: Coupa app
+  type: marketplace
+  marketplace: own
+  channel: partner-built
+  evidence: https://marketplace.coupa.com/apps/502976/docusign-clm-connector-for-coupa
+  source: edge
+  relationship: platform-app
+  contract_reference:
+    register: Coupa App Marketplace (marketplace.coupa.com AppDirect listing + products JSON)
+    spec_file: null
+    role: coupa-app
+    registered_name: Docusign
+    matched_domain: null
+    matched_by: register-name
+    listings: 1
+    sample_apps:
+    - Docusign CLM Connector for Coupa
+    signal_note: one edge per (builder, platform); listings are context, never read
+    detected_by: sweep-procurement.py
+    detected: '2026-10-20'
+    identity_source: register-name
+    identity_note: register gave only the name; exact normalised match to the repo's apis.yml name, one repo, Wikidata
+      P856 not contradicting (Kin 2026-10-20 decision 2)
+  status: not-a-workflow
+  arazzo: null
+- slug: coupa-ecovadis-sas
+  label: EcoVadis SAS
+  partner: ecovadis
+  partner_name: EcoVadis SAS
+  category: Coupa app
+  type: marketplace
+  marketplace: own
+  channel: partner-built
+  evidence: https://marketplace.coupa.com/apps/352623/ecovadis-supplier-sustainability-ratings
+  source: edge
+  relationship: platform-app
+  contract_reference:
+    register: Coupa App Marketplace (marketplace.coupa.com AppDirect listing + products JSON)
+    spec_file: null
+    role: coupa-app
+    registered_name: EcoVadis SAS
+    matched_domain: ecovadis.com
+    matched_by: domain
+    listings: 2
+    sample_apps:
+    - EcoVadis IQ Plus Sustainability Risk Intelligence
+    - EcoVadis Supplier Sustainability Ratings
+    signal_note: one edge per (builder, platform); listings are context, never read
+    detected_by: sweep-procurement.py
+    detected: '2026-10-20'
+  status: not-a-workflow
+  arazzo: null
+- slug: coupa-fairmarkit
+  label: Fairmarkit
+  partner: fairmarkit
+  partner_name: Fairmarkit
+  category: Coupa app
+  type: marketplace
+  marketplace: own
+  channel: partner-built
+  evidence: https://marketplace.coupa.com/apps/472328/fairmarkit-autonomous-sourcing
+  source: edge
+  relationship: platform-app
+  contract_reference:
+    register: Coupa App Marketplace (marketplace.coupa.com AppDirect listing + products JSON)
+    spec_file: null
+    role: coupa-app
+    registered_name: Fairmarkit
+    matched_domain: null
+    matched_by: register-name
+    listings: 1
+    sample_apps:
+    - Fairmarkit Autonomous Sourcing
+    signal_note: one edge per (builder, platform); listings are context, never read
+    detected_by: sweep-procurement.py
+    detected: '2026-10-20'
+    identity_source: register-name
+    identity_note: register gave only the name; exact normalised match to the repo's apis.yml name, one repo, Wikidata
+      P856 not contradicting (Kin 2026-10-20 decision 2)
+  status: not-a-workflow
+  arazzo: null
+- slug: coupa-floqast
+  label: FloQast
+  partner: floqast
+  partner_name: FloQast
+  category: Coupa app
+  type: marketplace
+  marketplace: own
+  channel: partner-built
+  evidence: https://marketplace.coupa.com/apps/643616/floqast-accounting-transformation
+  source: edge
+  relationship: platform-app
+  contract_reference:
+    register: Coupa App Marketplace (marketplace.coupa.com AppDirect listing + products JSON)
+    spec_file: null
+    role: coupa-app
+    registered_name: FloQast
+    matched_domain: floqast.com
+    matched_by: domain
+    listings: 1
+    sample_apps:
+    - FloQast Accounting Transformation
+    signal_note: one edge per (builder, platform); listings are context, never read
+    detected_by: sweep-procurement.py
+    detected: '2026-10-20'
+  status: not-a-workflow
+  arazzo: null
+- slug: coupa-focal-point
+  label: Focal Point
+  partner: focal-point-procurement-solutions
+  partner_name: Focal Point
+  category: Coupa app
+  type: marketplace
+  marketplace: own
+  channel: partner-built
+  evidence: https://marketplace.coupa.com/apps/351531/focal-point-procurement-management
+  source: edge
+  relationship: platform-app
+  contract_reference:
+    register: Coupa App Marketplace (marketplace.coupa.com AppDirect listing + products JSON)
+    spec_file: null
+    role: coupa-app
+    registered_name: Focal Point
+    matched_domain: getfocalpoint.com
+    matched_by: domain
+    listings: 1
+    sample_apps:
+    - Focal Point Procurement Management
+    signal_note: one edge per (builder, platform); listings are context, never read
+    detected_by: sweep-procurement.py
+    detected: '2026-10-20'
+  status: not-a-workflow
+  arazzo: null
+- slug: coupa-interos
+  label: Interos
+  partner: interos
+  partner_name: Interos
+  category: Coupa app
+  type: marketplace
+  marketplace: own
+  channel: partner-built
+  evidence: https://marketplace.coupa.com/apps/363279/interos-supply-chain-risk-intelligence
+  source: edge
+  relationship: platform-app
+  contract_reference:
+    register: Coupa App Marketplace (marketplace.coupa.com AppDirect listing + products JSON)
+    spec_file: null
+    role: coupa-app
+    registered_name: Interos
+    matched_domain: null
+    matched_by: register-name
+    listings: 1
+    sample_apps:
+    - Interos Supply Chain Risk Intelligence
+    signal_note: one edge per (builder, platform); listings are context, never read
+    detected_by: sweep-procurement.py
+    detected: '2026-10-20'
+    identity_source: register-name
+    identity_note: register gave only the name; exact normalised match to the repo's apis.yml name, one repo, Wikidata
+      P856 not contradicting (Kin 2026-10-20 decision 2)
+  status: not-a-workflow
+  arazzo: null
+- slug: coupa-ironclad-inc
+  label: Ironclad Inc.
+  partner: ironclad
+  partner_name: Ironclad Inc.
+  category: Coupa app
+  type: marketplace
+  marketplace: own
+  channel: partner-built
+  evidence: https://marketplace.coupa.com/apps/406734/ironclad-ai-contract-management-for-coupa
+  source: edge
+  relationship: platform-app
+  contract_reference:
+    register: Coupa App Marketplace (marketplace.coupa.com AppDirect listing + products JSON)
+    spec_file: null
+    role: coupa-app
+    registered_name: Ironclad Inc.
+    matched_domain: null
+    matched_by: register-name
+    listings: 1
+    sample_apps:
+    - Ironclad AI Contract Management for Coupa
+    signal_note: one edge per (builder, platform); listings are context, never read
+    detected_by: sweep-procurement.py
+    detected: '2026-10-20'
+    identity_source: register-name
+    identity_note: register gave only the name; exact normalised match to the repo's apis.yml name, one repo, Wikidata
+      P856 not contradicting (Kin 2026-10-20 decision 2)
+  status: not-a-workflow
+  arazzo: null
+- slug: coupa-jitterbit
+  label: Jitterbit
+  partner: jitterbit
+  partner_name: Jitterbit
+  category: Coupa app
+  type: marketplace
+  marketplace: own
+  channel: partner-built
+  evidence: https://marketplace.coupa.com/apps/365778/jitterbit-pre-built-integrations-for-coupa
+  source: edge
+  relationship: ipaas-bridge
+  contract_reference:
+    register: Coupa App Marketplace (marketplace.coupa.com AppDirect listing + products JSON)
+    spec_file: null
+    role: coupa-app
+    registered_name: Jitterbit
+    matched_domain: null
+    matched_by: register-name
+    listings: 1
+    sample_apps:
+    - Jitterbit Pre-Built Integrations for Coupa
+    signal_note: one edge per (builder, platform); listings are context, never read
+    detected_by: sweep-procurement.py
+    detected: '2026-10-20'
+    identity_source: register-name
+    identity_note: register gave only the name; exact normalised match to the repo's apis.yml name, one repo, Wikidata
+      P856 not contradicting (Kin 2026-10-20 decision 2)
+  status: pending-generation
+  arazzo: null
+- slug: coupa-lyft
+  label: Lyft
+  partner: lyft
+  partner_name: Lyft
+  category: Coupa app
+  type: marketplace
+  marketplace: own
+  channel: partner-built
+  evidence: https://marketplace.coupa.com/apps/395334/lyft-business
+  source: edge
+  relationship: platform-app
+  contract_reference:
+    register: Coupa App Marketplace (marketplace.coupa.com AppDirect listing + products JSON)
+    spec_file: null
+    role: coupa-app
+    registered_name: Lyft
+    matched_domain: lyft.com
+    matched_by: domain
+    listings: 1
+    sample_apps:
+    - Lyft Business
+    signal_note: one edge per (builder, platform); listings are context, never read
+    detected_by: sweep-procurement.py
+    detected: '2026-10-20'
+  status: not-a-workflow
+  arazzo: null
+- slug: coupa-moveworks
+  label: Moveworks
+  partner: moveworks
+  partner_name: Moveworks
+  category: Coupa app
+  type: marketplace
+  marketplace: own
+  channel: partner-built
+  evidence: https://marketplace.coupa.com/apps/798426/moveworks-agents-for-coupa
+  source: edge
+  relationship: platform-app
+  contract_reference:
+    register: Coupa App Marketplace (marketplace.coupa.com AppDirect listing + products JSON)
+    spec_file: null
+    role: coupa-app
+    registered_name: Moveworks
+    matched_domain: moveworks.com
+    matched_by: domain
+    listings: 1
+    sample_apps:
+    - Moveworks Agents for Coupa
+    signal_note: one edge per (builder, platform); listings are context, never read
+    detected_by: sweep-procurement.py
+    detected: '2026-10-20'
+  status: not-a-workflow
+  arazzo: null
+- slug: coupa-opkey
+  label: Opkey
+  partner: opkey
+  partner_name: Opkey
+  category: Coupa app
+  type: marketplace
+  marketplace: own
+  channel: partner-built
+  evidence: https://marketplace.coupa.com/apps/419580/coupa-test-automation-from-opkey
+  source: edge
+  relationship: platform-app
+  contract_reference:
+    register: Coupa App Marketplace (marketplace.coupa.com AppDirect listing + products JSON)
+    spec_file: null
+    role: coupa-app
+    registered_name: Opkey
+    matched_domain: null
+    matched_by: register-name
+    listings: 1
+    sample_apps:
+    - Coupa Test Automation from Opkey
+    signal_note: one edge per (builder, platform); listings are context, never read
+    detected_by: sweep-procurement.py
+    detected: '2026-10-20'
+    identity_source: register-name
+    identity_note: register gave only the name; exact normalised match to the repo's apis.yml name, one repo, Wikidata
+      P856 not contradicting (Kin 2026-10-20 decision 2)
+  status: not-a-workflow
+  arazzo: null
+- slug: coupa-spendflo
+  label: Spendflo
+  partner: spendflo
+  partner_name: Spendflo
+  category: Coupa app
+  type: marketplace
+  marketplace: own
+  channel: partner-built
+  evidence: https://marketplace.coupa.com/apps/670928/spendflo-saas-procurement-management
+  source: edge
+  relationship: platform-app
+  contract_reference:
+    register: Coupa App Marketplace (marketplace.coupa.com AppDirect listing + products JSON)
+    spec_file: null
+    role: coupa-app
+    registered_name: Spendflo
+    matched_domain: null
+    matched_by: register-name
+    listings: 1
+    sample_apps:
+    - Spendflo SaaS Procurement Management
+    signal_note: one edge per (builder, platform); listings are context, never read
+    detected_by: sweep-procurement.py
+    detected: '2026-10-20'
+    identity_source: register-name
+    identity_note: register gave only the name; exact normalised match to the repo's apis.yml name, one repo, Wikidata
+      P856 not contradicting (Kin 2026-10-20 decision 2)
+  status: not-a-workflow
+  arazzo: null
+- slug: coupa-thomson-reuters
+  label: Thomson Reuters
+  partner: thomson-reuters
+  partner_name: Thomson Reuters
+  category: Coupa app
+  type: marketplace
+  marketplace: own
+  channel: partner-built
+  evidence: https://marketplace.coupa.com/apps/352737/thomson-reuters-onesource-indirect-tax-calculation-in-coupa
+  source: edge
+  relationship: platform-app
+  contract_reference:
+    register: Coupa App Marketplace (marketplace.coupa.com AppDirect listing + products JSON)
+    spec_file: null
+    role: coupa-app
+    registered_name: Thomson Reuters
+    matched_domain: thomsonreuters.com
+    matched_by: domain+name-among-holders
+    listings: 1
+    sample_apps:
+    - Thomson Reuters ONESOURCE Indirect Tax Calculation in Coupa
+    signal_note: one edge per (builder, platform); listings are context, never read
+    detected_by: sweep-procurement.py
+    detected: '2026-10-20'
+  status: not-a-workflow
+  arazzo: null
+- slug: coupa-torii
+  label: Torii
+  partner: torii
+  partner_name: Torii
+  category: Coupa app
+  type: marketplace
+  marketplace: own
+  channel: partner-built
+  evidence: https://marketplace.coupa.com/apps/688237/torii-connector
+  source: edge
+  relationship: platform-app
+  contract_reference:
+    register: Coupa App Marketplace (marketplace.coupa.com AppDirect listing + products JSON)
+    spec_file: null
+    role: coupa-app
+    registered_name: Torii
+    matched_domain: null
+    matched_by: register-name
+    listings: 1
+    sample_apps:
+    - Torii Connector
+    signal_note: one edge per (builder, platform); listings are context, never read
+    detected_by: sweep-procurement.py
+    detected: '2026-10-20'
+    identity_source: register-name
+    identity_note: register gave only the name; exact normalised match to the repo's apis.yml name, one repo, Wikidata
+      P856 not contradicting (Kin 2026-10-20 decision 2)
+  status: not-a-workflow
+  arazzo: null
+- slug: coupa-uber
+  label: Uber
+  partner: uber
+  partner_name: Uber
+  category: Coupa app
+  type: marketplace
+  marketplace: own
+  channel: partner-built
+  evidence: https://marketplace.coupa.com/apps/407109/uber-for-business
+  source: edge
+  relationship: platform-app
+  contract_reference:
+    register: Coupa App Marketplace (marketplace.coupa.com AppDirect listing + products JSON)
+    spec_file: null
+    role: coupa-app
+    registered_name: Uber
+    matched_domain: uber.com
+    matched_by: domain+name-among-holders
+    listings: 1
+    sample_apps:
+    - Uber for Business
+    signal_note: one edge per (builder, platform); listings are context, never read
+    detected_by: sweep-procurement.py
+    detected: '2026-10-20'
+  status: not-a-workflow
+  arazzo: null
+- slug: coupa-whatfix
+  label: Whatfix
+  partner: whatfix
+  partner_name: Whatfix
+  category: Coupa app
+  type: marketplace
+  marketplace: own
+  channel: partner-built
+  evidence: https://marketplace.coupa.com/apps/421717/whatfix-digital-adoption-for-coupa
+  source: edge
+  relationship: platform-app
+  contract_reference:
+    register: Coupa App Marketplace (marketplace.coupa.com AppDirect listing + products JSON)
+    spec_file: null
+    role: coupa-app
+    registered_name: Whatfix
+    matched_domain: whatfix.com
+    matched_by: domain
+    listings: 1
+    sample_apps:
+    - Whatfix Digital Adoption for Coupa
+    signal_note: one edge per (builder, platform); listings are context, never read
+    detected_by: sweep-procurement.py
+    detected: '2026-10-20'
+  status: not-a-workflow
+  arazzo: null
+- slug: coupa-xelix
+  label: Xelix
+  partner: xelix
+  partner_name: Xelix
+  category: Coupa app
+  type: marketplace
+  marketplace: own
+  channel: partner-built
+  evidence: https://marketplace.coupa.com/apps/795335/vendor-statement-reconciliation
+  source: edge
+  relationship: platform-app
+  contract_reference:
+    register: Coupa App Marketplace (marketplace.coupa.com AppDirect listing + products JSON)
+    spec_file: null
+    role: coupa-app
+    registered_name: Xelix
+    matched_domain: xelix.com
+    matched_by: domain
+    listings: 1
+    sample_apps:
+    - Vendor Statement Reconciliation
+    signal_note: one edge per (builder, platform); listings are context, never read
+    detected_by: sweep-procurement.py
+    detected: '2026-10-20'
+  status: not-a-workflow
+  arazzo: null
+- slug: coupa-zylo
+  label: Zylo
+  partner: zylo
+  partner_name: Zylo
+  category: Coupa app
+  type: marketplace
+  marketplace: own
+  channel: partner-built
+  evidence: https://marketplace.coupa.com/apps/368898/zylo-saas-management
+  source: edge
+  relationship: platform-app
+  contract_reference:
+    register: Coupa App Marketplace (marketplace.coupa.com AppDirect listing + products JSON)
+    spec_file: null
+    role: coupa-app
+    registered_name: Zylo
+    matched_domain: null
+    matched_by: register-name
+    listings: 1
+    sample_apps:
+    - Zylo SaaS Management
+    signal_note: one edge per (builder, platform); listings are context, never read
+    detected_by: sweep-procurement.py
+    detected: '2026-10-20'
+    identity_source: register-name
+    identity_note: register gave only the name; exact normalised match to the repo's apis.yml name, one repo, Wikidata
+      P856 not contradicting (Kin 2026-10-20 decision 2)
+  status: not-a-workflow
+  arazzo: null
+- slug: coupa-adobe-acrobat-sign-integration-for-coupa
+  label: Adobe Acrobat Sign Integration for Coupa
+  partner: adobe-sign
+  partner_name: Adobe Acrobat Sign Integration for Coupa
+  category: Coupa app
+  type: marketplace
+  marketplace: own
+  channel: provider-built
+  evidence: https://marketplace.coupa.com/apps/352557/adobe-acrobat-sign-integration-for-coupa
+  source: edge
+  relationship: platform-app
+  contract_reference:
+    register: Coupa App Marketplace (marketplace.coupa.com AppDirect listing + products JSON)
+    spec_file: null
+    role: coupa-provider-built-app
+    registered_name: Coupa
+    matched_domain: adobe.com
+    matched_by: domain+name-among-holders
+    listings: 1
+    sample_apps:
+    - Adobe Acrobat Sign Integration for Coupa
+    signal_note: one edge per (builder, platform); listings are context, never read
+    detected_by: sweep-procurement.py
+    detected: '2026-10-20'
+  status: not-a-workflow
+  arazzo: null
