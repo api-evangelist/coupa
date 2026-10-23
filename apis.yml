@@ -591,6 +591,8 @@ apis:
   - type: Rules
     url: rules/coupa-core-api-rules.yml
 common:
+  - type: PostmanWorkspace
+    url: https://www.postman.com/kinlaneapi/coupa/overview
   - type: Plans
     url: plans/coupa-plans-pricing.yml
   - type: FinOps
